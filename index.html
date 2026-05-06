@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Company Profile</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THÉP TAM GIANG PROFILE</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
 
@@ -17,429 +16,36 @@
       box-sizing:border-box;
     }
 
-    :root{
-      --primary:#0F4C81;
-      --dark:#111111;
-      --gray:#666666;
-      --light:#f5f5f5;
-      --white:#ffffff;
-    }
-
     body{
-      font-family:'Montserrat',sans-serif;
-      background:#ddd;
-      color:#222;
-    }
-
-    main{
-      width:100%;
+      background:#dcdcdc;
+      font-family:Arial,sans-serif;
     }
 
     .page{
       width:210mm;
       height:297mm;
-      background:white;
       margin:20px auto;
-      position:relative;
+      background:#fff;
       overflow:hidden;
+      position:relative;
       page-break-after:always;
-    }
-
-    .container{
-      width:85%;
-      margin:auto;
     }
 
     img{
       width:100%;
+      height:100%;
       display:block;
       object-fit:cover;
+      object-position:center;
     }
-
-    h1,h2,h3,h4{
-      line-height:1.2;
-    }
-
-    p{
-      line-height:1.7;
-      color:var(--gray);
-    }
-
-    .section-title{
-      margin-bottom:40px;
-    }
-
-    .section-title h2{
-      font-size:38px;
-      font-weight:800;
-      color:var(--primary);
-      margin-bottom:10px;
-    }
-
-    .section-title span{
-      width:80px;
-      height:4px;
-      background:var(--primary);
-      display:block;
-    }
-
-    /* COVER */
-
-    .cover{
-      position:relative;
-      color:white;
-    }
-
-    .cover .bg{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .cover .overlay{
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to right, rgba(0,0,0,.8), rgba(0,0,0,.3));
-    }
-
-    .cover-content{
-      position:relative;
-      z-index:2;
-      height:100%;
-      padding:70px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
-    .logo{
-      width:170px;
-    }
-
-    .hero h1{
-      font-size:68px;
-      font-weight:800;
-      line-height:1;
-      margin-bottom:20px;
-    }
-
-    .hero p{
-      color:white;
-      font-size:18px;
-      max-width:450px;
-    }
-
-    /* ABOUT */
-
-    .about{
-      padding:70px 0;
-    }
-
-    .about-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:50px;
-      align-items:center;
-    }
-
-    .about-image{
-      height:560px;
-      overflow:hidden;
-      border-radius:10px;
-    }
-
-    .about-image img{
-      height:100%;
-    }
-
-    .stats{
-      margin-top:40px;
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:20px;
-    }
-
-    .stat-card{
-      background:#f7f7f7;
-      padding:25px;
-      border-left:5px solid var(--primary);
-    }
-
-    .stat-card h3{
-      font-size:36px;
-      color:var(--primary);
-      margin-bottom:8px;
-    }
-
-    /* VISION */
-
-    .vision{
-      padding:70px;
-      background:#fafafa;
-    }
-
-    .vision-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:25px;
-      margin-top:50px;
-    }
-
-    .vision-card{
-      background:white;
-      padding:35px;
-      min-height:320px;
-      box-shadow:0 10px 30px rgba(0,0,0,.06);
-    }
-
-    .vision-card h3{
-      color:var(--primary);
-      font-size:28px;
-      margin-bottom:20px;
-    }
-
-    .vision-number{
-      font-size:80px;
-      font-weight:800;
-      color:#e9eef3;
-      margin-bottom:20px;
-    }
-
-    /* CAPABILITY */
-
-    .capability{
-      position:relative;
-      color:white;
-    }
-
-    .capability .bg{
-      position:absolute;
-      inset:0;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .capability-overlay{
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,.6);
-    }
-
-    .capability-content{
-      position:relative;
-      z-index:2;
-      padding:70px;
-    }
-
-    .capability-content h2{
-      font-size:42px;
-      margin-bottom:20px;
-    }
-
-    .feature-grid{
-      margin-top:50px;
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:25px;
-    }
-
-    .feature-card{
-      background:rgba(255,255,255,.1);
-      border:1px solid rgba(255,255,255,.15);
-      padding:30px;
-      backdrop-filter:blur(5px);
-    }
-
-    .feature-card h4{
-      font-size:24px;
-      margin-bottom:15px;
-    }
-
-    .feature-card p{
-      color:#eee;
-    }
-
-    /* PRODUCTS */
-
-    .products{
-      padding:70px;
-    }
-
-    .product-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:30px;
-    }
-
-    .product-card{
-      overflow:hidden;
-      background:white;
-      box-shadow:0 10px 30px rgba(0,0,0,.07);
-    }
-
-    .product-image{
-      height:240px;
-      overflow:hidden;
-    }
-
-    .product-image img{
-      height:100%;
-    }
-
-    .product-content{
-      padding:25px;
-    }
-
-    .product-content h3{
-      margin-bottom:15px;
-      color:var(--primary);
-      font-size:24px;
-    }
-
-    /* PROJECTS */
-
-    .projects{
-      padding:70px;
-      background:#fafafa;
-    }
-
-    .project-layout{
-      display:grid;
-      grid-template-columns:1.3fr 1fr;
-      gap:20px;
-      height:560px;
-    }
-
-    .project-large,
-    .project-small{
-      position:relative;
-      overflow:hidden;
-    }
-
-    .project-large img,
-    .project-small img{
-      height:100%;
-    }
-
-    .project-side{
-      display:grid;
-      gap:20px;
-    }
-
-    .project-caption{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      padding:25px;
-      background:linear-gradient(to top, rgba(0,0,0,.85), transparent);
-      color:white;
-    }
-
-    .project-caption h3{
-      font-size:24px;
-      margin-bottom:10px;
-    }
-
-    /* PARTNERS */
-
-    .partners{
-      padding:70px;
-    }
-
-    .logo-grid{
-      margin-top:50px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:25px;
-    }
-
-    .logo-box{
-      height:120px;
-      border:1px solid #ddd;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      background:white;
-    }
-
-    .logo-box img{
-      max-width:100%;
-      max-height:100%;
-      object-fit:contain;
-    }
-
-    /* CONTACT */
-
-    .contact{
-      position:relative;
-      color:white;
-    }
-
-    .contact .bg{
-      position:absolute;
-      inset:0;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .contact-overlay{
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,.72);
-    }
-
-    .contact-content{
-      position:relative;
-      z-index:2;
-      height:100%;
-      padding:70px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
-    .contact-content h2{
-      font-size:52px;
-      margin-bottom:20px;
-    }
-
-    .contact-list{
-      list-style:none;
-    }
-
-    .contact-list li{
-      margin-bottom:15px;
-      font-size:18px;
-    }
-
-    .footer-note{
-      font-size:14px;
-      opacity:.8;
-    }
-
-    @media print{
-      body{
-        background:white;
-      }
-
-      .page{
-        margin:0;
-      }
-    }
-
-  
 
     .full-bg{
       width:100%;
       height:100%;
       object-fit:cover;
-      object-position:center;
-      display:block;
     }
+
+    /* GRID */
 
     .collage-grid{
       display:grid;
@@ -447,13 +53,8 @@
       grid-template-rows:1fr 1fr;
       gap:10px;
       padding:10px;
-    }
-
-    .collage-grid img{
       width:100%;
       height:100%;
-      object-fit:cover;
-      object-position:center;
     }
 
     .gallery-2{
@@ -461,13 +62,8 @@
       grid-template-columns:1fr 1fr;
       gap:10px;
       padding:10px;
-    }
-
-    .gallery-2 img{
       width:100%;
       height:100%;
-      object-fit:cover;
-      object-position:center;
     }
 
     .gallery-3{
@@ -475,54 +71,24 @@
       grid-template-columns:1fr 1fr 1fr;
       gap:10px;
       padding:10px;
-    }
-
-    .gallery-3 img{
       width:100%;
       height:100%;
-      object-fit:cover;
-      object-position:center;
     }
 
-    .logo-grid-page{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:20px;
-      padding:50px;
-      align-content:center;
-    }
-
-    .logo-grid-page img{
-      width:100%;
-      height:120px;
-      object-fit:contain;
-      border:1px solid #ddd;
-      padding:20px;
-      background:white;
-    }
+    /* PROJECT LAYOUT */
 
     .project-layout{
       display:grid;
       grid-template-columns:2fr 1fr;
-      grid-template-rows:1fr 1fr;
       gap:10px;
-      width:100%;
-      height:100%;
       padding:10px;
-    }
-
-    .project-layout .main-project{
-      grid-row:1 / span 2;
-      overflow:hidden;
-    }
-
-    .project-layout .main-project img,
-    .project-layout .sub-project img{
       width:100%;
       height:100%;
-      object-fit:cover;
-      object-position:center;
-      display:block;
+    }
+
+    .main-project{
+      overflow:hidden;
+      height:100%;
     }
 
     .project-side-grid{
@@ -537,28 +103,57 @@
       overflow:hidden;
     }
 
-</style>
+    /* LOGO GRID */
+
+    .logo-grid-page{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+      padding:50px;
+      align-content:center;
+      width:100%;
+      height:100%;
+    }
+
+    .logo-grid-page img{
+      object-fit:contain;
+      background:#fff;
+      border:1px solid #ddd;
+      padding:20px;
+      height:120px;
+    }
+
+    @media print{
+      body{
+        background:#fff;
+      }
+
+      .page{
+        margin:0;
+      }
+    }
+
+  </style>
+
 </head>
+
 <body>
 
 <main>
 
-  <!-- 01 PROFILE COVER -->
+  <!-- 01 COVER -->
   <section class="page">
     <img class="full-bg" src="assets/profile-cover.jpg">
   </section>
 
   <!-- 02 COMPANY INTRO -->
-  <section class="page collage-grid">
-    <img src="assets/company-01.jpg">
-    <img src="assets/company-02.jpg">
-    <img src="assets/company-03.jpg">
-    <img src="assets/company-04.jpg">
+  <section class="page">
+    <img class="full-bg" src="assets/company-intro-01.jpg">
   </section>
 
   <!-- 03 COMPANY INTRO -->
   <section class="page">
-    <img class="full-bg" src="assets/company-main.jpg">
+    <img class="full-bg" src="assets/company-intro-02.jpg">
   </section>
 
   <!-- 04 CERTIFICATE -->
@@ -582,71 +177,87 @@
     <img src="assets/product-vlxd.jpg">
   </section>
 
-  <!-- 07 THEP CATEGORY -->
-  <section class="page project-layout">
+  <!-- 07 THEP -->
+  <section class="page">
 
-    <div class="main-project">
-      <img src="assets/thep-main.jpg">
-    </div>
+    <div class="project-layout">
 
-    <div class="project-side-grid">
-      <div class="sub-project"><img src="assets/thep-01.jpg"></div>
-      <div class="sub-project"><img src="assets/thep-02.jpg"></div>
-      <div class="sub-project"><img src="assets/thep-03.jpg"></div>
-      <div class="sub-project"><img src="assets/thep-04.jpg"></div>
-    </div>
+      <div class="main-project">
+        <img src="assets/thep-main.jpg">
+      </div>
 
-  </section>
+      <div class="project-side-grid">
+        <div class="sub-project"><img src="assets/thep-01.jpg"></div>
+        <div class="sub-project"><img src="assets/thep-02.jpg"></div>
+        <div class="sub-project"><img src="assets/thep-03.jpg"></div>
+        <div class="sub-project"><img src="assets/thep-04.jpg"></div>
+      </div>
 
-  <!-- 08 XI MANG CATEGORY -->
-  <section class="page project-layout">
-
-    <div class="main-project">
-      <img src="assets/ximang-main.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img src="assets/ximang-01.jpg"></div>
-      <div class="sub-project"><img src="assets/ximang-02.jpg"></div>
-      <div class="sub-project"><img src="assets/ximang-03.jpg"></div>
-      <div class="sub-project"><img src="assets/ximang-04.jpg"></div>
     </div>
 
   </section>
 
-  <!-- 09 THEP HINH CATEGORY -->
-  <section class="page project-layout">
+  <!-- 08 XI MANG -->
+  <section class="page">
 
-    <div class="main-project">
-      <img src="assets/thephinh-main.jpg">
-    </div>
+    <div class="project-layout">
 
-    <div class="project-side-grid">
-      <div class="sub-project"><img src="assets/thephinh-01.jpg"></div>
-      <div class="sub-project"><img src="assets/thephinh-02.jpg"></div>
-      <div class="sub-project"><img src="assets/thephinh-03.jpg"></div>
-      <div class="sub-project"><img src="assets/thephinh-04.jpg"></div>
-    </div>
+      <div class="main-project">
+        <img src="assets/ximang-main.jpg">
+      </div>
 
-  </section>
+      <div class="project-side-grid">
+        <div class="sub-project"><img src="assets/ximang-01.jpg"></div>
+        <div class="sub-project"><img src="assets/ximang-02.jpg"></div>
+        <div class="sub-project"><img src="assets/ximang-03.jpg"></div>
+        <div class="sub-project"><img src="assets/ximang-04.jpg"></div>
+      </div>
 
-  <!-- 10 VLXD CATEGORY -->
-  <section class="page project-layout">
-
-    <div class="main-project">
-      <img src="assets/vlxd-main.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img src="assets/vlxd-01.jpg"></div>
-      <div class="sub-project"><img src="assets/vlxd-02.jpg"></div>
-      <div class="sub-project"><img src="assets/vlxd-03.jpg"></div>
-      <div class="sub-project"><img src="assets/vlxd-04.jpg"></div>
     </div>
 
   </section>
 
-  <!-- 11 PROJECT SUPPLY -->
+  <!-- 09 THEP HINH -->
+  <section class="page">
+
+    <div class="project-layout">
+
+      <div class="main-project">
+        <img src="assets/thephinh-main.jpg">
+      </div>
+
+      <div class="project-side-grid">
+        <div class="sub-project"><img src="assets/thephinh-01.jpg"></div>
+        <div class="sub-project"><img src="assets/thephinh-02.jpg"></div>
+        <div class="sub-project"><img src="assets/thephinh-03.jpg"></div>
+        <div class="sub-project"><img src="assets/thephinh-04.jpg"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- 10 VLXD -->
+  <section class="page">
+
+    <div class="project-layout">
+
+      <div class="main-project">
+        <img src="assets/vlxd-main.jpg">
+      </div>
+
+      <div class="project-side-grid">
+        <div class="sub-project"><img src="assets/vlxd-01.jpg"></div>
+        <div class="sub-project"><img src="assets/vlxd-02.jpg"></div>
+        <div class="sub-project"><img src="assets/vlxd-03.jpg"></div>
+        <div class="sub-project"><img src="assets/vlxd-04.jpg"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- 11 PROJECT -->
   <section class="page">
 
     <div class="project-layout">
@@ -666,7 +277,7 @@
 
   </section>
 
-  <!-- 12 PROJECT SUPPLY -->
+  <!-- 12 PROJECT -->
   <section class="page">
 
     <div class="project-layout">
@@ -686,7 +297,7 @@
 
   </section>
 
-  <!-- 13 PROJECT SUPPLY -->
+  <!-- 13 PROJECT -->
   <section class="page">
 
     <div class="project-layout">
