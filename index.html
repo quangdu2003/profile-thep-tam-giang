@@ -8,7 +8,6 @@
 
 <title>THÉP TAM GIANG PROFILE</title>
 
-<!-- FAVICON -->
 <link rel="icon" href="./profile-cover-removebg-preview.png">
 <link rel="shortcut icon" href="./profile-cover-removebg-preview.png">
 <link rel="apple-touch-icon" href="./profile-cover-removebg-preview.png">
@@ -29,8 +28,6 @@ body{
   font-family:Arial,sans-serif;
 }
 
-/* PAGE */
-
 .page{
   width:100%;
   max-width:720px;
@@ -40,40 +37,27 @@ body{
   overflow:hidden;
   position:relative;
   box-shadow:0 5px 20px rgba(0,0,0,.15);
-  border-radius:0;
 }
-
-/* IMAGE */
 
 img{
   width:100%;
   height:100%;
   display:block;
-  object-position:center center;
+  object-position:center;
 }
-
-/* FULL IMAGE */
 
 .full-bg{
   width:100%;
   height:100%;
   object-fit:contain;
-  object-position:center;
-  background:#ffffff;
-}
-
-/* COVER */
-
-.cover-page{
-  background:#ffffff;
+  background:#fff;
 }
 
 .cover-image{
   width:100%;
   height:100%;
   object-fit:contain;
-  object-position:center;
-  background:#ffffff;
+  background:#fff;
 }
 
 /* CERTIFICATE */
@@ -93,21 +77,14 @@ img{
 
 .certificate-item{
   background:#fff;
-  overflow:hidden;
   border:1px solid #ddd;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  overflow:hidden;
 }
 
 .certificate-item img{
-  width:100%;
-  height:100%;
   object-fit:contain;
   background:#fff;
 }
-
-/* CERTIFICATE FULL */
 
 .certificate-full-page{
   background:#f5f5f5;
@@ -120,53 +97,13 @@ img{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#ffffff;
+  background:#fff;
   border:1px solid #ddd;
-  overflow:hidden;
 }
 
 .certificate-full-wrap img{
-  width:100%;
-  height:100%;
   object-fit:contain;
-  object-position:center;
-  background:#ffffff;
-}
-
-/* PROJECT */
-
-.project-layout{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:10px;
-  padding:10px;
-  width:100%;
-  height:100%;
-}
-
-.main-project{
-  overflow:hidden;
-  height:100%;
-}
-
-.project-side-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:1fr 1fr;
-  gap:10px;
-  height:100%;
-}
-
-.sub-project{
-  overflow:hidden;
-}
-
-.project-layout img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  display:block;
+  background:#fff;
 }
 
 /* COLLAGE */
@@ -182,10 +119,7 @@ img{
 }
 
 .collage-grid img{
-  width:100%;
-  height:100%;
   object-fit:cover;
-  object-position:center;
 }
 
 /* PARTNER */
@@ -201,15 +135,12 @@ img{
 }
 
 .logo-grid-page img{
-  width:100%;
   height:120px;
   object-fit:contain;
   background:#fff;
   border:1px solid #ddd;
   padding:15px;
 }
-
-/* MOBILE */
 
 @media(max-width:768px){
 
@@ -224,25 +155,6 @@ img{
 
 }
 
-/* PRINT */
-
-@media print{
-
-  body{
-    background:#fff;
-  }
-
-  .page{
-    margin:0;
-    max-width:none;
-    width:1080px;
-    height:1920px;
-    aspect-ratio:auto;
-    box-shadow:none;
-  }
-
-}
-
 </style>
 
 </head>
@@ -250,16 +162,16 @@ img{
 <body>
 
 <!-- 01 COVER -->
-<section class="page cover-page">
+<section class="page">
   <img loading="lazy" class="cover-image" src="./profile-cover.jpg">
 </section>
 
-<!-- 02 COMPANY INTRO -->
+<!-- 02 INTRO -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./company-intro-01.jpg">
 </section>
 
-<!-- 03 COMPANY INTRO -->
+<!-- 03 INTRO -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./company-intro-02.jpg">
 </section>
@@ -305,142 +217,37 @@ img{
 
 <!-- 07 THEP -->
 <section class="page">
-
-  <div class="project-layout">
-
-    <div class="main-project">
-      <img loading="lazy" src="./thep-main.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img loading="lazy" src="./thep-01.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./thep-02.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./thep-03.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./thep-04.jpg"></div>
-    </div>
-
-  </div>
-
+  <img loading="lazy" class="full-bg" src="./thep-products.jpg">
 </section>
 
 <!-- 08 XI MANG -->
 <section class="page">
-
-  <div class="project-layout">
-
-    <div class="main-project">
-      <img loading="lazy" src="./ximang-main.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img loading="lazy" src="./ximang-01.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./ximang-02.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./ximang-03.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./ximang-04.jpg"></div>
-    </div>
-
-  </div>
-
+  <img loading="lazy" class="full-bg" src="./ximang-products.jpg">
 </section>
 
 <!-- 09 THEP HINH -->
 <section class="page">
-
-  <div class="project-layout">
-
-    <div class="main-project">
-      <img loading="lazy" src="./thephinh-main.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img loading="lazy" src="./thephinh-01.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./thephinh-02.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./thephinh-03.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./thephinh-04.jpg"></div>
-    </div>
-
-  </div>
-
+  <img loading="lazy" class="full-bg" src="./thephinh-products.jpg">
 </section>
 
 <!-- 10 VLXD -->
 <section class="page">
-
-  <div class="project-layout">
-
-    <div class="main-project">
-      <img loading="lazy" src="./vlxd-main.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img loading="lazy" src="./vlxd-01.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./vlxd-02.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./vlxd-03.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./vlxd-04.jpg"></div>
-    </div>
-
-  </div>
-
+  <img loading="lazy" class="full-bg" src="./vlxd-products.jpg">
 </section>
 
 <!-- 11 PROJECT -->
 <section class="page">
-
-  <div class="project-layout">
-
-    <div class="main-project">
-      <img loading="lazy" src="./project-main-01.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img loading="lazy" src="./project-sub-01.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-02.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-03.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-04.jpg"></div>
-    </div>
-
-  </div>
-
+  <img loading="lazy" class="full-bg" src="./project-01.jpg">
 </section>
 
 <!-- 12 PROJECT -->
 <section class="page">
-
-  <div class="project-layout">
-
-    <div class="main-project">
-      <img loading="lazy" src="./project-main-02.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img loading="lazy" src="./project-sub-05.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-06.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-07.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-08.jpg"></div>
-    </div>
-
-  </div>
-
+  <img loading="lazy" class="full-bg" src="./project-02.jpg">
 </section>
 
 <!-- 13 PROJECT -->
 <section class="page">
-
-  <div class="project-layout">
-
-    <div class="main-project">
-      <img loading="lazy" src="./project-main-03.jpg">
-    </div>
-
-    <div class="project-side-grid">
-      <div class="sub-project"><img loading="lazy" src="./project-sub-09.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-10.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-11.jpg"></div>
-      <div class="sub-project"><img loading="lazy" src="./project-sub-12.jpg"></div>
-    </div>
-
-  </div>
-
+  <img loading="lazy" class="full-bg" src="./project-03.jpg">
 </section>
 
 <!-- 14 WAREHOUSE -->
@@ -461,8 +268,9 @@ img{
   <img loading="lazy" src="./construction-04.jpg">
 </section>
 
-<!-- 17 PARTNERS -->
+<!-- 17 PARTNER -->
 <section class="page logo-grid-page">
+
   <img loading="lazy" src="./partner-01.png">
   <img loading="lazy" src="./partner-02.png">
   <img loading="lazy" src="./partner-03.png">
@@ -471,6 +279,7 @@ img{
   <img loading="lazy" src="./partner-06.png">
   <img loading="lazy" src="./partner-07.png">
   <img loading="lazy" src="./partner-08.png">
+
 </section>
 
 <!-- 18 TEAM -->
