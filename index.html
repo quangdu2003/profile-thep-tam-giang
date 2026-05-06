@@ -9,9 +9,10 @@
 
 <title>THÉP TAM GIANG PROFILE</title>
 
-<link rel="icon" href="./profile-cover-removebg-preview.png">
-<link rel="shortcut icon" href="./profile-cover-removebg-preview.png">
-<link rel="apple-touch-icon" href="./profile-cover-removebg-preview.png">
+<!-- FAVICON -->
+<link rel="icon" type="image/png" href="./logo.png">
+<link rel="shortcut icon" type="image/png" href="./logo.png">
+<link rel="apple-touch-icon" href="./logo.png">
 
 <style>
 
@@ -32,12 +33,13 @@ body{
 .page{
   width:100%;
   max-width:720px;
-  aspect-ratio:9 / 16;
+  aspect-ratio:9/16;
   background:#fff;
   margin:20px auto;
   overflow:hidden;
   position:relative;
   box-shadow:0 5px 20px rgba(0,0,0,.15);
+  border-radius:10px;
 }
 
 img{
@@ -57,7 +59,7 @@ img{
 .cover-image{
   width:100%;
   height:100%;
-  object-fit:contain;
+  object-fit:cover;
   background:#fff;
 }
 
@@ -80,6 +82,7 @@ img{
   background:#fff;
   border:1px solid #ddd;
   overflow:hidden;
+  border-radius:8px;
 }
 
 .certificate-item img{
@@ -100,6 +103,7 @@ img{
   justify-content:center;
   background:#fff;
   border:1px solid #ddd;
+  border-radius:8px;
 }
 
 .certificate-full-wrap img{
@@ -121,6 +125,7 @@ img{
 
 .collage-grid img{
   object-fit:cover;
+  border-radius:8px;
 }
 
 /* PARTNER */
@@ -141,13 +146,17 @@ img{
   background:#fff;
   border:1px solid #ddd;
   padding:15px;
+  border-radius:10px;
 }
+
+/* MOBILE */
 
 @media(max-width:768px){
 
   .page{
     width:100%;
     margin:0 auto 15px;
+    border-radius:0;
   }
 
   .logo-grid-page{
@@ -216,87 +225,82 @@ img{
   <img loading="lazy" class="full-bg" src="./main-products.jpg">
 </section>
 
-<!-- 07 THEP -->
+<!-- 07 THÉP -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./thep-products.jpg">
 </section>
 
-<!-- 08 XI MANG -->
+<!-- 08 XI MĂNG -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./ximang-products.jpg">
 </section>
 
-<!-- 09 THEP HINH -->
+<!-- 09 THÉP HÌNH -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./thephinh-products.jpg">
 </section>
 
-<!-- 10 VLXD -->
-<section class="page">
-  <img loading="lazy" class="full-bg" src="./vlxd-products.jpg">
-</section>
-
-<!-- 11 PROJECT 01 -->
+<!-- 10 DỰ ÁN 01 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-01.jpg">
 </section>
 
-<!-- 12 PROJECT 02 -->
+<!-- 11 DỰ ÁN 02 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-02.jpg">
 </section>
 
-<!-- 13 PROJECT 03 -->
+<!-- 12 DỰ ÁN 03 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-03.jpg">
 </section>
 
-<!-- 14 PROJECT 04 -->
+<!-- 13 DỰ ÁN 04 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-04.jpg">
 </section>
 
-<!-- 15 PROJECT 05 -->
+<!-- 14 DỰ ÁN 05 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-05.jpg">
 </section>
 
-<!-- 16 PROJECT 06 -->
+<!-- 15 DỰ ÁN 06 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-06.jpg">
 </section>
 
-<!-- 17 PROJECT 07 -->
+<!-- 16 DỰ ÁN 07 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-07.jpg">
 </section>
 
-<!-- 18 PROJECT 08 -->
+<!-- 17 DỰ ÁN 08 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-08.jpg">
 </section>
 
-<!-- 19 PROJECT 09 -->
+<!-- 18 DỰ ÁN 09 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-09.jpg">
 </section>
 
-<!-- 20 PROJECT 10 -->
+<!-- 19 DỰ ÁN 10 -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./project-10.jpg">
 </section>
 
-<!-- 21 WAREHOUSE -->
+<!-- 20 KHO HÀNG -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./warehouse.jpg">
 </section>
 
-<!-- 22 FACTORY -->
+<!-- 21 NHÀ XƯỞNG -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./factory.jpg">
 </section>
 
-<!-- 23 CONSTRUCTION -->
+<!-- 22 THI CÔNG -->
 <section class="page collage-grid">
   <img loading="lazy" src="./construction-01.jpg">
   <img loading="lazy" src="./construction-02.jpg">
@@ -304,7 +308,7 @@ img{
   <img loading="lazy" src="./construction-04.jpg">
 </section>
 
-<!-- 24 PARTNER -->
+<!-- 23 ĐỐI TÁC -->
 <section class="page logo-grid-page">
 
   <img loading="lazy" src="./partner-01.png">
@@ -318,17 +322,17 @@ img{
 
 </section>
 
-<!-- 25 TEAM -->
+<!-- 24 TEAM -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./team.jpg">
 </section>
 
-<!-- 26 CONTACT -->
+<!-- 25 CONTACT -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./contact.jpg">
 </section>
 
-<!-- 27 BACK COVER -->
+<!-- 26 BACK COVER -->
 <section class="page">
   <img loading="lazy" class="full-bg" src="./back-cover.jpg">
 </section>
