@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Profile</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    :root{
+      --primary:#0F4C81;
+      --dark:#111111;
+      --gray:#666666;
+      --light:#f5f5f5;
+      --white:#ffffff;
+    }
+
+    body{
+      font-family:'Montserrat',sans-serif;
+      background:#ddd;
+      color:#222;
+    }
+
+    main{
+      width:100%;
+    }
+
+    .page{
+      width:210mm;
+      height:297mm;
+      background:white;
+      margin:20px auto;
+      position:relative;
+      overflow:hidden;
+      page-break-after:always;
+    }
+
+    .container{
+      width:85%;
+      margin:auto;
+    }
+
+    img{
+      width:100%;
+      display:block;
+      object-fit:cover;
+    }
+
+    h1,h2,h3,h4{
+      line-height:1.2;
+    }
+
+    p{
+      line-height:1.7;
+      color:var(--gray);
+    }
+
+    .section-title{
+      margin-bottom:40px;
+    }
+
+    .section-title h2{
+      font-size:38px;
+      font-weight:800;
+      color:var(--primary);
+      margin-bottom:10px;
+    }
+
+    .section-title span{
+      width:80px;
+      height:4px;
+      background:var(--primary);
+      display:block;
+    }
+
+    /* COVER */
+
+    .cover{
+      position:relative;
+      color:white;
+    }
+
+    .cover .bg{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .cover .overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to right, rgba(0,0,0,.8), rgba(0,0,0,.3));
+    }
+
+    .cover-content{
+      position:relative;
+      z-index:2;
+      height:100%;
+      padding:70px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .logo{
+      width:170px;
+    }
+
+    .hero h1{
+      font-size:68px;
+      font-weight:800;
+      line-height:1;
+      margin-bottom:20px;
+    }
+
+    .hero p{
+      color:white;
+      font-size:18px;
+      max-width:450px;
+    }
+
+    /* ABOUT */
+
+    .about{
+      padding:70px 0;
+    }
+
+    .about-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:50px;
+      align-items:center;
+    }
+
+    .about-image{
+      height:560px;
+      overflow:hidden;
+      border-radius:10px;
+    }
+
+    .about-image img{
+      height:100%;
+    }
+
+    .stats{
+      margin-top:40px;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+    }
+
+    .stat-card{
+      background:#f7f7f7;
+      padding:25px;
+      border-left:5px solid var(--primary);
+    }
+
+    .stat-card h3{
+      font-size:36px;
+      color:var(--primary);
+      margin-bottom:8px;
+    }
+
+    /* VISION */
+
+    .vision{
+      padding:70px;
+      background:#fafafa;
+    }
+
+    .vision-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:25px;
+      margin-top:50px;
+    }
+
+    .vision-card{
+      background:white;
+      padding:35px;
+      min-height:320px;
+      box-shadow:0 10px 30px rgba(0,0,0,.06);
+    }
+
+    .vision-card h3{
+      color:var(--primary);
+      font-size:28px;
+      margin-bottom:20px;
+    }
+
+    .vision-number{
+      font-size:80px;
+      font-weight:800;
+      color:#e9eef3;
+      margin-bottom:20px;
+    }
+
+    /* CAPABILITY */
+
+    .capability{
+      position:relative;
+      color:white;
+    }
+
+    .capability .bg{
+      position:absolute;
+      inset:0;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .capability-overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.6);
+    }
+
+    .capability-content{
+      position:relative;
+      z-index:2;
+      padding:70px;
+    }
+
+    .capability-content h2{
+      font-size:42px;
+      margin-bottom:20px;
+    }
+
+    .feature-grid{
+      margin-top:50px;
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:25px;
+    }
+
+    .feature-card{
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.15);
+      padding:30px;
+      backdrop-filter:blur(5px);
+    }
+
+    .feature-card h4{
+      font-size:24px;
+      margin-bottom:15px;
+    }
+
+    .feature-card p{
+      color:#eee;
+    }
+
+    /* PRODUCTS */
+
+    .products{
+      padding:70px;
+    }
+
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:30px;
+    }
+
+    .product-card{
+      overflow:hidden;
+      background:white;
+      box-shadow:0 10px 30px rgba(0,0,0,.07);
+    }
+
+    .product-image{
+      height:240px;
+      overflow:hidden;
+    }
+
+    .product-image img{
+      height:100%;
+    }
+
+    .product-content{
+      padding:25px;
+    }
+
+    .product-content h3{
+      margin-bottom:15px;
+      color:var(--primary);
+      font-size:24px;
+    }
+
+    /* PROJECTS */
+
+    .projects{
+      padding:70px;
+      background:#fafafa;
+    }
+
+    .project-layout{
+      display:grid;
+      grid-template-columns:1.3fr 1fr;
+      gap:20px;
+      height:560px;
+    }
+
+    .project-large,
+    .project-small{
+      position:relative;
+      overflow:hidden;
+    }
+
+    .project-large img,
+    .project-small img{
+      height:100%;
+    }
+
+    .project-side{
+      display:grid;
+      gap:20px;
+    }
+
+    .project-caption{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      padding:25px;
+      background:linear-gradient(to top, rgba(0,0,0,.85), transparent);
+      color:white;
+    }
+
+    .project-caption h3{
+      font-size:24px;
+      margin-bottom:10px;
+    }
+
+    /* PARTNERS */
+
+    .partners{
+      padding:70px;
+    }
+
+    .logo-grid{
+      margin-top:50px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:25px;
+    }
+
+    .logo-box{
+      height:120px;
+      border:1px solid #ddd;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:white;
+    }
+
+    .logo-box img{
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+    }
+
+    /* CONTACT */
+
+    .contact{
+      position:relative;
+      color:white;
+    }
+
+    .contact .bg{
+      position:absolute;
+      inset:0;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .contact-overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.72);
+    }
+
+    .contact-content{
+      position:relative;
+      z-index:2;
+      height:100%;
+      padding:70px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .contact-content h2{
+      font-size:52px;
+      margin-bottom:20px;
+    }
+
+    .contact-list{
+      list-style:none;
+    }
+
+    .contact-list li{
+      margin-bottom:15px;
+      font-size:18px;
+    }
+
+    .footer-note{
+      font-size:14px;
+      opacity:.8;
+    }
+
+    @media print{
+      body{
+        background:white;
+      }
+
+      .page{
+        margin:0;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<main>
+
+  <!-- PAGE 1 -->
+  <section class="page cover">
+
+    <img class="bg" src="assets/cover.jpg" alt="">
+
+    <div class="overlay"></div>
+
+    <div class="cover-content">
+
+      <img class="logo" src="assets/logo.png" alt="logo">
+
+      <div class="hero">
+        <h1>COMPANY<br>PROFILE</h1>
+        <p>
+          Nội dung slogan công ty tại đây.
+          Bạn có thể sửa toàn bộ nội dung này.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 2 -->
+  <section class="page about">
+
+    <div class="container">
+
+      <div class="about-grid">
+
+        <div class="about-left">
+
+          <div class="section-title">
+            <h2>About Us</h2>
+            <span></span>
+          </div>
+
+          <p>
+            Nội dung giới thiệu công ty.
+            Bạn có thể thay đổi toàn bộ đoạn text này.
+            Đây là phần mô tả doanh nghiệp, năng lực và định hướng.
+          </p>
+
+          <div class="stats">
+
+            <div class="stat-card">
+              <h3>15+</h3>
+              <p>Years Experience</p>
+            </div>
+
+            <div class="stat-card">
+              <h3>500+</h3>
+              <p>Employees</p>
+            </div>
+
+            <div class="stat-card">
+              <h3>25+</h3>
+              <p>Projects</p>
+            </div>
+
+            <div class="stat-card">
+              <h3>10+</h3>
+              <p>Branches</p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="about-image">
+          <img src="assets/about.jpg" alt="">
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 3 -->
+  <section class="page vision">
+
+    <div class="section-title">
+      <h2>Vision & Mission</h2>
+      <span></span>
+    </div>
+
+    <div class="vision-grid">
+
+      <div class="vision-card">
+        <div class="vision-number">01</div>
+        <h3>Vision</h3>
+        <p>
+          Nội dung vision tại đây.
+        </p>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-number">02</div>
+        <h3>Mission</h3>
+        <p>
+          Nội dung mission tại đây.
+        </p>
+      </div>
+
+      <div class="vision-card">
+        <div class="vision-number">03</div>
+        <h3>Core Values</h3>
+        <p>
+          Nội dung core values tại đây.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 4 -->
+  <section class="page capability">
+
+    <img class="bg" src="assets/factory.jpg" alt="">
+
+    <div class="capability-overlay"></div>
+
+    <div class="capability-content">
+
+      <h2>Manufacturing Capability</h2>
+
+      <p>
+        Nội dung giới thiệu năng lực sản xuất.
+      </p>
+
+      <div class="feature-grid">
+
+        <div class="feature-card">
+          <h4>Factory</h4>
+          <p>
+            Nội dung nhà máy.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h4>Technology</h4>
+          <p>
+            Nội dung công nghệ.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h4>Quality Control</h4>
+          <p>
+            Nội dung kiểm soát chất lượng.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h4>Human Resources</h4>
+          <p>
+            Nội dung nhân sự.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 5 -->
+  <section class="page products">
+
+    <div class="section-title">
+      <h2>Products</h2>
+      <span></span>
+    </div>
+
+    <div class="product-grid">
+
+      <div class="product-card">
+
+        <div class="product-image">
+          <img src="assets/product-1.jpg" alt="">
+        </div>
+
+        <div class="product-content">
+          <h3>Product Name</h3>
+          <p>
+            Nội dung mô tả sản phẩm.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="product-card">
+
+        <div class="product-image">
+          <img src="assets/product-2.jpg" alt="">
+        </div>
+
+        <div class="product-content">
+          <h3>Product Name</h3>
+          <p>
+            Nội dung mô tả sản phẩm.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="product-card">
+
+        <div class="product-image">
+          <img src="assets/product-3.jpg" alt="">
+        </div>
+
+        <div class="product-content">
+          <h3>Product Name</h3>
+          <p>
+            Nội dung mô tả sản phẩm.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="product-card">
+
+        <div class="product-image">
+          <img src="assets/product-4.jpg" alt="">
+        </div>
+
+        <div class="product-content">
+          <h3>Product Name</h3>
+          <p>
+            Nội dung mô tả sản phẩm.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 6 -->
+  <section class="page projects">
+
+    <div class="section-title">
+      <h2>Projects</h2>
+      <span></span>
+    </div>
+
+    <div class="project-layout">
+
+      <div class="project-large">
+
+        <img src="assets/project-1.jpg" alt="">
+
+        <div class="project-caption">
+          <h3>Project Name</h3>
+          <p>
+            Nội dung dự án.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="project-side">
+
+        <div class="project-small">
+
+          <img src="assets/project-2.jpg" alt="">
+
+          <div class="project-caption">
+            <h3>Project Name</h3>
+          </div>
+
+        </div>
+
+        <div class="project-small">
+
+          <img src="assets/project-3.jpg" alt="">
+
+          <div class="project-caption">
+            <h3>Project Name</h3>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 7 -->
+  <section class="page partners">
+
+    <div class="section-title">
+      <h2>Partners</h2>
+      <span></span>
+    </div>
+
+    <div class="logo-grid">
+
+      <div class="logo-box">
+        <img src="assets/partner-1.png" alt="">
+      </div>
+
+      <div class="logo-box">
+        <img src="assets/partner-2.png" alt="">
+      </div>
+
+      <div class="logo-box">
+        <img src="assets/partner-3.png" alt="">
+      </div>
+
+      <div class="logo-box">
+        <img src="assets/partner-4.png" alt="">
+      </div>
+
+      <div class="logo-box">
+        <img src="assets/partner-5.png" alt="">
+      </div>
+
+      <div class="logo-box">
+        <img src="assets/partner-6.png" alt="">
+      </div>
+
+      <div class="logo-box">
+        <img src="assets/partner-7.png" alt="">
+      </div>
+
+      <div class="logo-box">
+        <img src="assets/partner-8.png" alt="">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PAGE 8 -->
+  <section class="page contact">
+
+    <img class="bg" src="assets/contact-bg.jpg" alt="">
+
+    <div class="contact-overlay"></div>
+
+    <div class="contact-content">
+
+      <div>
+        <h2>Contact Us</h2>
+
+        <ul class="contact-list">
+          <li>Address: Your address here</li>
+          <li>Phone: +84 xxx xxx xxx</li>
+          <li>Email: contact@company.com</li>
+          <li>Website: www.company.com</li>
+        </ul>
+      </div>
+
+      <div class="footer-note">
+        COMPANY PROFILE 2026
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>
