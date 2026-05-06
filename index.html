@@ -10,8 +10,6 @@
 
 <!-- FAVICON -->
 <link rel="icon" href="./profile-cover-removebg-preview.png">
-<link rel="shortcut icon" href="./profile-cover-removebg-preview.png">
-<link rel="apple-touch-icon" href="./profile-cover-removebg-preview.png">
 
 <style>
 
@@ -49,20 +47,19 @@ img{
   object-position:center;
 }
 
-/* FULL PAGE IMAGE */
-/* sửa object-fit từ contain -> cover để không bị mất bố cục */
+/* FIX HIỂN THỊ ĐẦY ĐỦ ẢNH */
 
 .full-bg{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   background:#fff;
 }
 
 .cover-image{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   background:#fff;
 }
 
