@@ -3,370 +3,416 @@
 
 <head>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>THÉP TAM GIANG PROFILE</title>
+<title>THÉP TAM GIANG PROFILE</title>
 
-  <link rel="icon" type="image/jpg" href="assets/profile-cover.jpg">
+<link rel="icon" type="image/jpg" href="./assets/profile-cover.jpg">
 
-  <style>
+<style>
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    body{
-      background:#dcdcdc;
-      font-family:Arial,sans-serif;
-    }
+html,
+body{
+  width:100%;
+  overflow-x:hidden;
+  background:#e5e5e5;
+  font-family:Arial,sans-serif;
+}
 
-    .page{
-      width:210mm;
-      height:297mm;
-      margin:20px auto;
-      background:#fff;
-      overflow:hidden;
-      position:relative;
-      page-break-after:always;
-    }
+/* PAGE */
 
-    img{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit:cover;
-      object-position:center;
-    }
+.page{
+  width:100%;
+  max-width:900px;
+  aspect-ratio:210 / 297;
+  background:#fff;
+  margin:20px auto;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
 
-    .full-bg{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
+/* IMAGE */
 
-    /* GRID */
+img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+}
 
-    .collage-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      grid-template-rows:1fr 1fr;
-      gap:10px;
-      padding:10px;
-      width:100%;
-      height:100%;
-    }
+.full-bg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-    .gallery-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      padding:10px;
-      width:100%;
-      height:100%;
-    }
+/* GRID */
 
-    .gallery-3{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:10px;
-      padding:10px;
-      width:100%;
-      height:100%;
-    }
+.collage-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:10px;
+  padding:10px;
+  width:100%;
+  height:100%;
+}
 
-    /* PROJECT */
+.gallery-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:10px;
+  width:100%;
+  height:100%;
+}
 
-    .project-layout{
-      display:grid;
-      grid-template-columns:2fr 1fr;
-      gap:10px;
-      padding:10px;
-      width:100%;
-      height:100%;
-    }
+.gallery-3{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  padding:10px;
+  width:100%;
+  height:100%;
+}
 
-    .main-project{
-      overflow:hidden;
-      height:100%;
-    }
+.collage-grid img,
+.gallery-2 img,
+.gallery-3 img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
 
-    .project-side-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      grid-template-rows:1fr 1fr;
-      gap:10px;
-      height:100%;
-    }
+/* PROJECT */
 
-    .sub-project{
-      overflow:hidden;
-    }
+.project-layout{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:10px;
+  padding:10px;
+  width:100%;
+  height:100%;
+}
 
-    /* LOGO */
+.main-project{
+  overflow:hidden;
+  height:100%;
+}
 
-    .logo-grid-page{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:20px;
-      padding:50px;
-      align-content:center;
-      width:100%;
-      height:100%;
-    }
+.project-side-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:10px;
+  height:100%;
+}
 
-    .logo-grid-page img{
-      object-fit:contain;
-      background:#fff;
-      border:1px solid #ddd;
-      padding:20px;
-      height:120px;
-    }
+.sub-project{
+  overflow:hidden;
+}
 
-    @media print{
+.project-layout img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
 
-      body{
-        background:#fff;
-      }
+/* PARTNER */
 
-      .page{
-        margin:0;
-      }
+.logo-grid-page{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+  padding:40px;
+  align-content:center;
+  width:100%;
+  height:100%;
+}
 
-    }
+.logo-grid-page img{
+  width:100%;
+  height:120px;
+  object-fit:contain;
+  background:#fff;
+  border:1px solid #ddd;
+  padding:15px;
+}
 
-  </style>
+/* MOBILE */
+
+@media(max-width:768px){
+
+  .page{
+    width:100%;
+    margin:0 auto 15px;
+    border-radius:0;
+  }
+
+  .logo-grid-page{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+/* PRINT */
+
+@media print{
+
+  body{
+    background:#fff;
+  }
+
+  .page{
+    margin:0;
+    max-width:none;
+    width:210mm;
+    height:297mm;
+    aspect-ratio:auto;
+    box-shadow:none;
+  }
+
+}
+
+</style>
 
 </head>
 
 <body>
 
-<main>
+<!-- 01 COVER -->
+<section class="page">
+  <img loading="lazy" class="full-bg" src="./assets/profile-cover.jpg">
+</section>
 
-  <!-- 01 COVER -->
-  <section class="page">
-    <img class="full-bg" src="assets/profile-cover.jpg">
-  </section>
+<!-- 02 COMPANY INTRO -->
+<section class="page">
+  <img loading="lazy" class="full-bg" src="./assets/company-intro-01.jpg">
+</section>
 
-  <!-- 02 COMPANY INTRO -->
-  <section class="page">
-    <img class="full-bg" src="assets/company-intro-01.jpg">
-  </section>
+<!-- 03 COMPANY INTRO -->
+<section class="page">
+  <img loading="lazy" class="full-bg" src="./assets/company-intro-02.jpg">
+</section>
 
-  <!-- 03 COMPANY INTRO -->
-  <section class="page">
-    <img class="full-bg" src="assets/company-intro-02.jpg">
-  </section>
+<!-- 04 CERTIFICATE -->
+<section class="page gallery-2">
+  <img loading="lazy" src="./assets/certificate-01.jpg">
+  <img loading="lazy" src="./assets/certificate-02.jpg">
+</section>
 
-  <!-- 04 CERTIFICATE -->
-  <section class="page gallery-2">
-    <img src="assets/certificate-01.jpg">
-    <img src="assets/certificate-02.jpg">
-  </section>
+<!-- 05 CERTIFICATE -->
+<section class="page gallery-3">
+  <img loading="lazy" src="./assets/certificate-03.jpg">
+  <img loading="lazy" src="./assets/certificate-04.jpg">
+  <img loading="lazy" src="./assets/certificate-05.jpg">
+</section>
 
-  <!-- 05 CERTIFICATE -->
-  <section class="page gallery-3">
-    <img src="assets/certificate-03.jpg">
-    <img src="assets/certificate-04.jpg">
-    <img src="assets/certificate-05.jpg">
-  </section>
+<!-- 06 PRODUCT -->
+<section class="page collage-grid">
+  <img loading="lazy" src="./assets/product-thep.jpg">
+  <img loading="lazy" src="./assets/product-ximang.jpg">
+  <img loading="lazy" src="./assets/product-thephinh.jpg">
+  <img loading="lazy" src="./assets/product-vlxd.jpg">
+</section>
 
-  <!-- 06 PRODUCT CATEGORY -->
-  <section class="page collage-grid">
-    <img src="assets/product-thep.jpg">
-    <img src="assets/product-ximang.jpg">
-    <img src="assets/product-thephinh.jpg">
-    <img src="assets/product-vlxd.jpg">
-  </section>
+<!-- 07 THEP -->
+<section class="page">
 
-  <!-- 07 THEP -->
-  <section class="page">
+  <div class="project-layout">
 
-    <div class="project-layout">
-
-      <div class="main-project">
-        <img src="assets/thep-main.jpg">
-      </div>
-
-      <div class="project-side-grid">
-        <div class="sub-project"><img src="assets/thep-01.jpg"></div>
-        <div class="sub-project"><img src="assets/thep-02.jpg"></div>
-        <div class="sub-project"><img src="assets/thep-03.jpg"></div>
-        <div class="sub-project"><img src="assets/thep-04.jpg"></div>
-      </div>
-
+    <div class="main-project">
+      <img loading="lazy" src="./assets/thep-main.jpg">
     </div>
 
-  </section>
-
-  <!-- 08 XI MANG -->
-  <section class="page">
-
-    <div class="project-layout">
-
-      <div class="main-project">
-        <img src="assets/ximang-main.jpg">
-      </div>
-
-      <div class="project-side-grid">
-        <div class="sub-project"><img src="assets/ximang-01.jpg"></div>
-        <div class="sub-project"><img src="assets/ximang-02.jpg"></div>
-        <div class="sub-project"><img src="assets/ximang-03.jpg"></div>
-        <div class="sub-project"><img src="assets/ximang-04.jpg"></div>
-      </div>
-
+    <div class="project-side-grid">
+      <div class="sub-project"><img loading="lazy" src="./assets/thep-01.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/thep-02.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/thep-03.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/thep-04.jpg"></div>
     </div>
 
-  </section>
+  </div>
 
-  <!-- 09 THEP HINH -->
-  <section class="page">
+</section>
 
-    <div class="project-layout">
+<!-- 08 XI MANG -->
+<section class="page">
 
-      <div class="main-project">
-        <img src="assets/thephinh-main.jpg">
-      </div>
+  <div class="project-layout">
 
-      <div class="project-side-grid">
-        <div class="sub-project"><img src="assets/thephinh-01.jpg"></div>
-        <div class="sub-project"><img src="assets/thephinh-02.jpg"></div>
-        <div class="sub-project"><img src="assets/thephinh-03.jpg"></div>
-        <div class="sub-project"><img src="assets/thephinh-04.jpg"></div>
-      </div>
-
+    <div class="main-project">
+      <img loading="lazy" src="./assets/ximang-main.jpg">
     </div>
 
-  </section>
-
-  <!-- 10 VLXD -->
-  <section class="page">
-
-    <div class="project-layout">
-
-      <div class="main-project">
-        <img src="assets/vlxd-main.jpg">
-      </div>
-
-      <div class="project-side-grid">
-        <div class="sub-project"><img src="assets/vlxd-01.jpg"></div>
-        <div class="sub-project"><img src="assets/vlxd-02.jpg"></div>
-        <div class="sub-project"><img src="assets/vlxd-03.jpg"></div>
-        <div class="sub-project"><img src="assets/vlxd-04.jpg"></div>
-      </div>
-
+    <div class="project-side-grid">
+      <div class="sub-project"><img loading="lazy" src="./assets/ximang-01.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/ximang-02.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/ximang-03.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/ximang-04.jpg"></div>
     </div>
 
-  </section>
+  </div>
 
-  <!-- 11 PROJECT -->
-  <section class="page">
+</section>
 
-    <div class="project-layout">
+<!-- 09 THEP HINH -->
+<section class="page">
 
-      <div class="main-project">
-        <img src="assets/project-main-01.jpg">
-      </div>
+  <div class="project-layout">
 
-      <div class="project-side-grid">
-        <div class="sub-project"><img src="assets/project-sub-01.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-02.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-03.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-04.jpg"></div>
-      </div>
-
+    <div class="main-project">
+      <img loading="lazy" src="./assets/thephinh-main.jpg">
     </div>
 
-  </section>
-
-  <!-- 12 PROJECT -->
-  <section class="page">
-
-    <div class="project-layout">
-
-      <div class="main-project">
-        <img src="assets/project-main-02.jpg">
-      </div>
-
-      <div class="project-side-grid">
-        <div class="sub-project"><img src="assets/project-sub-05.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-06.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-07.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-08.jpg"></div>
-      </div>
-
+    <div class="project-side-grid">
+      <div class="sub-project"><img loading="lazy" src="./assets/thephinh-01.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/thephinh-02.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/thephinh-03.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/thephinh-04.jpg"></div>
     </div>
 
-  </section>
+  </div>
 
-  <!-- 13 PROJECT -->
-  <section class="page">
+</section>
 
-    <div class="project-layout">
+<!-- 10 VLXD -->
+<section class="page">
 
-      <div class="main-project">
-        <img src="assets/project-main-03.jpg">
-      </div>
+  <div class="project-layout">
 
-      <div class="project-side-grid">
-        <div class="sub-project"><img src="assets/project-sub-09.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-10.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-11.jpg"></div>
-        <div class="sub-project"><img src="assets/project-sub-12.jpg"></div>
-      </div>
-
+    <div class="main-project">
+      <img loading="lazy" src="./assets/vlxd-main.jpg">
     </div>
 
-  </section>
+    <div class="project-side-grid">
+      <div class="sub-project"><img loading="lazy" src="./assets/vlxd-01.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/vlxd-02.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/vlxd-03.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/vlxd-04.jpg"></div>
+    </div>
 
-  <!-- 14 WAREHOUSE -->
-  <section class="page">
-    <img class="full-bg" src="assets/warehouse.jpg">
-  </section>
+  </div>
 
-  <!-- 15 FACTORY -->
-  <section class="page">
-    <img class="full-bg" src="assets/factory.jpg">
-  </section>
+</section>
 
-  <!-- 16 CONSTRUCTION -->
-  <section class="page collage-grid">
-    <img src="assets/construction-01.jpg">
-    <img src="assets/construction-02.jpg">
-    <img src="assets/construction-03.jpg">
-    <img src="assets/construction-04.jpg">
-  </section>
+<!-- 11 PROJECT -->
+<section class="page">
 
-  <!-- 17 PARTNERS -->
-  <section class="page logo-grid-page">
-    <img src="assets/partner-01.png">
-    <img src="assets/partner-02.png">
-    <img src="assets/partner-03.png">
-    <img src="assets/partner-04.png">
-    <img src="assets/partner-05.png">
-    <img src="assets/partner-06.png">
-    <img src="assets/partner-07.png">
-    <img src="assets/partner-08.png">
-  </section>
+  <div class="project-layout">
 
-  <!-- 18 TEAM -->
-  <section class="page">
-    <img class="full-bg" src="assets/team.jpg">
-  </section>
+    <div class="main-project">
+      <img loading="lazy" src="./assets/project-main-01.jpg">
+    </div>
 
-  <!-- 19 CONTACT -->
-  <section class="page">
-    <img class="full-bg" src="assets/contact.jpg">
-  </section>
+    <div class="project-side-grid">
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-01.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-02.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-03.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-04.jpg"></div>
+    </div>
 
-  <!-- 20 BACK COVER -->
-  <section class="page">
-    <img class="full-bg" src="assets/back-cover.jpg">
-  </section>
+  </div>
 
-</main>
+</section>
+
+<!-- 12 PROJECT -->
+<section class="page">
+
+  <div class="project-layout">
+
+    <div class="main-project">
+      <img loading="lazy" src="./assets/project-main-02.jpg">
+    </div>
+
+    <div class="project-side-grid">
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-05.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-06.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-07.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-08.jpg"></div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- 13 PROJECT -->
+<section class="page">
+
+  <div class="project-layout">
+
+    <div class="main-project">
+      <img loading="lazy" src="./assets/project-main-03.jpg">
+    </div>
+
+    <div class="project-side-grid">
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-09.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-10.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-11.jpg"></div>
+      <div class="sub-project"><img loading="lazy" src="./assets/project-sub-12.jpg"></div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- 14 WAREHOUSE -->
+<section class="page">
+  <img loading="lazy" class="full-bg" src="./assets/warehouse.jpg">
+</section>
+
+<!-- 15 FACTORY -->
+<section class="page">
+  <img loading="lazy" class="full-bg" src="./assets/factory.jpg">
+</section>
+
+<!-- 16 CONSTRUCTION -->
+<section class="page collage-grid">
+  <img loading="lazy" src="./assets/construction-01.jpg">
+  <img loading="lazy" src="./assets/construction-02.jpg">
+  <img loading="lazy" src="./assets/construction-03.jpg">
+  <img loading="lazy" src="./assets/construction-04.jpg">
+</section>
+
+<!-- 17 PARTNERS -->
+<section class="page logo-grid-page">
+  <img loading="lazy" src="./assets/partner-01.png">
+  <img loading="lazy" src="./assets/partner-02.png">
+  <img loading="lazy" src="./assets/partner-03.png">
+  <img loading="lazy" src="./assets/partner-04.png">
+  <img loading="lazy" src="./assets/partner-05.png">
+  <img loading="lazy" src="./assets/partner-06.png">
+  <img loading="lazy" src="./assets/partner-07.png">
+  <img loading="lazy" src="./assets/partner-08.png">
+</section>
+
+<!-- 18 TEAM -->
+<section class="page">
+  <img loading="lazy" class="full-bg" src="./assets/team.jpg">
+</section>
+
+<!-- 19 CONTACT -->
+<section class="page">
+  <img loading="lazy" class="full-bg" src="./assets/contact.jpg">
+</section>
+
+<!-- 20 BACK COVER -->
+<section class="page">
+  <img loading="lazy" class="full-bg" src="./assets/back-cover.jpg">
+</section>
 
 </body>
 
