@@ -431,302 +431,194 @@
       }
     }
 
-  </style>
+  
+
+    .full-bg{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+    }
+
+    .collage-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:1fr 1fr;
+      gap:10px;
+      padding:10px;
+    }
+
+    .collage-grid img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+    }
+
+    .gallery-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      padding:10px;
+    }
+
+    .gallery-2 img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+    }
+
+    .gallery-3{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+      padding:10px;
+    }
+
+    .gallery-3 img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+    }
+
+    .logo-grid-page{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+      padding:50px;
+      align-content:center;
+    }
+
+    .logo-grid-page img{
+      width:100%;
+      height:120px;
+      object-fit:contain;
+      border:1px solid #ddd;
+      padding:20px;
+      background:white;
+    }
+
+    .project-layout{
+      display:grid;
+      grid-template-columns:2fr 1fr;
+      grid-template-rows:1fr 1fr;
+      gap:10px;
+      width:100%;
+      height:100%;
+      padding:10px;
+    }
+
+    .project-layout .main-project{
+      grid-row:1 / span 2;
+      overflow:hidden;
+    }
+
+    .project-layout .main-project img,
+    .project-layout .sub-project img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      display:block;
+    }
+
+    .project-side-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:1fr 1fr;
+      gap:10px;
+      height:100%;
+    }
+
+    .sub-project{
+      overflow:hidden;
+    }
+
+</style>
 </head>
 <body>
 
 <main>
 
-  <!-- PAGE 1 -->
-  <section class="page cover">
+  <!-- 01 COVER -->
+  <section class="page"><img class="full-bg" src="assets/cover.jpg"></section>
 
-    <img class="bg" src="assets/cover.jpg" alt="">
+  <!-- 02 LOGO -->
+  <section class="page"><img class="full-bg" src="assets/logo-page.jpg"></section>
 
-    <div class="overlay"></div>
+  <!-- 03 COMPANY -->
+  <section class="page"><img class="full-bg" src="assets/company-01.jpg"></section>
 
-    <div class="cover-content">
+  <!-- 04 DIRECTOR -->
+  <section class="page"><img class="full-bg" src="assets/director.jpg"></section>
 
-      <img class="logo" src="assets/logo.png" alt="logo">
-
-      <div class="hero">
-        <h1>COMPANY<br>PROFILE</h1>
-        <p>
-          Nội dung slogan công ty tại đây.
-          Bạn có thể sửa toàn bộ nội dung này.
-        </p>
-      </div>
-
-    </div>
-
+  <!-- 05 OVERVIEW -->
+  <section class="page collage-grid">
+    <img src="assets/overview-01.jpg">
+    <img src="assets/overview-02.jpg">
+    <img src="assets/overview-03.jpg">
+    <img src="assets/overview-04.jpg">
   </section>
 
+  <!-- 06 FACTORY -->
+  <section class="page"><img class="full-bg" src="assets/factory-01.jpg"></section>
 
-  <!-- PAGE 2 -->
-  <section class="page about">
+  <!-- 07 FACTORY -->
+  <section class="page"><img class="full-bg" src="assets/factory-02.jpg"></section>
 
-    <div class="container">
-
-      <div class="about-grid">
-
-        <div class="about-left">
-
-          <div class="section-title">
-            <h2>About Us</h2>
-            <span></span>
-          </div>
-
-          <p>
-            Nội dung giới thiệu công ty.
-            Bạn có thể thay đổi toàn bộ đoạn text này.
-            Đây là phần mô tả doanh nghiệp, năng lực và định hướng.
-          </p>
-
-          <div class="stats">
-
-            <div class="stat-card">
-              <h3>15+</h3>
-              <p>Years Experience</p>
-            </div>
-
-            <div class="stat-card">
-              <h3>500+</h3>
-              <p>Employees</p>
-            </div>
-
-            <div class="stat-card">
-              <h3>25+</h3>
-              <p>Projects</p>
-            </div>
-
-            <div class="stat-card">
-              <h3>10+</h3>
-              <p>Branches</p>
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="about-image">
-          <img src="assets/about.jpg" alt="">
-        </div>
-
-      </div>
-
-    </div>
-
+  <!-- 08 MACHINE -->
+  <section class="page gallery-3">
+    <img src="assets/machine-01.jpg">
+    <img src="assets/machine-02.jpg">
+    <img src="assets/machine-03.jpg">
   </section>
 
+  <!-- 09 STEEL -->
+  <section class="page"><img class="full-bg" src="assets/steel-01.jpg"></section>
 
-  <!-- PAGE 3 -->
-  <section class="page vision">
+  <!-- 10 STEEL -->
+  <section class="page"><img class="full-bg" src="assets/steel-02.jpg"></section>
 
-    <div class="section-title">
-      <h2>Vision & Mission</h2>
-      <span></span>
-    </div>
-
-    <div class="vision-grid">
-
-      <div class="vision-card">
-        <div class="vision-number">01</div>
-        <h3>Vision</h3>
-        <p>
-          Nội dung vision tại đây.
-        </p>
-      </div>
-
-      <div class="vision-card">
-        <div class="vision-number">02</div>
-        <h3>Mission</h3>
-        <p>
-          Nội dung mission tại đây.
-        </p>
-      </div>
-
-      <div class="vision-card">
-        <div class="vision-number">03</div>
-        <h3>Core Values</h3>
-        <p>
-          Nội dung core values tại đây.
-        </p>
-      </div>
-
-    </div>
-
+  <!-- 11 CERTIFICATE -->
+  <section class="page gallery-2">
+    <img src="assets/cert-01.jpg">
+    <img src="assets/cert-02.jpg">
   </section>
 
-
-  <!-- PAGE 4 -->
-  <section class="page capability">
-
-    <img class="bg" src="assets/factory.jpg" alt="">
-
-    <div class="capability-overlay"></div>
-
-    <div class="capability-content">
-
-      <h2>Manufacturing Capability</h2>
-
-      <p>
-        Nội dung giới thiệu năng lực sản xuất.
-      </p>
-
-      <div class="feature-grid">
-
-        <div class="feature-card">
-          <h4>Factory</h4>
-          <p>
-            Nội dung nhà máy.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h4>Technology</h4>
-          <p>
-            Nội dung công nghệ.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h4>Quality Control</h4>
-          <p>
-            Nội dung kiểm soát chất lượng.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h4>Human Resources</h4>
-          <p>
-            Nội dung nhân sự.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-
+  <!-- 12 CERTIFICATE -->
+  <section class="page gallery-2">
+    <img src="assets/cert-03.jpg">
+    <img src="assets/cert-04.jpg">
   </section>
 
-
-  <!-- PAGE 5 -->
-  <section class="page products">
-
-    <div class="section-title">
-      <h2>Products</h2>
-      <span></span>
-    </div>
-
-    <div class="product-grid">
-
-      <div class="product-card">
-
-        <div class="product-image">
-          <img src="assets/product-1.jpg" alt="">
-        </div>
-
-        <div class="product-content">
-          <h3>Product Name</h3>
-          <p>
-            Nội dung mô tả sản phẩm.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="product-card">
-
-        <div class="product-image">
-          <img src="assets/product-2.jpg" alt="">
-        </div>
-
-        <div class="product-content">
-          <h3>Product Name</h3>
-          <p>
-            Nội dung mô tả sản phẩm.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="product-card">
-
-        <div class="product-image">
-          <img src="assets/product-3.jpg" alt="">
-        </div>
-
-        <div class="product-content">
-          <h3>Product Name</h3>
-          <p>
-            Nội dung mô tả sản phẩm.
-          </p>
-        </div>
-
-      </div>
-
-      <div class="product-card">
-
-        <div class="product-image">
-          <img src="assets/product-4.jpg" alt="">
-        </div>
-
-        <div class="product-content">
-          <h3>Product Name</h3>
-          <p>
-            Nội dung mô tả sản phẩm.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- PAGE 6 -->
-  <section class="page projects">
-
-    <div class="section-title">
-      <h2>Projects</h2>
-      <span></span>
-    </div>
+  <!-- 13 PROJECT -->
+  <section class="page">
 
     <div class="project-layout">
 
-      <div class="project-large">
-
-        <img src="assets/project-1.jpg" alt="">
-
-        <div class="project-caption">
-          <h3>Project Name</h3>
-          <p>
-            Nội dung dự án.
-          </p>
-        </div>
-
+      <div class="main-project">
+        <img src="assets/project-main-01.jpg">
       </div>
 
-      <div class="project-side">
+      <div class="project-side-grid">
 
-        <div class="project-small">
-
-          <img src="assets/project-2.jpg" alt="">
-
-          <div class="project-caption">
-            <h3>Project Name</h3>
-          </div>
-
+        <div class="sub-project">
+          <img src="assets/project-sub-01.jpg">
         </div>
 
-        <div class="project-small">
+        <div class="sub-project">
+          <img src="assets/project-sub-02.jpg">
+        </div>
 
-          <img src="assets/project-3.jpg" alt="">
+        <div class="sub-project">
+          <img src="assets/project-sub-03.jpg">
+        </div>
 
-          <div class="project-caption">
-            <h3>Project Name</h3>
-          </div>
-
+        <div class="sub-project">
+          <img src="assets/project-sub-04.jpg">
         </div>
 
       </div>
@@ -735,81 +627,100 @@
 
   </section>
 
+  <!-- 14 PROJECT -->
+  <section class="page">
 
-  <!-- PAGE 7 -->
-  <section class="page partners">
+    <div class="project-layout">
 
-    <div class="section-title">
-      <h2>Partners</h2>
-      <span></span>
-    </div>
-
-    <div class="logo-grid">
-
-      <div class="logo-box">
-        <img src="assets/partner-1.png" alt="">
+      <div class="main-project">
+        <img src="assets/project-main-02.jpg">
       </div>
 
-      <div class="logo-box">
-        <img src="assets/partner-2.png" alt="">
-      </div>
+      <div class="project-side-grid">
 
-      <div class="logo-box">
-        <img src="assets/partner-3.png" alt="">
-      </div>
+        <div class="sub-project">
+          <img src="assets/project-sub-05.jpg">
+        </div>
 
-      <div class="logo-box">
-        <img src="assets/partner-4.png" alt="">
-      </div>
+        <div class="sub-project">
+          <img src="assets/project-sub-06.jpg">
+        </div>
 
-      <div class="logo-box">
-        <img src="assets/partner-5.png" alt="">
-      </div>
+        <div class="sub-project">
+          <img src="assets/project-sub-07.jpg">
+        </div>
 
-      <div class="logo-box">
-        <img src="assets/partner-6.png" alt="">
-      </div>
+        <div class="sub-project">
+          <img src="assets/project-sub-08.jpg">
+        </div>
 
-      <div class="logo-box">
-        <img src="assets/partner-7.png" alt="">
-      </div>
-
-      <div class="logo-box">
-        <img src="assets/partner-8.png" alt="">
       </div>
 
     </div>
 
   </section>
 
+  <!-- 15 PROJECT -->
+  <section class="page">
 
-  <!-- PAGE 8 -->
-  <section class="page contact">
+    <div class="project-layout">
 
-    <img class="bg" src="assets/contact-bg.jpg" alt="">
-
-    <div class="contact-overlay"></div>
-
-    <div class="contact-content">
-
-      <div>
-        <h2>Contact Us</h2>
-
-        <ul class="contact-list">
-          <li>Address: Your address here</li>
-          <li>Phone: +84 xxx xxx xxx</li>
-          <li>Email: contact@company.com</li>
-          <li>Website: www.company.com</li>
-        </ul>
+      <div class="main-project">
+        <img src="assets/project-main-03.jpg">
       </div>
 
-      <div class="footer-note">
-        COMPANY PROFILE 2026
+      <div class="project-side-grid">
+
+        <div class="sub-project">
+          <img src="assets/project-sub-09.jpg">
+        </div>
+
+        <div class="sub-project">
+          <img src="assets/project-sub-10.jpg">
+        </div>
+
+        <div class="sub-project">
+          <img src="assets/project-sub-11.jpg">
+        </div>
+
+        <div class="sub-project">
+          <img src="assets/project-sub-12.jpg">
+        </div>
+
       </div>
 
     </div>
 
   </section>
+
+  <!-- 16 CONSTRUCTION -->
+  <section class="page collage-grid">
+    <img src="assets/construction-01.jpg">
+    <img src="assets/construction-02.jpg">
+    <img src="assets/construction-03.jpg">
+    <img src="assets/construction-04.jpg">
+  </section>
+
+  <!-- 17 PARTNERS -->
+  <section class="page logo-grid-page">
+    <img src="assets/partner-01.png">
+    <img src="assets/partner-02.png">
+    <img src="assets/partner-03.png">
+    <img src="assets/partner-04.png">
+    <img src="assets/partner-05.png">
+    <img src="assets/partner-06.png">
+    <img src="assets/partner-07.png">
+    <img src="assets/partner-08.png">
+  </section>
+
+  <!-- 18 TEAM -->
+  <section class="page"><img class="full-bg" src="assets/team.jpg"></section>
+
+  <!-- 19 CONTACT -->
+  <section class="page"><img class="full-bg" src="assets/contact.jpg"></section>
+
+  <!-- 20 BACK COVER -->
+  <section class="page"><img class="full-bg" src="assets/back-cover.jpg"></section>
 
 </main>
 
