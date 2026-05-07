@@ -117,13 +117,13 @@ body{
   font-weight:600;
 }
 
+/* ===== ZOOM ===== */
+
 .toolbar-center{
   position:absolute;
   left:50%;
   transform:translateX(-50%);
 }
-
-/* ===== PDF STYLE ZOOM ===== */
 
 #zoom-controls{
   display:flex;
@@ -179,11 +179,6 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:.2s;
-}
-
-.tool-btn:hover{
-  background:#3c4043;
 }
 
 .tool-btn svg{
@@ -234,21 +229,25 @@ body{
 .split-page{
   display:flex;
   flex-direction:column;
-  gap:10px;
-  padding:10px;
-  background:#f5f5f5;
+  gap:0;
+  padding:0;
+  overflow:hidden;
+  background:#fff;
 }
 
 .split-half{
-  flex:1;
+  width:100%;
+  height:50%;
   overflow:hidden;
-  background:#fff;
+  position:relative;
 }
 
 .split-image{
   width:100%;
   height:100%;
   object-fit:contain;
+  object-position:center;
+  display:block;
   background:#fff;
 }
 
@@ -303,7 +302,9 @@ img{
 
 <div class="viewer">
 
-<!-- SIDEBAR -->
+<!-- =========================
+     SIDEBAR
+========================= -->
 
 <div class="sidebar">
 
@@ -362,48 +363,46 @@ img{
     <span>11</span>
   </div>
 
-  <!-- project 04 -->
-  <div class="thumb" onclick="scrollToElement('project04-top')">
+  <div class="thumb" onclick="scrollToPage(12)">
     <img src="./project-04.jpg">
     <span>12</span>
   </div>
 
-  <!-- project 05 -->
-  <div class="thumb" onclick="scrollToElement('project05-bottom')">
+  <div class="thumb" onclick="scrollToPage(13)">
     <img src="./project-05.jpg">
     <span>13</span>
   </div>
 
-  <!-- project 06 -->
-  <div class="thumb" onclick="scrollToElement('project06-top')">
+  <div class="thumb" onclick="scrollToPage(14)">
     <img src="./project-06.jpg">
     <span>14</span>
   </div>
 
-  <!-- project 07 -->
-  <div class="thumb" onclick="scrollToElement('project07-bottom')">
+  <div class="thumb" onclick="scrollToPage(15)">
     <img src="./project-07.jpg">
     <span>15</span>
   </div>
 
-  <div class="thumb" onclick="scrollToPage(14)">
+  <div class="thumb" onclick="scrollToPage(16)">
     <img src="./project-08.jpg">
     <span>16</span>
   </div>
 
-  <div class="thumb" onclick="scrollToPage(15)">
+  <div class="thumb" onclick="scrollToPage(17)">
     <img src="./project-09.jpg">
     <span>17</span>
   </div>
 
-  <div class="thumb" onclick="scrollToPage(16)">
+  <div class="thumb" onclick="scrollToPage(18)">
     <img src="./project-10.jpg">
     <span>18</span>
   </div>
 
 </div>
 
-<!-- MAIN -->
+<!-- =========================
+     MAIN
+========================= -->
 
 <div class="main">
 
@@ -420,9 +419,11 @@ img{
       <span id="zoom-controls">
 
         <button onclick="zoomOut()">
+
           <svg viewBox="0 -960 960 960">
             <path d="M232-444v-72h496v72H232Z"></path>
           </svg>
+
         </button>
 
         <input
@@ -432,9 +433,11 @@ img{
         readonly>
 
         <button onclick="zoomIn()">
+
           <svg viewBox="0 -960 960 960">
             <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"></path>
           </svg>
+
         </button>
 
       </span>
@@ -451,99 +454,117 @@ img{
 
   </div>
 
-  <!-- CONTENT -->
+<!-- =========================
+     CONTENT
+========================= -->
 
-  <div class="content">
+<div class="content" id="content">
 
-    <section class="page">
-      <img class="cover-image" src="./profile-cover.jpg">
-    </section>
+  <!-- 01 -->
+  <section class="page">
+    <img class="cover-image" src="./profile-cover.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./company-intro-01.jpg">
-    </section>
+  <!-- 02 -->
+  <section class="page">
+    <img class="full-bg" src="./company-intro-01.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./company-intro-02.jpg">
-    </section>
+  <!-- 03 -->
+  <section class="page">
+    <img class="full-bg" src="./company-intro-02.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./main-products.jpg">
-    </section>
+  <!-- 04 -->
+  <section class="page">
+    <img class="full-bg" src="./main-products.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./thep-products.jpg">
-    </section>
+  <!-- 05 -->
+  <section class="page">
+    <img class="full-bg" src="./thep-products.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./ximang-products.jpg">
-    </section>
+  <!-- 06 -->
+  <section class="page">
+    <img class="full-bg" src="./ximang-products.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./thephinh-products.jpg">
-    </section>
+  <!-- 07 -->
+  <section class="page">
+    <img class="full-bg" src="./thephinh-products.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./vlxd-products.jpg">
-    </section>
+  <!-- 08 -->
+  <section class="page">
+    <img class="full-bg" src="./vlxd-products.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./project-01.jpg">
-    </section>
+  <!-- 09 -->
+  <section class="page">
+    <img class="full-bg" src="./project-01.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./project-02.jpg">
-    </section>
+  <!-- 10 -->
+  <section class="page">
+    <img class="full-bg" src="./project-02.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./project-03.jpg">
-    </section>
+  <!-- 11 -->
+  <section class="page">
+    <img class="full-bg" src="./project-03.jpg">
+  </section>
 
-    <!-- SPLIT 1 -->
+  <!-- 12 + 13 -->
+  <section class="page split-page">
 
-    <section class="page split-page">
+    <div class="split-half" id="project04">
+      <img class="split-image" src="./project-04.jpg">
+    </div>
 
-      <div class="split-half" id="project04-top">
-        <img class="split-image" src="./project-04.jpg">
-      </div>
+    <div class="split-half" id="project05">
+      <img class="split-image" src="./project-05.jpg">
+    </div>
 
-      <div class="split-half" id="project05-bottom">
-        <img class="split-image" src="./project-05.jpg">
-      </div>
+  </section>
 
-    </section>
+  <!-- 14 + 15 -->
+  <section class="page split-page">
 
-    <!-- SPLIT 2 -->
+    <div class="split-half" id="project06">
+      <img class="split-image" src="./project-06.jpg">
+    </div>
 
-    <section class="page split-page">
+    <div class="split-half" id="project07">
+      <img class="split-image" src="./project-07.jpg">
+    </div>
 
-      <div class="split-half" id="project06-top">
-        <img class="split-image" src="./project-06.jpg">
-      </div>
+  </section>
 
-      <div class="split-half" id="project07-bottom">
-        <img class="split-image" src="./project-07.jpg">
-      </div>
+  <!-- 16 -->
+  <section class="page">
+    <img class="full-bg" src="./project-08.jpg">
+  </section>
 
-    </section>
+  <!-- 17 -->
+  <section class="page">
+    <img class="full-bg" src="./project-09.jpg">
+  </section>
 
-    <section class="page">
-      <img class="full-bg" src="./project-08.jpg">
-    </section>
-
-    <section class="page">
-      <img class="full-bg" src="./project-09.jpg">
-    </section>
-
-    <section class="page">
-      <img class="full-bg" src="./project-10.jpg">
-    </section>
-
-  </div>
+  <!-- 18 -->
+  <section class="page">
+    <img class="full-bg" src="./project-10.jpg">
+  </section>
 
 </div>
 
 </div>
+
+</div>
+
+<!-- =========================
+     SCRIPT
+========================= -->
 
 <script>
 
@@ -585,34 +606,121 @@ function zoomOut(){
 
 }
 
+/* =========================
+   SCROLL SIDEBAR
+========================= */
+
 function scrollToPage(index){
+
+  const content =
+  document.getElementById('content');
 
   const pages =
   document.querySelectorAll('.page');
 
-  if(pages[index - 1]){
+  /* ===== PROJECT 04 ===== */
 
-    pages[index - 1].scrollIntoView({
+  if(index === 12){
 
-      behavior:'smooth',
-      block:'start'
+    const page =
+    pages[11];
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop,
+
+      behavior:'smooth'
 
     });
 
+    return;
+
   }
 
-}
+  /* ===== PROJECT 05 ===== */
 
-function scrollToElement(id){
+  if(index === 13){
 
-  const el = document.getElementById(id);
+    const page =
+    pages[11];
 
-  if(el){
+    content.scrollTo({
 
-    el.scrollIntoView({
+      top:
+      page.offsetTop +
+      (page.offsetHeight / 2),
 
-      behavior:'smooth',
-      block:'center'
+      behavior:'smooth'
+
+    });
+
+    return;
+
+  }
+
+  /* ===== PROJECT 06 ===== */
+
+  if(index === 14){
+
+    const page =
+    pages[12];
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop,
+
+      behavior:'smooth'
+
+    });
+
+    return;
+
+  }
+
+  /* ===== PROJECT 07 ===== */
+
+  if(index === 15){
+
+    const page =
+    pages[12];
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop +
+      (page.offsetHeight / 2),
+
+      behavior:'smooth'
+
+    });
+
+    return;
+
+  }
+
+  /* ===== NORMAL PAGE ===== */
+
+  let realIndex = index;
+
+  if(index >= 16){
+
+    realIndex = index - 2;
+
+  }
+
+  const page =
+  pages[realIndex - 1];
+
+  if(page){
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop,
+
+      behavior:'smooth'
 
     });
 
@@ -623,5 +731,4 @@ function scrollToElement(id){
 </script>
 
 </body>
-
 </html>
