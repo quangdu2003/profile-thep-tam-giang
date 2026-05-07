@@ -117,15 +117,13 @@ body{
   font-weight:600;
 }
 
-/* ===== CENTER ===== */
-
 .toolbar-center{
   position:absolute;
   left:50%;
   transform:translateX(-50%);
 }
 
-/* ===== PDF ZOOM STYLE ===== */
+/* ===== PDF STYLE ZOOM ===== */
 
 #zoom-controls{
   display:flex;
@@ -305,115 +303,99 @@ img{
 
 <div class="viewer">
 
-  <!-- SIDEBAR -->
-
-<!-- SIDEBAR : ĐỦ 18 THUMB -->
+<!-- SIDEBAR -->
 
 <div class="sidebar">
 
-  <!-- 1 -->
   <div class="thumb" onclick="scrollToPage(1)">
     <img src="./profile-cover.jpg">
     <span>1</span>
   </div>
 
-  <!-- 2 -->
   <div class="thumb" onclick="scrollToPage(2)">
     <img src="./company-intro-01.jpg">
     <span>2</span>
   </div>
 
-  <!-- 3 -->
   <div class="thumb" onclick="scrollToPage(3)">
     <img src="./company-intro-02.jpg">
     <span>3</span>
   </div>
 
-  <!-- 4 -->
   <div class="thumb" onclick="scrollToPage(4)">
     <img src="./main-products.jpg">
     <span>4</span>
   </div>
 
-  <!-- 5 -->
   <div class="thumb" onclick="scrollToPage(5)">
     <img src="./thep-products.jpg">
     <span>5</span>
   </div>
 
-  <!-- 6 -->
   <div class="thumb" onclick="scrollToPage(6)">
     <img src="./ximang-products.jpg">
     <span>6</span>
   </div>
 
-  <!-- 7 -->
   <div class="thumb" onclick="scrollToPage(7)">
     <img src="./thephinh-products.jpg">
     <span>7</span>
   </div>
 
-  <!-- 8 -->
   <div class="thumb" onclick="scrollToPage(8)">
     <img src="./vlxd-products.jpg">
     <span>8</span>
   </div>
 
-  <!-- 9 -->
   <div class="thumb" onclick="scrollToPage(9)">
     <img src="./project-01.jpg">
     <span>9</span>
   </div>
 
-  <!-- 10 -->
   <div class="thumb" onclick="scrollToPage(10)">
     <img src="./project-02.jpg">
     <span>10</span>
   </div>
 
-  <!-- 11 -->
   <div class="thumb" onclick="scrollToPage(11)">
     <img src="./project-03.jpg">
     <span>11</span>
   </div>
 
-  <!-- 12 -->
-  <div class="thumb" onclick="scrollToPage(12)">
+  <!-- project 04 -->
+  <div class="thumb" onclick="scrollToElement('project04-top')">
     <img src="./project-04.jpg">
     <span>12</span>
   </div>
 
-  <!-- 13 -->
-  <div class="thumb" onclick="scrollToPage(12)">
+  <!-- project 05 -->
+  <div class="thumb" onclick="scrollToElement('project05-bottom')">
     <img src="./project-05.jpg">
     <span>13</span>
   </div>
 
-  <!-- 14 -->
-  <div class="thumb" onclick="scrollToPage(13)">
+  <!-- project 06 -->
+  <div class="thumb" onclick="scrollToElement('project06-top')">
     <img src="./project-06.jpg">
     <span>14</span>
   </div>
 
-  <!-- 15 -->
-  <div class="thumb" onclick="scrollToPage(13)">
+  <!-- project 07 -->
+  <div class="thumb" onclick="scrollToElement('project07-bottom')">
     <img src="./project-07.jpg">
     <span>15</span>
   </div>
 
-  <!-- 16 -->
   <div class="thumb" onclick="scrollToPage(14)">
     <img src="./project-08.jpg">
     <span>16</span>
   </div>
 
-  <!-- 17 -->
   <div class="thumb" onclick="scrollToPage(15)">
     <img src="./project-09.jpg">
     <span>17</span>
   </div>
 
-  <!-- 18 -->
   <div class="thumb" onclick="scrollToPage(16)">
     <img src="./project-10.jpg">
     <span>18</span>
@@ -421,170 +403,145 @@ img{
 
 </div>
 
+<!-- MAIN -->
 
-  <!-- MAIN -->
+<div class="main">
 
-  <div class="main">
+  <!-- TOOLBAR -->
 
-    <!-- TOOLBAR -->
+  <div class="toolbar">
 
-    <div class="toolbar">
+    <div class="toolbar-title">
+      THÉP TAM GIANG PROFILE
+    </div>
 
-      <div class="toolbar-title">
-        THÉP TAM GIANG PROFILE
-      </div>
+    <div class="toolbar-center">
 
-      <div class="toolbar-center">
+      <span id="zoom-controls">
 
-        <span id="zoom-controls">
+        <button onclick="zoomOut()">
+          <svg viewBox="0 -960 960 960">
+            <path d="M232-444v-72h496v72H232Z"></path>
+          </svg>
+        </button>
 
-          <!-- ZOOM OUT -->
+        <input
+        type="text"
+        id="zoomInput"
+        value="100%"
+        readonly>
 
-          <button onclick="zoomOut()">
+        <button onclick="zoomIn()">
+          <svg viewBox="0 -960 960 960">
+            <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"></path>
+          </svg>
+        </button>
 
-            <svg viewBox="0 -960 960 960">
-              <path d="M232-444v-72h496v72H232Z"></path>
-            </svg>
-
-          </button>
-
-          <!-- INPUT -->
-
-          <input
-          type="text"
-          id="zoomInput"
-          value="100%"
-          readonly>
-
-          <!-- ZOOM IN -->
-
-          <button onclick="zoomIn()">
-
-            <svg viewBox="0 -960 960 960">
-              <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"></path>
-            </svg>
-
-          </button>
-
-        </span>
-
-      </div>
-
-      <!-- PRINT -->
-
-      <button class="tool-btn" onclick="window.print()">
-
-        <svg viewBox="0 -960 960 960">
-          <path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/>
-        </svg>
-
-      </button>
+      </span>
 
     </div>
 
-    <!-- CONTENT -->
+    <button class="tool-btn" onclick="window.print()">
 
-    <div class="content">
+      <svg viewBox="0 -960 960 960">
+        <path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/>
+      </svg>
 
-      <!-- 01 -->
-      <section class="page">
-        <img class="cover-image" src="./profile-cover.jpg">
-      </section>
-
-      <!-- 02 -->
-      <section class="page">
-        <img class="full-bg" src="./company-intro-01.jpg">
-      </section>
-
-      <!-- 03 -->
-      <section class="page">
-        <img class="full-bg" src="./company-intro-02.jpg">
-      </section>
-
-      <!-- 04 -->
-      <section class="page">
-        <img class="full-bg" src="./main-products.jpg">
-      </section>
-
-      <!-- 05 -->
-      <section class="page">
-        <img class="full-bg" src="./thep-products.jpg">
-      </section>
-
-      <!-- 06 -->
-      <section class="page">
-        <img class="full-bg" src="./ximang-products.jpg">
-      </section>
-
-      <!-- 07 -->
-      <section class="page">
-        <img class="full-bg" src="./thephinh-products.jpg">
-      </section>
-
-      <!-- 08 -->
-      <section class="page">
-        <img class="full-bg" src="./vlxd-products.jpg">
-      </section>
-
-      <!-- 09 -->
-      <section class="page">
-        <img class="full-bg" src="./project-01.jpg">
-      </section>
-
-      <!-- 10 -->
-      <section class="page">
-        <img class="full-bg" src="./project-02.jpg">
-      </section>
-
-      <!-- 11 -->
-      <section class="page">
-        <img class="full-bg" src="./project-03.jpg">
-      </section>
-
-      <!-- 12 -->
-      <section class="page split-page">
-
-        <div class="split-half">
-          <img class="split-image" src="./project-04.jpg">
-        </div>
-
-        <div class="split-half">
-          <img class="split-image" src="./project-05.jpg">
-        </div>
-
-      </section>
-
-      <!-- 13 -->
-      <section class="page split-page">
-
-        <div class="split-half">
-          <img class="split-image" src="./project-06.jpg">
-        </div>
-
-        <div class="split-half">
-          <img class="split-image" src="./project-07.jpg">
-        </div>
-
-      </section>
-
-      <!-- 14 -->
-      <section class="page">
-        <img class="full-bg" src="./project-08.jpg">
-      </section>
-
-      <!-- 15 -->
-      <section class="page">
-        <img class="full-bg" src="./project-09.jpg">
-      </section>
-
-      <!-- 16 -->
-      <section class="page">
-        <img class="full-bg" src="./project-10.jpg">
-      </section>
-
-    </div>
+    </button>
 
   </div>
+
+  <!-- CONTENT -->
+
+  <div class="content">
+
+    <section class="page">
+      <img class="cover-image" src="./profile-cover.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./company-intro-01.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./company-intro-02.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./main-products.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./thep-products.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./ximang-products.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./thephinh-products.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./vlxd-products.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./project-01.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./project-02.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./project-03.jpg">
+    </section>
+
+    <!-- SPLIT 1 -->
+
+    <section class="page split-page">
+
+      <div class="split-half" id="project04-top">
+        <img class="split-image" src="./project-04.jpg">
+      </div>
+
+      <div class="split-half" id="project05-bottom">
+        <img class="split-image" src="./project-05.jpg">
+      </div>
+
+    </section>
+
+    <!-- SPLIT 2 -->
+
+    <section class="page split-page">
+
+      <div class="split-half" id="project06-top">
+        <img class="split-image" src="./project-06.jpg">
+      </div>
+
+      <div class="split-half" id="project07-bottom">
+        <img class="split-image" src="./project-07.jpg">
+      </div>
+
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./project-08.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./project-09.jpg">
+    </section>
+
+    <section class="page">
+      <img class="full-bg" src="./project-10.jpg">
+    </section>
+
+  </div>
+
+</div>
 
 </div>
 
@@ -637,7 +594,25 @@ function scrollToPage(index){
 
     pages[index - 1].scrollIntoView({
 
-      behavior:'smooth'
+      behavior:'smooth',
+      block:'start'
+
+    });
+
+  }
+
+}
+
+function scrollToElement(id){
+
+  const el = document.getElementById(id);
+
+  if(el){
+
+    el.scrollIntoView({
+
+      behavior:'smooth',
+      block:'center'
 
     });
 
