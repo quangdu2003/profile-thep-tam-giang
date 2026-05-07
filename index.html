@@ -12,7 +12,9 @@
 
 <style>
 
-/* ===== RESET ===== */
+/* =========================
+   RESET
+========================= */
 
 *{
   margin:0;
@@ -29,7 +31,9 @@ body{
   background:#202124;
 }
 
-/* ===== VIEWER ===== */
+/* =========================
+   VIEWER
+========================= */
 
 .viewer{
   display:flex;
@@ -37,7 +41,9 @@ body{
   height:100vh;
 }
 
-/* ===== SIDEBAR ===== */
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
   width:260px;
@@ -59,7 +65,9 @@ body{
   background:#5f6368;
 }
 
-/* ===== THUMB ===== */
+/* =========================
+   THUMB
+========================= */
 
 .thumb{
   width:100%;
@@ -89,7 +97,9 @@ body{
   font-size:15px;
 }
 
-/* ===== MAIN ===== */
+/* =========================
+   MAIN
+========================= */
 
 .main{
   flex:1;
@@ -98,7 +108,9 @@ body{
   overflow:hidden;
 }
 
-/* ===== TOOLBAR ===== */
+/* =========================
+   TOOLBAR
+========================= */
 
 .toolbar{
   height:56px;
@@ -118,7 +130,9 @@ body{
   font-weight:600;
 }
 
-/* ===== ZOOM ===== */
+/* =========================
+   ZOOM
+========================= */
 
 .toolbar-center{
   position:absolute;
@@ -143,7 +157,6 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:.2s;
 }
 
 #zoom-controls button:hover{
@@ -168,7 +181,9 @@ body{
   border-radius:4px;
 }
 
-/* ===== PRINT ===== */
+/* =========================
+   PRINT
+========================= */
 
 .tool-btn{
   width:34px;
@@ -189,7 +204,9 @@ body{
   fill:#fff;
 }
 
-/* ===== CONTENT ===== */
+/* =========================
+   CONTENT
+========================= */
 
 .content{
   flex:1;
@@ -211,7 +228,9 @@ body{
   background:#5f6368;
 }
 
-/* ===== PAGE ===== */
+/* =========================
+   PAGE
+========================= */
 
 .page{
   width:100%;
@@ -227,7 +246,9 @@ body{
   0 0 0 1px rgba(255,255,255,.04);
 }
 
-/* ===== SPLIT PAGE ===== */
+/* =========================
+   SPLIT PAGE
+========================= */
 
 .split-page{
   display:flex;
@@ -242,7 +263,6 @@ body{
   width:100%;
   height:50%;
   overflow:hidden;
-  position:relative;
 }
 
 .split-image{
@@ -250,11 +270,12 @@ body{
   height:100%;
   object-fit:contain;
   object-position:center;
-  display:block;
   background:#fff;
 }
 
-/* ===== IMAGE ===== */
+/* =========================
+   IMAGE
+========================= */
 
 img{
   width:100%;
@@ -272,21 +293,25 @@ img{
 }
 
 /* ===================================
-   MOBILE OPTIMIZE
+   MOBILE FIX
 =================================== */
 
 @media(max-width:768px){
 
   html,
   body{
+    width:100%;
+    height:100%;
     overflow:hidden;
-    background:#111;
+    background:#1e1e1e;
   }
 
   .viewer{
     width:100%;
     height:100vh;
     overflow:hidden;
+    display:flex;
+    flex-direction:column;
   }
 
   /* ===== HIDE SIDEBAR ===== */
@@ -301,65 +326,80 @@ img{
     width:100%;
     height:100vh;
     overflow:hidden;
+    display:flex;
+    flex-direction:column;
   }
 
   /* ===== TOOLBAR ===== */
 
   .toolbar{
-    height:58px;
-    padding:0 12px;
+    width:100%;
+    height:56px;
+    min-height:56px;
+    padding:0 10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
     flex-shrink:0;
   }
 
+  /* ===== TITLE ===== */
+
   .toolbar-title{
-    font-size:13px;
-    font-weight:700;
-    max-width:130px;
-    overflow:hidden;
+    font-size:12px;
+    max-width:110px;
     white-space:nowrap;
+    overflow:hidden;
     text-overflow:ellipsis;
+    flex-shrink:0;
   }
 
+  /* ===== CENTER ZOOM ===== */
+
   .toolbar-center{
+    position:absolute;
     left:50%;
     transform:translateX(-50%);
   }
 
-  /* ===== ZOOM ===== */
-
   #zoom-controls{
-    gap:6px;
+    display:flex;
+    align-items:center;
+    gap:4px;
   }
 
   #zoom-controls button{
-    width:34px;
-    height:34px;
-    border-radius:6px;
-    background:#3a3a3a;
+    width:28px;
+    height:28px;
+    background:#3c4043;
+    border-radius:4px;
+    padding:0;
   }
 
   #zoom-controls svg{
-    width:18px;
-    height:18px;
+    width:16px;
+    height:16px;
   }
 
   #zoom-controls input{
-    width:72px;
-    height:34px;
-    font-size:15px;
-    border-radius:6px;
+    width:58px;
+    height:28px;
+    font-size:12px;
+    border-radius:4px;
   }
 
   /* ===== PRINT ===== */
 
   .tool-btn{
-    width:34px;
-    height:34px;
+    width:28px;
+    height:28px;
+    flex-shrink:0;
   }
 
   .tool-btn svg{
-    width:20px;
-    height:20px;
+    width:18px;
+    height:18px;
   }
 
   /* ===== CONTENT ===== */
@@ -367,7 +407,7 @@ img{
   .content{
     flex:1;
     overflow:auto;
-    padding:12px 0 60px;
+    padding:10px 0 40px;
     -webkit-overflow-scrolling:touch;
   }
 
@@ -376,9 +416,9 @@ img{
   .page{
     width:96%;
     max-width:none;
-    margin:0 auto 16px;
+    margin:0 auto 14px;
     aspect-ratio:9/16;
-    border-radius:6px;
+    border-radius:4px;
     overflow:hidden;
     background:#fff;
   }
@@ -391,11 +431,11 @@ img{
     width:100%;
     height:100%;
     object-fit:contain;
-    object-position:top center;
+    object-position:center top;
     background:#fff;
   }
 
-  /* ===== SPLIT PAGE ===== */
+  /* ===== SPLIT ===== */
 
   .split-page{
     gap:0;
@@ -423,99 +463,13 @@ img{
 
 <div class="sidebar">
 
-  <div class="thumb" onclick="scrollToPage(1)">
-    <img src="./profile-cover.jpg">
-    <span>1</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(2)">
-    <img src="./company-intro-01.jpg">
-    <span>2</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(3)">
-    <img src="./company-intro-02.jpg">
-    <span>3</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(4)">
-    <img src="./main-products.jpg">
-    <span>4</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(5)">
-    <img src="./thep-products.jpg">
-    <span>5</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(6)">
-    <img src="./ximang-products.jpg">
-    <span>6</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(7)">
-    <img src="./thephinh-products.jpg">
-    <span>7</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(8)">
-    <img src="./vlxd-products.jpg">
-    <span>8</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(9)">
-    <img src="./project-01.jpg">
-    <span>9</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(10)">
-    <img src="./project-02.jpg">
-    <span>10</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(11)">
-    <img src="./project-03.jpg">
-    <span>11</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(12)">
-    <img src="./project-04.jpg">
-    <span>12</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(13)">
-    <img src="./project-05.jpg">
-    <span>13</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(14)">
-    <img src="./project-06.jpg">
-    <span>14</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(15)">
-    <img src="./project-07.jpg">
-    <span>15</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(16)">
-    <img src="./project-08.jpg">
-    <span>16</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(17)">
-    <img src="./project-09.jpg">
-    <span>17</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(18)">
-    <img src="./project-10.jpg">
-    <span>18</span>
-  </div>
+  <!-- thêm thumb ở đây -->
 
 </div>
 
-<!-- MAIN -->
+<!-- =========================
+     MAIN
+========================= -->
 
 <div class="main">
 
@@ -561,9 +515,11 @@ readonly>
 
 </div>
 
+<!-- CONTENT -->
+
 <div class="content" id="content">
 
-<!-- giữ nguyên toàn bộ section page của bạn -->
+<!-- thêm section page ở đây -->
 
 </div>
 
