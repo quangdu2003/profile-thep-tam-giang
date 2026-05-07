@@ -115,6 +115,7 @@ body{
   color:#fff;
   font-size:18px;
   font-weight:600;
+  white-space:nowrap;
 }
 
 /* ===== ZOOM ===== */
@@ -276,12 +277,61 @@ img{
     display:none;
   }
 
+  /* ===== TOOLBAR MOBILE FIX ===== */
+
   .toolbar{
-    padding:0 10px;
+    height:auto;
+    min-height:56px;
+    padding:10px 12px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    grid-template-rows:auto auto;
+    gap:10px;
+    align-items:center;
   }
 
   .toolbar-title{
-    font-size:14px;
+    font-size:16px;
+    line-height:1.3;
+    white-space:normal;
+    word-break:break-word;
+    padding-right:10px;
+  }
+
+  .toolbar-center{
+    position:static;
+    transform:none;
+    grid-column:1 / 2;
+    grid-row:2;
+    justify-self:start;
+  }
+
+  #zoom-controls{
+    gap:8px;
+  }
+
+  #zoom-controls button{
+    width:32px;
+    height:32px;
+  }
+
+  #zoom-controls input{
+    width:60px;
+    height:30px;
+    font-size:13px;
+  }
+
+  .tool-btn{
+    grid-column:2;
+    grid-row:1;
+    justify-self:end;
+    width:32px;
+    height:32px;
+  }
+
+  .toolbar-title{
+    grid-column:1;
+    grid-row:1;
   }
 
   .content{
