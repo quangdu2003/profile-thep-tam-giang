@@ -125,7 +125,7 @@ body{
   transform:translateX(-50%);
 }
 
-/* ===== ZOOM ===== */
+/* ===== PDF ZOOM STYLE ===== */
 
 #zoom-controls{
   display:flex;
@@ -382,27 +382,39 @@ img{
     </div>
 
     <!-- 13 -->
-    <div class="thumb" onclick="scrollToPage(13)">
-      <img src="./project-06.jpg">
+    <div class="thumb" onclick="scrollToPage(12)">
+      <img src="./project-05.jpg">
       <span>13</span>
     </div>
 
     <!-- 14 -->
-    <div class="thumb" onclick="scrollToPage(14)">
-      <img src="./project-08.jpg">
+    <div class="thumb" onclick="scrollToPage(13)">
+      <img src="./project-06.jpg">
       <span>14</span>
     </div>
 
     <!-- 15 -->
-    <div class="thumb" onclick="scrollToPage(15)">
-      <img src="./project-09.jpg">
+    <div class="thumb" onclick="scrollToPage(13)">
+      <img src="./project-07.jpg">
       <span>15</span>
     </div>
 
     <!-- 16 -->
+    <div class="thumb" onclick="scrollToPage(14)">
+      <img src="./project-08.jpg">
+      <span>16</span>
+    </div>
+
+    <!-- 17 -->
+    <div class="thumb" onclick="scrollToPage(15)">
+      <img src="./project-09.jpg">
+      <span>17</span>
+    </div>
+
+    <!-- 18 -->
     <div class="thumb" onclick="scrollToPage(16)">
       <img src="./project-10.jpg">
-      <span>16</span>
+      <span>18</span>
     </div>
 
   </div>
@@ -423,11 +435,17 @@ img{
 
         <span id="zoom-controls">
 
+          <!-- ZOOM OUT -->
+
           <button onclick="zoomOut()">
+
             <svg viewBox="0 -960 960 960">
               <path d="M232-444v-72h496v72H232Z"></path>
             </svg>
+
           </button>
+
+          <!-- INPUT -->
 
           <input
           type="text"
@@ -435,15 +453,21 @@ img{
           value="100%"
           readonly>
 
+          <!-- ZOOM IN -->
+
           <button onclick="zoomIn()">
+
             <svg viewBox="0 -960 960 960">
               <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"></path>
             </svg>
+
           </button>
 
         </span>
 
       </div>
+
+      <!-- PRINT -->
 
       <button class="tool-btn" onclick="window.print()">
 
