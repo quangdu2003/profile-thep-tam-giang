@@ -332,8 +332,6 @@ img{
     font-size:13px;
   }
 
-  /* ===== PRINT ===== */
-
   .tool-btn{
     grid-column:2;
     grid-row:1;
@@ -523,15 +521,102 @@ img{
     <img class="cover-image" src="./profile-cover.jpg">
   </section>
 
-</div>
+  <!-- 02 -->
+  <section class="page">
+    <img class="full-bg" src="./company-intro-01.jpg">
+  </section>
+
+  <!-- 03 -->
+  <section class="page">
+    <img class="full-bg" src="./company-intro-02.jpg">
+  </section>
+
+  <!-- 04 -->
+  <section class="page">
+    <img class="full-bg" src="./main-products.jpg">
+  </section>
+
+  <!-- 05 -->
+  <section class="page">
+    <img class="full-bg" src="./thep-products.jpg">
+  </section>
+
+  <!-- 06 -->
+  <section class="page">
+    <img class="full-bg" src="./ximang-products.jpg">
+  </section>
+
+  <!-- 07 -->
+  <section class="page">
+    <img class="full-bg" src="./thephinh-products.jpg">
+  </section>
+
+  <!-- 08 -->
+  <section class="page">
+    <img class="full-bg" src="./vlxd-products.jpg">
+  </section>
+
+  <!-- 09 -->
+  <section class="page">
+    <img class="full-bg" src="./project-01.jpg">
+  </section>
+
+  <!-- 10 -->
+  <section class="page">
+    <img class="full-bg" src="./project-02.jpg">
+  </section>
+
+  <!-- 11 -->
+  <section class="page">
+    <img class="full-bg" src="./project-03.jpg">
+  </section>
+
+  <!-- 12 + 13 -->
+  <section class="page split-page">
+
+    <div class="split-half" id="project04">
+      <img class="split-image" src="./project-04.jpg">
+    </div>
+
+    <div class="split-half" id="project05">
+      <img class="split-image" src="./project-05.jpg">
+    </div>
+
+  </section>
+
+  <!-- 14 + 15 -->
+  <section class="page split-page">
+
+    <div class="split-half" id="project06">
+      <img class="split-image" src="./project-06.jpg">
+    </div>
+
+    <div class="split-half" id="project07">
+      <img class="split-image" src="./project-07.jpg">
+    </div>
+
+  </section>
+
+  <!-- 16 -->
+  <section class="page">
+    <img class="full-bg" src="./project-08.jpg">
+  </section>
+
+  <!-- 17 -->
+  <section class="page">
+    <img class="full-bg" src="./project-09.jpg">
+  </section>
+
+  <!-- 18 -->
+  <section class="page">
+    <img class="full-bg" src="./project-10.jpg">
+  </section>
 
 </div>
 
 </div>
 
-<!-- =========================
-     SCRIPT
-========================= -->
+</div>
 
 <script>
 
@@ -568,6 +653,114 @@ function zoomOut(){
 
     zoomLevel -= 10;
     updateZoom();
+
+  }
+
+}
+
+function scrollToPage(index){
+
+  const content =
+  document.getElementById('content');
+
+  const pages =
+  document.querySelectorAll('.page');
+
+  if(index === 12){
+
+    const page =
+    pages[11];
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop,
+
+      behavior:'smooth'
+
+    });
+
+    return;
+
+  }
+
+  if(index === 13){
+
+    const page =
+    pages[11];
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop +
+      (page.offsetHeight / 2),
+
+      behavior:'smooth'
+
+    });
+
+    return;
+
+  }
+
+  if(index === 14){
+
+    const page =
+    pages[12];
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop,
+
+      behavior:'smooth'
+
+    });
+
+    return;
+
+  }
+
+  if(index === 15){
+
+    const page =
+    pages[12];
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop +
+      (page.offsetHeight / 2),
+
+      behavior:'smooth'
+
+    });
+
+    return;
+
+  }
+
+  let realIndex = index;
+
+  if(index >= 16){
+
+    realIndex = index - 2;
+
+  }
+
+  const page =
+  pages[realIndex - 1];
+
+  if(page){
+
+    content.scrollTo({
+
+      top:
+      page.offsetTop,
+
+      behavior:'smooth'
+
+    });
 
   }
 
