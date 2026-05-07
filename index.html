@@ -117,20 +117,25 @@ body{
   font-weight:600;
 }
 
-/* ===== ZOOM CONTROLS ===== */
+/* ===== CENTER ===== */
 
-#zoom-controls{
+.toolbar-center{
   position:absolute;
   left:50%;
   transform:translateX(-50%);
+}
+
+/* ===== PDF ZOOM STYLE ===== */
+
+#zoom-controls{
   display:flex;
   align-items:center;
   gap:10px;
 }
 
-.zoom-btn{
-  width:32px;
-  height:32px;
+#zoom-controls button{
+  width:34px;
+  height:34px;
   border:none;
   background:transparent;
   color:#fff;
@@ -142,47 +147,48 @@ body{
   transition:.2s;
 }
 
-.zoom-btn:hover{
+#zoom-controls button:hover{
   background:#3c4043;
 }
 
-.zoom-btn svg{
+#zoom-controls svg{
   width:22px;
   height:22px;
   fill:#fff;
 }
 
-#zoomInput{
-  width:70px;
+#zoom-controls input{
+  width:65px;
   height:32px;
   background:#202124;
   border:1px solid #5f6368;
   color:#fff;
   text-align:center;
-  outline:none;
-  border-radius:4px;
   font-size:14px;
+  outline:none;
 }
 
-/* ===== PRINT BUTTON ===== */
+/* ===== PRINT ===== */
 
-.print-btn{
+.tool-btn{
   width:34px;
   height:34px;
   border:none;
   background:transparent;
-  border-radius:4px;
+  color:#fff;
   cursor:pointer;
+  border-radius:4px;
   display:flex;
   align-items:center;
   justify-content:center;
+  transition:.2s;
 }
 
-.print-btn:hover{
+.tool-btn:hover{
   background:#3c4043;
 }
 
-.print-btn svg{
+.tool-btn svg{
   width:22px;
   height:22px;
   fill:#fff;
@@ -225,6 +231,29 @@ body{
   0 0 0 1px rgba(255,255,255,.04);
 }
 
+/* ===== SPLIT PAGE ===== */
+
+.split-page{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:10px;
+  background:#f5f5f5;
+}
+
+.split-half{
+  flex:1;
+  overflow:hidden;
+  background:#fff;
+}
+
+.split-image{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#fff;
+}
+
 /* ===== IMAGE ===== */
 
 img{
@@ -242,30 +271,6 @@ img{
   background:#fff;
 }
 
-/* ===== SPLIT PAGE ===== */
-
-.split-page{
-  display:flex;
-  flex-direction:column;
-  background:#e5e5e5;
-  padding:12px;
-  gap:12px;
-}
-
-.split-half{
-  flex:1;
-  background:#fff;
-  overflow:hidden;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
-}
-
-.split-image{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#fff;
-}
-
 /* ===== MOBILE ===== */
 
 @media(max-width:768px){
@@ -274,8 +279,16 @@ img{
     display:none;
   }
 
+  .toolbar{
+    padding:0 10px;
+  }
+
   .toolbar-title{
     font-size:14px;
+  }
+
+  .content{
+    padding:10px 0;
   }
 
   .page{
@@ -370,43 +383,47 @@ img{
         THÉP TAM GIANG PROFILE
       </div>
 
-      <!-- ZOOM CONTROLS -->
+      <!-- CENTER -->
 
-      <span id="zoom-controls">
+      <div class="toolbar-center">
 
-        <!-- ZOOM OUT -->
+        <span id="zoom-controls">
 
-        <button class="zoom-btn" onclick="zoomOut()">
+          <!-- ZOOM OUT -->
 
-          <svg viewBox="0 -960 960 960">
-            <path d="M232-444v-72h496v72H232Z"></path>
-          </svg>
+          <button onclick="zoomOut()">
 
-        </button>
+            <svg viewBox="0 -960 960 960">
+              <path d="M232-444v-72h496v72H232Z"></path>
+            </svg>
 
-        <!-- INPUT -->
+          </button>
 
-        <input
-        type="text"
-        id="zoomInput"
-        value="100%"
-        readonly>
+          <!-- INPUT -->
 
-        <!-- ZOOM IN -->
+          <input
+          type="text"
+          id="zoomInput"
+          value="100%"
+          readonly>
 
-        <button class="zoom-btn" onclick="zoomIn()">
+          <!-- ZOOM IN -->
 
-          <svg viewBox="0 -960 960 960">
-            <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"></path>
-          </svg>
+          <button onclick="zoomIn()">
 
-        </button>
+            <svg viewBox="0 -960 960 960">
+              <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"></path>
+            </svg>
 
-      </span>
+          </button>
+
+        </span>
+
+      </div>
 
       <!-- PRINT -->
 
-      <button class="print-btn" onclick="window.print()">
+      <button class="tool-btn" onclick="window.print()">
 
         <svg viewBox="0 -960 960 960">
           <path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/>
@@ -420,49 +437,49 @@ img{
 
     <div class="content">
 
-      <!-- PAGE 01 -->
+      <!-- 01 -->
 
       <section class="page">
         <img class="cover-image" src="./profile-cover.jpg">
       </section>
 
-      <!-- PAGE 02 -->
+      <!-- 02 -->
 
       <section class="page">
         <img class="full-bg" src="./company-intro-01.jpg">
       </section>
 
-      <!-- PAGE 03 -->
+      <!-- 03 -->
 
       <section class="page">
         <img class="full-bg" src="./company-intro-02.jpg">
       </section>
 
-      <!-- PAGE 04 -->
+      <!-- 04 -->
 
       <section class="page">
         <img class="full-bg" src="./main-products.jpg">
       </section>
 
-      <!-- PAGE 05 -->
+      <!-- 05 -->
 
       <section class="page">
         <img class="full-bg" src="./project-01.jpg">
       </section>
 
-      <!-- PAGE 06 -->
+      <!-- 06 -->
 
       <section class="page">
         <img class="full-bg" src="./project-02.jpg">
       </section>
 
-      <!-- PAGE 07 -->
+      <!-- 07 -->
 
       <section class="page">
         <img class="full-bg" src="./project-03.jpg">
       </section>
 
-      <!-- PAGE 08 -->
+      <!-- 08 : PROJECT 04 + 05 -->
 
       <section class="page split-page">
 
@@ -476,7 +493,7 @@ img{
 
       </section>
 
-      <!-- PAGE 09 -->
+      <!-- 09 : PROJECT 06 + 07 -->
 
       <section class="page split-page">
 
@@ -490,19 +507,19 @@ img{
 
       </section>
 
-      <!-- PAGE 10 -->
+      <!-- 10 -->
 
       <section class="page">
         <img class="full-bg" src="./project-08.jpg">
       </section>
 
-      <!-- PAGE 11 -->
+      <!-- 11 -->
 
       <section class="page">
         <img class="full-bg" src="./project-09.jpg">
       </section>
 
-      <!-- PAGE 12 -->
+      <!-- 12 -->
 
       <section class="page">
         <img class="full-bg" src="./project-10.jpg">
@@ -522,11 +539,13 @@ function updateZoom(){
 
   document.querySelectorAll('.page').forEach(page=>{
 
-    page.style.transform = `scale(${zoomLevel / 100})`;
+    page.style.transform =
+    `scale(${zoomLevel / 100})`;
 
   });
 
-  document.getElementById('zoomInput').value = zoomLevel + '%';
+  document.getElementById('zoomInput').value =
+  zoomLevel + '%';
 
 }
 
@@ -554,7 +573,8 @@ function zoomOut(){
 
 function scrollToPage(index){
 
-  const pages = document.querySelectorAll('.page');
+  const pages =
+  document.querySelectorAll('.page');
 
   if(pages[index - 1]){
 
@@ -571,4 +591,5 @@ function scrollToPage(index){
 </script>
 
 </body>
+
 </html>
