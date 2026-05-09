@@ -55,6 +55,28 @@ html, body {
     object-fit:contain;
     display:block;
 }
+/* Thumb split: 2 ảnh xếp dọc, không kéo giãn, có khoảng tách */
+.thumb-inner.split {
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    padding:3px;
+    gap:3px;
+    background:#c8c8c8;
+}
+.thumb-inner.split .th-half {
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+}
+.thumb-inner.split .th-half img {
+    max-width:100%; max-height:100%;
+    object-fit:contain;
+}
 .thumb span {
     display:block;
     text-align:center;
@@ -67,7 +89,7 @@ html, body {
 /* ═══ MAIN ════════════════════════════════════════════════════════════ */
 .main { flex:1; display:flex; flex-direction:column; overflow:hidden; background:#1e1e1e; }
 
-/* ═══ TOOLBAR — DESKTOP ════════════════════════════════════════════════ */
+/* ═══ TOOLBAR DESKTOP ════════════════════════════════════════════════ */
 .toolbar {
     height:52px;
     background:#2b2b2b;
@@ -92,11 +114,6 @@ html, body {
     display:flex;
     align-items:center;
     justify-content:center;
-}
-#zoom-controls {
-    display:flex;
-    align-items:center;
-    gap:6px;
 }
 .zoom-btn {
     width:32px; height:32px;
@@ -125,6 +142,7 @@ html, body {
     outline:none;
     border-radius:3px;
     cursor:default;
+    margin:0 4px;
 }
 .toolbar-right {
     display:flex;
@@ -173,6 +191,37 @@ html, body {
     object-fit:fill;
 }
 
+/* ─── TRANG SPLIT: 1 trang A4 chứa 2 ảnh xếp dọc ─── */
+/* object-fit:contain → ảnh KHÔNG bị kéo giãn, dư trắng thì dư  */
+/* Khoảng tách giữa = 20px nền xám để phân biệt rõ 2 ảnh         */
+.split-page {
+    background:#d0d0d0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    padding:16px !important;
+    gap:0 !important;
+}
+.split-half {
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.split-half img {
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    display:block;
+}
+.split-gap {
+    height:20px;
+    flex-shrink:0;
+    background:#d0d0d0;
+}
+
 /* ═══ MOBILE TOOLBAR ══════════════════════════════════════════════════ */
 @media (max-width:768px) {
     .sidebar { display:none; }
@@ -182,12 +231,10 @@ html, body {
         display:flex;
         flex-direction:column;
         align-items:stretch;
-        padding:8px 10px 8px;
+        padding:8px 10px;
         gap:0;
         grid-template-columns:unset;
     }
-
-    /* Hàng 1: tên profile */
     .toolbar-title {
         width:100%;
         text-align:center;
@@ -196,62 +243,30 @@ html, body {
         border-bottom:1px solid #3c4043;
         justify-self:unset;
         white-space:nowrap;
-        overflow:visible;
     }
-
-    /* Hàng 2: zoom + icons */
-    .toolbar-row2 {
-        display:flex !important;
-        align-items:center;
-        padding-top:8px;
-        width:100%;
-        position:relative;
-    }
-
-    /* Zoom tuyệt đối ở giữa */
-    .toolbar-center {
-        position:absolute;
-        left:50%;
-        transform:translateX(-50%);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:6px;
-        pointer-events:auto;
-    }
-
-    /* Icons đẩy sang phải */
-    .toolbar-right {
-        margin-left:auto;
-        display:flex;
-        align-items:center;
-        gap:6px;
-    }
+    .toolbar-center,
+    .toolbar-right { display:none !important; }
 
     .zoom-btn { width:38px; height:38px; font-size:26px; }
     .zoom-val  { width:54px; height:32px; font-size:13px; }
     .tool-btn  { width:38px; height:38px; }
 
-    /* Trang mobile */
     .page {
         width:95vw !important;
         height:auto !important;
         aspect-ratio:210/297;
     }
+    .split-page {
+        padding:8px !important;
+    }
+    .split-gap { height:10px; }
 }
 
-/* ═══ PRINT: Desktop ══════════════════════════════════════════════════
-   Mục tiêu: in đúng như giao diện web — mỗi trang là 1 ảnh A4
-   KHÔNG scale, KHÔNG thêm margin ngoài
-════════════════════════════════════════════════════════════════════════ */
+/* ═══ PRINT DESKTOP ═══════════════════════════════════════════════════ */
 @media print {
     @page { size:A4 portrait; margin:0; }
-    * {
-        -webkit-print-color-adjust:exact !important;
-        print-color-adjust:exact !important;
-    }
+    * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
     .sidebar, .toolbar, #toolbar-row2, #print-overlay { display:none !important; }
-
     html, body {
         background:white !important;
         width:210mm !important; height:auto !important;
@@ -266,22 +281,29 @@ html, body {
     .page {
         display:block !important;
         width:210mm !important;
-        height:297mm !important;
-        min-height:297mm !important; max-height:297mm !important;
+        height:297mm !important; min-height:297mm !important; max-height:297mm !important;
         margin:0 !important; padding:0 !important;
         border:none !important; box-shadow:none !important;
-        overflow:hidden !important; background:white !important;
-        transform:none !important;
+        overflow:hidden !important; background:white !important; transform:none !important;
         page-break-after:always !important; break-after:page !important;
         page-break-inside:avoid !important; break-inside:avoid !important;
     }
-    .page:last-child {
-        page-break-after:avoid !important; break-after:avoid !important;
-    }
-    .page > img {
+    .page:last-child { page-break-after:avoid !important; break-after:avoid !important; }
+    .page > img { width:210mm !important; height:297mm !important; object-fit:fill !important; display:block !important; }
+    /* split print */
+    .split-page {
+        background:#d0d0d0 !important;
+        display:flex !important; flex-direction:column !important;
         width:210mm !important; height:297mm !important;
-        object-fit:fill !important; display:block !important;
+        padding:8mm !important; gap:0 !important;
     }
+    .split-half {
+        flex:1 !important; background:#fff !important;
+        display:flex !important; align-items:center !important; justify-content:center !important;
+        overflow:hidden !important;
+    }
+    .split-half img { max-width:100% !important; max-height:100% !important; object-fit:contain !important; display:block !important; }
+    .split-gap { height:8mm !important; background:#d0d0d0 !important; flex-shrink:0 !important; }
 }
 
 /* ═══ OVERLAY ════════════════════════════════════════════════════════ */
@@ -307,84 +329,44 @@ html, body {
 </div>
 
 <div class="viewer">
-
-    <!-- ═══ SIDEBAR ══════════════════════════════════════════════════ -->
+    <!-- SIDEBAR: 17 trang, trang 15 = split -->
     <div class="sidebar">
-        <div class="thumb" onclick="scrollToPage(0)">
-            <div class="thumb-inner"><img src="./profile-cover.jpg" loading="lazy"></div><span>1</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(1)">
-            <div class="thumb-inner"><img src="./company-intro-01.jpg" loading="lazy"></div><span>2</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(2)">
-            <div class="thumb-inner"><img src="./company-intro-02.jpg" loading="lazy"></div><span>3</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(3)">
-            <div class="thumb-inner"><img src="./main-products.jpg" loading="lazy"></div><span>4</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(4)">
-            <div class="thumb-inner"><img src="./thep-products.jpg" loading="lazy"></div><span>5</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(5)">
-            <div class="thumb-inner"><img src="./ximang-products.jpg" loading="lazy"></div><span>6</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(6)">
-            <div class="thumb-inner"><img src="./thephinh-products.jpg" loading="lazy"></div><span>7</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(7)">
-            <div class="thumb-inner"><img src="./vlxd-products.jpg" loading="lazy"></div><span>8</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(8)">
-            <div class="thumb-inner"><img src="./project-11.jpg" loading="lazy"></div><span>9</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(9)">
-            <div class="thumb-inner"><img src="./project-12.jpg" loading="lazy"></div><span>10</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(10)">
-            <div class="thumb-inner"><img src="./project-03.jpg" loading="lazy"></div><span>11</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(11)">
-            <div class="thumb-inner"><img src="./project-08.jpg" loading="lazy"></div><span>12</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(12)">
-            <div class="thumb-inner"><img src="./project-09.jpg" loading="lazy"></div><span>13</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(13)">
-            <div class="thumb-inner"><img src="./project-10.jpg" loading="lazy"></div><span>14</span>
-        </div>
-        <!-- Trang 15: project-04 riêng -->
+        <div class="thumb" onclick="scrollToPage(0)"><div class="thumb-inner"><img src="./profile-cover.jpg" loading="lazy"></div><span>1</span></div>
+        <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-inner"><img src="./company-intro-01.jpg" loading="lazy"></div><span>2</span></div>
+        <div class="thumb" onclick="scrollToPage(2)"><div class="thumb-inner"><img src="./company-intro-02.jpg" loading="lazy"></div><span>3</span></div>
+        <div class="thumb" onclick="scrollToPage(3)"><div class="thumb-inner"><img src="./main-products.jpg" loading="lazy"></div><span>4</span></div>
+        <div class="thumb" onclick="scrollToPage(4)"><div class="thumb-inner"><img src="./thep-products.jpg" loading="lazy"></div><span>5</span></div>
+        <div class="thumb" onclick="scrollToPage(5)"><div class="thumb-inner"><img src="./ximang-products.jpg" loading="lazy"></div><span>6</span></div>
+        <div class="thumb" onclick="scrollToPage(6)"><div class="thumb-inner"><img src="./thephinh-products.jpg" loading="lazy"></div><span>7</span></div>
+        <div class="thumb" onclick="scrollToPage(7)"><div class="thumb-inner"><img src="./vlxd-products.jpg" loading="lazy"></div><span>8</span></div>
+        <div class="thumb" onclick="scrollToPage(8)"><div class="thumb-inner"><img src="./project-11.jpg" loading="lazy"></div><span>9</span></div>
+        <div class="thumb" onclick="scrollToPage(9)"><div class="thumb-inner"><img src="./project-12.jpg" loading="lazy"></div><span>10</span></div>
+        <div class="thumb" onclick="scrollToPage(10)"><div class="thumb-inner"><img src="./project-03.jpg" loading="lazy"></div><span>11</span></div>
+        <div class="thumb" onclick="scrollToPage(11)"><div class="thumb-inner"><img src="./project-08.jpg" loading="lazy"></div><span>12</span></div>
+        <div class="thumb" onclick="scrollToPage(12)"><div class="thumb-inner"><img src="./project-09.jpg" loading="lazy"></div><span>13</span></div>
+        <div class="thumb" onclick="scrollToPage(13)"><div class="thumb-inner"><img src="./project-10.jpg" loading="lazy"></div><span>14</span></div>
+        <!-- Trang 15: split thumb -->
         <div class="thumb" onclick="scrollToPage(14)">
-            <div class="thumb-inner"><img src="./project-04.jpg" loading="lazy"></div><span>15</span>
+            <div class="thumb-inner split">
+                <div class="th-half"><img src="./project-04.jpg" loading="lazy"></div>
+                <div class="th-half"><img src="./project-07.jpg" loading="lazy"></div>
+            </div><span>15</span>
         </div>
-        <!-- Trang 16: project-07 riêng -->
-        <div class="thumb" onclick="scrollToPage(15)">
-            <div class="thumb-inner"><img src="./project-07.jpg" loading="lazy"></div><span>16</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(16)">
-            <div class="thumb-inner"><img src="./project-01.jpg" loading="lazy"></div><span>17</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(17)">
-            <div class="thumb-inner"><img src="./project-02.jpg" loading="lazy"></div><span>18</span>
-        </div>
+        <div class="thumb" onclick="scrollToPage(15)"><div class="thumb-inner"><img src="./project-01.jpg" loading="lazy"></div><span>16</span></div>
+        <div class="thumb" onclick="scrollToPage(16)"><div class="thumb-inner"><img src="./project-02.jpg" loading="lazy"></div><span>17</span></div>
     </div>
 
-    <!-- ═══ MAIN ══════════════════════════════════════════════════════ -->
     <div class="main">
-        <!-- TOOLBAR DESKTOP -->
+        <!-- TOOLBAR -->
         <div class="toolbar">
             <div class="toolbar-title">THÉP TAM GIANG PROFILE</div>
-
-            <div class="toolbar-center" id="zoom-slot-desktop">
-                <div id="zoom-controls">
-                    <button class="zoom-btn" onclick="zoomOut()" title="Thu nhỏ">−</button>
-                    <input type="text" class="zoom-val" id="zoom-display" value="100%" readonly>
-                    <button class="zoom-btn" onclick="zoomIn()" title="Phóng to">+</button>
-                </div>
+            <div class="toolbar-center" id="zoom-d">
+                <button class="zoom-btn" onclick="zoomOut()">−</button>
+                <input type="text" class="zoom-val" id="zoom-display" value="100%" readonly>
+                <button class="zoom-btn" onclick="zoomIn()">+</button>
             </div>
-
-            <div class="toolbar-right" id="icons-slot-desktop">
-                <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP"
-                   class="tool-btn" title="Tải xuống">
+            <div class="toolbar-right" id="icons-d">
+                <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn" title="Tải xuống">
                     <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
                 </a>
                 <button class="tool-btn" onclick="printProfile()" title="In">
@@ -393,18 +375,21 @@ html, body {
             </div>
         </div>
 
-        <!-- TOOLBAR ROW 2 — Mobile only (hidden on desktop via JS) -->
-        <div id="toolbar-row2" style="display:none; background:#2b2b2b; border-bottom:1px solid #3c4043; padding:6px 10px; width:100%; position:relative;">
-            <!-- Zoom canh giữa tuyệt đối -->
-            <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:flex; align-items:center; gap:6px; pointer-events:auto;">
+        <!-- MOBILE ROW 2: position:relative container, zoom absolute center, icons absolute right -->
+        <div id="toolbar-row2" style="
+            display:none;
+            position:relative;
+            height:54px;
+            background:#2b2b2b;
+            border-bottom:1px solid #3c4043;
+        ">
+            <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;">
                 <button class="zoom-btn" onclick="zoomOut()">−</button>
                 <input type="text" class="zoom-val" id="zoom-display-m" value="100%" readonly>
                 <button class="zoom-btn" onclick="zoomIn()">+</button>
             </div>
-            <!-- Icons bên phải -->
-            <div style="display:flex; align-items:center; gap:6px; margin-left:auto; height:38px;">
-                <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP"
-                   class="tool-btn" title="Tải xuống">
+            <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:6px;">
+                <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn" title="Tải xuống">
                     <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
                 </a>
                 <button class="tool-btn" onclick="printProfile()" title="In">
@@ -413,6 +398,7 @@ html, body {
             </div>
         </div>
 
+        <!-- CONTENT: 17 trang -->
         <div class="content" id="content">
             <section class="page" id="p0"><img src="./profile-cover.jpg" loading="eager"></section>
             <section class="page" id="p1"><img src="./company-intro-01.jpg" loading="eager"></section>
@@ -428,56 +414,47 @@ html, body {
             <section class="page" id="p11"><img src="./project-08.jpg" loading="eager"></section>
             <section class="page" id="p12"><img src="./project-09.jpg" loading="eager"></section>
             <section class="page" id="p13"><img src="./project-10.jpg" loading="eager"></section>
-            <!-- Trang 15: project-04 riêng -->
-            <section class="page" id="p14"><img src="./project-04.jpg" loading="eager"></section>
-            <!-- Trang 16: project-07 riêng -->
-            <section class="page" id="p15"><img src="./project-07.jpg" loading="eager"></section>
-            <section class="page" id="p16"><img src="./project-01.jpg" loading="eager"></section>
-            <section class="page" id="p17"><img src="./project-02.jpg" loading="eager"></section>
+            <!-- Trang 15: 1 trang A4, 2 ảnh xếp dọc, khoảng tách xám -->
+            <section class="page split-page" id="p14">
+                <div class="split-half"><img src="./project-04.jpg" loading="eager"></div>
+                <div class="split-gap"></div>
+                <div class="split-half"><img src="./project-07.jpg" loading="eager"></div>
+            </section>
+            <section class="page" id="p15"><img src="./project-01.jpg" loading="eager"></section>
+            <section class="page" id="p16"><img src="./project-02.jpg" loading="eager"></section>
         </div>
     </div>
 </div>
 
 <script>
-/* ═══ MOBILE LAYOUT SWITCH ══════════════════════════════════════════ */
+/* ─── Layout switch ─── */
 function applyLayout() {
-    const isMobileLayout = window.innerWidth <= 768;
-    const row2 = document.getElementById('toolbar-row2');
-    const zoomDesktop = document.getElementById('zoom-slot-desktop');
-    const iconsDesktop = document.getElementById('icons-slot-desktop');
-
-    if (isMobileLayout) {
-        row2.style.display = 'flex';
-        zoomDesktop.style.display = 'none';
-        iconsDesktop.style.display = 'none';
-    } else {
-        row2.style.display = 'none';
-        zoomDesktop.style.display = 'flex';
-        iconsDesktop.style.display = 'flex';
-    }
+    const mob = window.innerWidth <= 768;
+    document.getElementById('toolbar-row2').style.display = mob ? 'block' : 'none';
+    document.getElementById('zoom-d').style.display  = mob ? 'none' : 'flex';
+    document.getElementById('icons-d').style.display = mob ? 'none' : 'flex';
 }
 applyLayout();
 window.addEventListener('resize', applyLayout);
 
-/* ═══ ZOOM ══════════════════════════════════════════════════════════ */
+/* ─── Zoom ─── */
 let zoomLevel = 100;
 const contentEl = document.getElementById('content');
 
 function updateZoom() {
     document.querySelectorAll('.page').forEach(p => {
         p.style.transformOrigin = 'top center';
-        p.style.transform = `scale(${zoomLevel / 100})`;
+        p.style.transform = `scale(${zoomLevel/100})`;
         const h = p.offsetHeight;
         const diff = h - h * zoomLevel / 100;
-        p.style.marginTop    = `${-diff / 2}px`;
-        p.style.marginBottom = `${24 - diff / 2}px`;
+        p.style.marginTop    = `${-diff/2}px`;
+        p.style.marginBottom = `${24 - diff/2}px`;
     });
     document.getElementById('zoom-display').value   = zoomLevel + '%';
     document.getElementById('zoom-display-m').value = zoomLevel + '%';
 }
 function zoomIn()  { if (zoomLevel < 200) { zoomLevel += 10; updateZoom(); } }
 function zoomOut() { if (zoomLevel > 30)  { zoomLevel -= 10; updateZoom(); } }
-
 function resetZoom() {
     zoomLevel = 100;
     document.querySelectorAll('.page').forEach(p => {
@@ -486,13 +463,12 @@ function resetZoom() {
     document.getElementById('zoom-display').value   = '100%';
     document.getElementById('zoom-display-m').value = '100%';
 }
-
-function scrollToPage(idx) {
-    const el = document.getElementById('p' + idx);
-    if (el) contentEl.scrollTo({ top: el.offsetTop - 16, behavior: 'smooth' });
+function scrollToPage(i) {
+    const el = document.getElementById('p'+i);
+    if (el) contentEl.scrollTo({top: el.offsetTop - 16, behavior:'smooth'});
 }
 
-/* ═══ DETECT BROWSER ════════════════════════════════════════════════ */
+/* ─── Browser detect ─── */
 const ua = navigator.userAgent;
 const isIOS           = /iP(hone|ad|od)/i.test(ua);
 const isChromeIOS     = /CriOS/i.test(ua);
@@ -501,85 +477,90 @@ const isAndroid       = /Android/i.test(ua);
 const isChromeAndroid = isAndroid && /Chrome/i.test(ua) && !/Firefox/i.test(ua);
 const needsIframe     = isChromeIOS || isChromeAndroid;
 
-/* ═══ DANH SÁCH TRANG ══════════════════════════════════════════════ */
+/* ─── PAGES list (17 trang) ─── */
 const PAGES = [
-    {src:'./profile-cover.jpg'},
-    {src:'./company-intro-01.jpg'},
-    {src:'./company-intro-02.jpg'},
-    {src:'./main-products.jpg'},
-    {src:'./thep-products.jpg'},
-    {src:'./ximang-products.jpg'},
-    {src:'./thephinh-products.jpg'},
-    {src:'./vlxd-products.jpg'},
-    {src:'./project-11.jpg'},
-    {src:'./project-12.jpg'},
-    {src:'./project-03.jpg'},
-    {src:'./project-08.jpg'},
-    {src:'./project-09.jpg'},
-    {src:'./project-10.jpg'},
-    {src:'./project-04.jpg'},
-    {src:'./project-07.jpg'},
-    {src:'./project-01.jpg'},
-    {src:'./project-02.jpg'},
+    {t:'s', src:'./profile-cover.jpg'},
+    {t:'s', src:'./company-intro-01.jpg'},
+    {t:'s', src:'./company-intro-02.jpg'},
+    {t:'s', src:'./main-products.jpg'},
+    {t:'s', src:'./thep-products.jpg'},
+    {t:'s', src:'./ximang-products.jpg'},
+    {t:'s', src:'./thephinh-products.jpg'},
+    {t:'s', src:'./vlxd-products.jpg'},
+    {t:'s', src:'./project-11.jpg'},
+    {t:'s', src:'./project-12.jpg'},
+    {t:'s', src:'./project-03.jpg'},
+    {t:'s', src:'./project-08.jpg'},
+    {t:'s', src:'./project-09.jpg'},
+    {t:'s', src:'./project-10.jpg'},
+    {t:'2', src:'./project-04.jpg', src2:'./project-07.jpg'},
+    {t:'s', src:'./project-01.jpg'},
+    {t:'s', src:'./project-02.jpg'},
 ];
 
 function getBase() {
     const h = window.location.href;
-    return h.substring(0, h.lastIndexOf('/') + 1);
+    return h.substring(0, h.lastIndexOf('/')+1);
 }
 
-/* ═══ IFRAME PRINT — Chrome iOS & Chrome Android ═══════════════════
-   Build iframe với body width=794px, mỗi page height=1123px.
-   KHÔNG include toolbar, KHÔNG include sidebar.
-   Mỗi ảnh = 1 div.p riêng biệt → đúng 18 trang, không bị nhân đôi.
-══════════════════════════════════════════════════════════════════════ */
+/* ─── IFRAME PRINT (Chrome iOS/Android) ─────────────────────────────
+   Build document sạch: chỉ có ảnh, không toolbar, không sidebar.
+   → Đúng 17 trang khi in.
+   Quan trọng: iframe.width=794px để Chrome không thu hẹp layout.
+────────────────────────────────────────────────────────────────────── */
 function buildIframeHTML() {
     const base = getBase();
     const W = 794, H = 1123;
+    const PAD = 16, GAP = 20;
+    const halfH = Math.floor((H - PAD*2 - GAP) / 2);
     const abs = r => base + r.replace(/^\.\//, '');
 
     let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;
-  -webkit-print-color-adjust:exact!important;
-  print-color-adjust:exact!important}
+  -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 @page{size:210mm 297mm;margin:0}
-html,body{width:${W}px;background:#fff;margin:0;padding:0}
-.p{
-  display:block;width:${W}px;height:${H}px;
-  overflow:hidden;background:#fff;
-  page-break-after:always;break-after:page;
-  page-break-inside:avoid;break-inside:avoid
-}
+html,body{width:${W}px;margin:0;padding:0;background:#fff}
+.p{width:${W}px;height:${H}px;overflow:hidden;background:#fff;
+   page-break-after:always;break-after:page;
+   page-break-inside:avoid;break-inside:avoid}
 .p:last-child{page-break-after:avoid;break-after:avoid}
 .p>img{display:block;width:${W}px;height:${H}px;object-fit:fill}
+.sp{display:flex;flex-direction:column;background:#d0d0d0;padding:${PAD}px}
+.sh{width:${W-PAD*2}px;height:${halfH}px;background:#fff;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.sh img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.sg{height:${GAP}px;flex-shrink:0;background:#d0d0d0}
 </style></head><body>`;
 
     PAGES.forEach(p => {
-        html += `<div class="p"><img src="${abs(p.src)}"></div>`;
+        if (p.t === '2') {
+            html += `<div class="p sp">`
+                  + `<div class="sh"><img src="${abs(p.src)}"></div>`
+                  + `<div class="sg"></div>`
+                  + `<div class="sh"><img src="${abs(p.src2)}"></div>`
+                  + `</div>`;
+        } else {
+            html += `<div class="p"><img src="${abs(p.src)}"></div>`;
+        }
     });
-
     return html + `</body></html>`;
 }
 
 function printViaIframe() {
     const msgEl = document.getElementById('overlay-msg');
     msgEl.textContent = 'Đang tải ảnh để in…';
-
     const old = document.getElementById('_pf');
     if (old) old.remove();
 
     const iframe = document.createElement('iframe');
     iframe.id = '_pf';
-    iframe.style.cssText =
-        'position:fixed;top:-9999px;left:0;' +
-        'width:794px;height:1px;border:none;visibility:hidden;';
+    /* width=794px để Chrome render đúng A4, đặt ngoài màn hình */
+    iframe.style.cssText = 'position:fixed;top:-9999px;left:0;width:794px;height:1px;border:none;visibility:hidden;';
     document.body.appendChild(iframe);
 
     const doc = iframe.contentDocument || iframe.contentWindow.document;
-    doc.open();
-    doc.write(buildIframeHTML());
-    doc.close();
+    doc.open(); doc.write(buildIframeHTML()); doc.close();
 
     function waitImgs(cb) {
         const imgs = Array.from(doc.querySelectorAll('img'));
@@ -607,58 +588,53 @@ function printViaIframe() {
     });
 }
 
-/* ═══ SAFARI iOS PRINT ══════════════════════════════════════════════
-   Inject CSS với kích thước px tính theo screen.width (portrait).
-   Đảm bảo chỉ có 18 trang, mỗi trang 1 ảnh.
-══════════════════════════════════════════════════════════════════════ */
-let _safariEl = null;
-
+/* ─── SAFARI iOS PRINT ───────────────────────────────────────────────
+   Inject @media print CSS vào document.
+   Tính kích thước theo portrait screen width.
+   Ẩn toàn bộ UI, chỉ render .page trong .content.
+────────────────────────────────────────────────────────────────────── */
+let _safariStyleEl = null;
 function buildSafariCSS() {
-    const pw  = Math.min(screen.width, screen.height);
+    const pw  = Math.min(screen.width, screen.height); // portrait px
     const ph  = Math.round(pw * 297 / 210);
+    const pad = Math.round(pw * 0.02);
+    const gap = Math.round(pw * 0.025);
+    const halfH = Math.floor((ph - pad*2 - gap) / 2);
 
     return `@media print{
 @page{size:${pw}px ${ph}px;margin:0!important}
 *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 #print-overlay,.sidebar,.toolbar,#toolbar-row2{display:none!important}
-html,body{
-  background:#fff!important;
-  width:${pw}px!important;height:auto!important;
-  margin:0!important;padding:0!important;overflow:visible!important
-}
-.viewer,.main,.content{
-  display:block!important;
-  width:${pw}px!important;height:auto!important;
-  margin:0!important;padding:0!important;
-  overflow:visible!important;background:#fff!important
-}
-.page{
-  display:block!important;
-  width:${pw}px!important;
+html,body{background:#fff!important;width:${pw}px!important;height:auto!important;
+  margin:0!important;padding:0!important;overflow:visible!important}
+.viewer,.main,.content{display:block!important;width:${pw}px!important;height:auto!important;
+  margin:0!important;padding:0!important;overflow:visible!important;background:#fff!important}
+.page{display:block!important;width:${pw}px!important;
   height:${ph}px!important;min-height:${ph}px!important;max-height:${ph}px!important;
-  margin:0!important;padding:0!important;
-  border:none!important;box-shadow:none!important;
+  margin:0!important;padding:0!important;border:none!important;box-shadow:none!important;
   overflow:hidden!important;background:#fff!important;transform:none!important;
   page-break-after:always!important;break-after:page!important;
-  page-break-inside:avoid!important;break-inside:avoid!important
-}
+  page-break-inside:avoid!important;break-inside:avoid!important}
 .page:last-child{page-break-after:avoid!important;break-after:avoid!important}
-.page>img{
+.page>img{width:${pw}px!important;height:${ph}px!important;object-fit:fill!important;display:block!important}
+.split-page{display:flex!important;flex-direction:column!important;
   width:${pw}px!important;height:${ph}px!important;
-  object-fit:fill!important;display:block!important
-}
+  background:#d0d0d0!important;padding:${pad}px!important;gap:0!important;overflow:hidden!important}
+.split-half{flex:none!important;width:${pw-pad*2}px!important;height:${halfH}px!important;
+  background:#fff!important;display:flex!important;align-items:center!important;
+  justify-content:center!important;overflow:hidden!important}
+.split-half img{max-width:100%!important;max-height:100%!important;object-fit:contain!important;display:block!important}
+.split-gap{height:${gap}px!important;flex-shrink:0!important;background:#d0d0d0!important;display:block!important}
 }`;
 }
-
 function injectSafariCSS() {
-    if (_safariEl) _safariEl.remove();
-    _safariEl = document.createElement('style');
-    _safariEl.id = '_safari_print';
-    _safariEl.textContent = buildSafariCSS();
-    document.head.appendChild(_safariEl);
+    if (_safariStyleEl) _safariStyleEl.remove();
+    _safariStyleEl = document.createElement('style');
+    _safariStyleEl.textContent = buildSafariCSS();
+    document.head.appendChild(_safariStyleEl);
 }
 
-/* ═══ WAIT IMAGES ═══════════════════════════════════════════════════ */
+/* ─── Wait images ─── */
 function waitMainImages(cb) {
     const imgs = Array.from(document.querySelectorAll('.content img'));
     let n = imgs.filter(i => !i.complete).length;
@@ -672,7 +648,7 @@ function waitMainImages(cb) {
     });
 }
 
-/* ═══ MAIN PRINT ════════════════════════════════════════════════════ */
+/* ─── printProfile ─── */
 function printProfile() {
     const overlay = document.getElementById('print-overlay');
     resetZoom();
@@ -680,19 +656,16 @@ function printProfile() {
     document.getElementById('overlay-msg').textContent = 'Đang chuẩn bị in…';
 
     if (needsIframe) {
-        /* Chrome iOS + Chrome Android: dùng iframe sạch, không có toolbar */
         printViaIframe();
     } else if (isSafariIOS) {
-        /* Safari iOS: inject CSS rồi print trên document hiện tại */
         injectSafariCSS();
         waitMainImages(() => {
             setTimeout(() => {
                 overlay.classList.remove('show');
-                setTimeout(() => window.print(), 400);
-            }, 600);
+                setTimeout(() => window.print(), 500);
+            }, 700);
         });
     } else {
-        /* Desktop & Firefox Android */
         waitMainImages(() => {
             setTimeout(() => {
                 overlay.classList.remove('show');
@@ -702,7 +675,6 @@ function printProfile() {
     }
 }
 
-/* Ctrl+P fallback */
 window.addEventListener('beforeprint', () => {
     resetZoom();
     if (isSafariIOS) injectSafariCSS();
