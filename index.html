@@ -66,33 +66,32 @@
             .page { width: 95%; margin-bottom: 15px; }
         }
 
-        /* ===== CHIẾN THUẬT TRIỆT TIÊU TRANG TRỐNG & FOOTER ===== */
+        /* ===== TUYỆT CHIÊU CUỐI: DIỆT 34 TRANG VÀ FOOTER ===== */
         @media print {
             @page { 
                 size: A4 portrait; 
-                margin: 0 !important; /* Xóa sạch lề để diệt Header/Footer */
+                margin: 0 !important; /* Triệt tiêu Footer/Header */
             }
 
-            /* Ẩn toàn bộ giao diện web */
-            .sidebar, .toolbar, .mobile-tools-wrap { display: none !important; }
+            /* Ẩn tất cả trừ nội dung chính */
+            .sidebar, .toolbar, .mobile-tools-wrap, .toolbar-title, span { display: none !important; }
 
-            /* Ép body và các thẻ cha không chiếm diện tích ảo */
             html, body, .viewer, .main, .desktop-layout, .content { 
                 display: block !important; 
                 margin: 0 !important; 
                 padding: 0 !important;
                 height: auto !important;
-                width: 210mm !important; /* Khóa chiều rộng chuẩn */
+                width: 210mm !important; /* Ép cứng chiều rộng A4 */
                 overflow: visible !important;
-                position: static !important;
                 background: white !important;
+                position: static !important;
             }
 
-            /* Định nghĩa lại section là 1 tờ A4 khít */
             .page { 
                 display: flex !important;
                 width: 210mm !important; 
-                height: 297mm !important; /* Chiều cao chuẩn A4 */
+                /* Quan trọng: Giảm chiều cao xuống một chút để né Footer Safari */
+                height: 296mm !important; 
                 margin: 0 !important; 
                 padding: 0 !important;
                 page-break-after: always !important; 
@@ -102,22 +101,14 @@
                 overflow: hidden !important;
             }
 
-            /* Xử lý trang gộp 15 */
-            .split-page { 
-                display: flex !important;
-                flex-direction: column !important;
-                padding: 10mm !important;
-                gap: 10mm !important;
-                justify-content: center !important;
-            }
-            .split-half { height: 45% !important; flex: none !important; }
+            .split-page { padding: 10mm !important; gap: 10mm !important; display: flex !important; flex-direction: column !important; height: 296mm !important;}
+            .split-half { height: 48% !important; flex: none !important; }
 
-            /* Ảnh phải khít 100% không dư thừa pixel */
             img { 
                 width: 100% !important; 
                 height: 100% !important; 
                 object-fit: contain !important; 
-                page-break-inside: avoid !important;
+                display: block !important;
             }
         }
     </style>
@@ -125,6 +116,7 @@
 
 <body>
     <div class="viewer">
+        <!-- Sidebar and Content remain the same structure -->
         <div class="sidebar">
             <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-page"><img src="./profile-cover.jpg"></div><span>1</span></div>
             <div class="thumb" onclick="scrollToPage(2)"><div class="thumb-page"><img src="./company-intro-01.jpg"></div><span>2</span></div>
