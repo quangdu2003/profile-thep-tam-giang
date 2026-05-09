@@ -20,9 +20,9 @@
         .thumb { 
             width: 100%; 
             margin-bottom: 20px; 
-            background: #202124; 
+            background: #1a1a1a; 
             border: 2px solid transparent; 
-            padding: 5px; 
+            padding: 2px; 
             cursor: pointer; 
             transition: .2s;
             display: flex;
@@ -31,10 +31,14 @@
         }
         .thumb:hover { border-color: #8ab4f8; }
         
-        /* Thumbnail dọc */
-        .thumb img { width: 100%; height: auto; aspect-ratio: 1/1.414; object-fit: cover; background: #fff; }
-        /* Thumbnail ngang cho trang 15 và 16 */
-        .thumb.landscape img { aspect-ratio: 1.414/1; }
+        .thumb img { 
+            width: 100%; 
+            height: auto; 
+            max-height: 180px; 
+            display: block; 
+            object-fit: contain; 
+            background: #fff; 
+        }
         
         .thumb span { display: block; text-align: center; color: #fff; margin-top: 8px; font-size: 13px; }
 
@@ -68,11 +72,12 @@
         .content { flex: 1; overflow-x: hidden; overflow-y: auto; background: #1e1e1e; padding: 30px 0; scroll-behavior: smooth; }
         .page { width: 100%; max-width: 760px; aspect-ratio: 1/1.414; background: #fff; margin: 0 auto 30px; overflow: hidden; transform-origin: top center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         
+        /* Cấu trúc trang chia đôi */
         .split-page { display: flex; flex-direction: column; }
         .split-half { width: 100%; height: 50%; overflow: hidden; }
         
         img { width: 100%; height: 100%; display: block; object-fit: contain; }
-        .split-half img { object-fit: cover; }
+        .split-half img { object-fit: cover; } /* Đổi thành cover để ảnh ngang khít khung chia đôi */
 
         @media print {
             @page { size: A4 portrait; margin: 0; }
@@ -86,7 +91,6 @@
 <body>
     <div class="viewer">
         <div class="sidebar">
-            <!-- 14 trang dọc đầu tiên -->
             <div class="thumb" onclick="scrollToPage(1)"><img src="./profile-cover.jpg"><span>1</span></div>
             <div class="thumb" onclick="scrollToPage(2)"><img src="./company-intro-01.jpg"><span>2</span></div>
             <div class="thumb" onclick="scrollToPage(3)"><img src="./company-intro-02.jpg"><span>3</span></div>
@@ -102,11 +106,10 @@
             <div class="thumb" onclick="scrollToPage(13)"><img src="./project-09.jpg"><span>13</span></div>
             <div class="thumb" onclick="scrollToPage(14)"><img src="./project-10.jpg"><span>14</span></div>
 
-            <!-- Trang ghép 15 (Chứa ô 15 & 16 bên trái) -->
-            <div class="thumb landscape" onclick="scrollToPage(15)"><img src="./project-04.jpg"><span>15</span></div>
-            <div class="thumb landscape" onclick="scrollToPage(16)"><img src="./project-07.jpg"><span>16</span></div>
+            <!-- Thumbnail 15 & 16 sẽ dẫn vào cùng một trang gộp -->
+            <div class="thumb" onclick="scrollToPage(15)"><img src="./project-04.jpg"><span>15</span></div>
+            <div class="thumb" onclick="scrollToPage(16)"><img src="./project-07.jpg"><span>16</span></div>
 
-            <!-- Các trang dọc còn lại -->
             <div class="thumb" onclick="scrollToPage(17)"><img src="./project-01.jpg"><span>17</span></div>
             <div class="thumb" onclick="scrollToPage(18)"><img src="./project-02.jpg"><span>18</span></div>
         </div>
@@ -132,7 +135,7 @@
             </div>
 
             <div class="content" id="content">
-                <!-- 14 trang dọc -->
+                <!-- 14 trang dọc đầu tiên -->
                 <section class="page"><img src="./profile-cover.jpg"></section>
                 <section class="page"><img src="./company-intro-01.jpg"></section>
                 <section class="page"><img src="./company-intro-02.jpg"></section>
@@ -148,7 +151,7 @@
                 <section class="page"><img src="./project-09.jpg"></section>
                 <section class="page"><img src="./project-10.jpg"></section>
 
-                <!-- TRANG GỘP 15 (Chia đôi) -->
+                <!-- TRANG VẬT LÝ SỐ 15 (TRANG GỘP CHIA ĐÔI) -->
                 <section class="page split-page">
                     <div class="split-half"><img src="./project-04.jpg"></div>
                     <div class="split-half"><img src="./project-07.jpg"></div>
@@ -181,15 +184,16 @@
             if (index <= 14) {
                 targetTop = pages[index - 1].offsetTop;
             } else if (index === 15) {
-                targetTop = pages[14].offsetTop; // Đầu trang ghép
+                targetTop = pages[14].offsetTop; // Cuộn đến trang gộp (Project 04)
             } else if (index === 16) {
-                targetTop = pages[14].offsetTop + (pages[14].offsetHeight / 2); // Giữa trang ghép
+                targetTop = pages[14].offsetTop + (pages[14].offsetHeight / 2); // Cuộn xuống nửa trang gộp (Project 07)
             } else {
-                targetTop = pages[index - 2].offsetTop; // Trang 17, 18 tương ứng section 15, 16
+                targetTop = pages[index - 2].offsetTop; // Bù trừ cho các trang sau trang gộp
             }
 
             content.scrollTo({ top: targetTop - 20, behavior: 'smooth' });
         }
     </script>
 </body>
+
 </html>
