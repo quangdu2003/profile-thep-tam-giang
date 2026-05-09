@@ -65,13 +65,14 @@
             .page { width: 95%; margin-bottom: 15px; }
         }
 
-        /* ===== PHƯƠNG ÁN DIỆT FOOTER SAFARI ===== */
+        /* ===== GIẢI PHÁP DIỆT 34 TRANG & XOÁ FOOTER CHO IPHONE ===== */
         @media print {
             @page { 
                 size: A4 portrait; 
-                margin: 0 !important; /* Xoá lề giấy */
+                margin: 0 !important; 
             }
 
+            /* Ẩn toàn bộ UI */
             .sidebar, .toolbar, .mobile-tools-wrap, .toolbar-title, span { 
                 display: none !important; 
             }
@@ -96,23 +97,25 @@
             }
 
             .page { 
-                display: flex !important;
+                display: block !important;
                 width: 210mm !important; 
-                height: 292mm !important; /* Trừ 5mm để giữ ảnh to nhất có thể */
-                /* Dùng margin âm ở dưới để "đè" lên khu vực Safari chèn Footer */
-                margin: 0 0 -10mm 0 !important; 
+                /* THÔNG SỐ QUAN TRỌNG: 280mm để chừa chỗ cho URL Safari */
+                height: 280mm !important; 
+                /* Margin âm để nuốt chửng khoảng trống Safari tạo ra */
+                margin: 0 0 -15mm 0 !important; 
                 padding: 0 !important;
                 page-break-after: always !important; 
                 page-break-inside: avoid !important;
                 box-shadow: none !important;
                 border: none !important;
+                background: white !important;
                 overflow: hidden !important;
             }
             
             .split-page { 
-                padding: 8mm !important; 
+                padding: 10mm !important; 
                 gap: 5mm !important; 
-                height: 292mm !important;
+                height: 280mm !important;
             }
 
             img { 
