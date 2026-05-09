@@ -45,16 +45,12 @@ html, body {
     align-items:center;
     justify-content:center;
 }
-/* Mặc định tất cả thumb dùng contain */
 .thumb-inner img {
     width:100%;
     height:100%;
     object-fit:contain;
     display:block;
 }
-/* Thumb 15 & 16: ảnh project-04/07 là ảnh ngang nằm trong nửa trang dọc
-   → thumb riêng có aspect-ratio 210/148 (nửa A4 trừ padding/gap)
-   → fill ngang hoàn toàn */
 .thumb-inner.half-page {
     aspect-ratio:210/148;
 }
@@ -62,8 +58,6 @@ html, body {
     width:100%;
     height:100%;
     object-fit:cover;
-    object-position:center center;
-    display:block;
 }
 .thumb span {
     display:block;
@@ -97,17 +91,17 @@ html, body {
 .zoom-btn {
     width:32px; height:32px; border:none; background:#3c4043; color:#fff;
     cursor:pointer; border-radius:4px; font-size:22px; font-weight:300;
-    display:flex; align-items:center; justify-content:center; user-select:none; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; user-select:none;
 }
 .zoom-btn:hover { background:#5f6368; }
 .zoom-val {
     width:60px; height:28px; background:#202124; border:1px solid #5f6368; color:#fff;
-    text-align:center; font-size:13px; outline:none; border-radius:3px; cursor:default; margin:0 4px;
+    text-align:center; font-size:13px; outline:none; border-radius:3px; margin:0 4px;
 }
 .toolbar-right { display:flex; align-items:center; gap:8px; justify-self:end; }
 .tool-btn {
     width:34px; height:34px; display:flex; align-items:center; justify-content:center;
-    border-radius:4px; background:#3c4043; cursor:pointer; border:none; text-decoration:none; flex-shrink:0;
+    border-radius:4px; background:#3c4043; cursor:pointer; border:none; text-decoration:none;
 }
 .tool-btn:hover { background:#4f5256; }
 .tool-btn svg { width:20px; height:20px; fill:#fff; }
@@ -123,17 +117,16 @@ html, body {
 }
 .page > img { width:100%; height:100%; display:block; object-fit:fill; }
 
-/* Split page: 2 ảnh xếp dọc trong 1 trang A4 */
 .split-page {
     background:#d0d0d0 !important;
     display:flex !important; flex-direction:column !important;
-    padding:16px !important; gap:0 !important;
+    padding:16px !important;
 }
 .split-half {
     flex:1; min-height:0; overflow:hidden; background:#fff;
     display:flex; align-items:center; justify-content:center;
 }
-.split-half img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
+.split-half img { max-width:100%; max-height:100%; object-fit:contain; }
 .split-gap { height:20px; flex-shrink:0; background:#d0d0d0; }
 
 /* ═══ MOBILE ════════════════════════════════════════════════════════ */
@@ -141,116 +134,62 @@ html, body {
     .sidebar { display:none; }
     .toolbar {
         height:auto; display:flex; flex-direction:column;
-        align-items:stretch; padding:8px 10px; gap:0; grid-template-columns:unset;
+        align-items:stretch; padding:8px 10px; gap:0;
     }
     .toolbar-title {
         width:100%; text-align:center; font-size:13px;
-        padding-bottom:8px; border-bottom:1px solid #3c4043; justify-self:unset;
+        padding-bottom:8px; border-bottom:1px solid #3c4043;
     }
     .toolbar-center, .toolbar-right { display:none !important; }
     .page { width:95vw !important; height:auto !important; aspect-ratio:210/297; }
     .split-page { padding:8px !important; }
-    .split-gap { height:10px; }
 }
 
-/* ═══ PRINT (Desktop Chrome/Edge/Firefox) ═══════════════════════════ */
+/* ═══ PRINT (Desktop) ═══════════════════════════ */
 @media print {
     @page { size:A4 portrait; margin:0; }
-    * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
-    .sidebar, .toolbar, #toolbar-row2, #print-overlay { display:none !important; }
-    html, body {
+    .sidebar, .toolbar, #toolbar-row2 { display:none !important; }
+    html, body, .viewer, .main, .content {
         background:white !important; width:210mm !important; height:auto !important;
         overflow:visible !important; margin:0 !important; padding:0 !important;
     }
-    .viewer, .main, .content {
-        display:block !important; width:210mm !important; height:auto !important;
-        overflow:visible !important; background:white !important; padding:0 !important; margin:0 !important;
-    }
     .page {
-        display:block !important; width:210mm !important;
-        height:297mm !important; min-height:unset !important; max-height:297mm !important;
-        margin:0 !important; padding:0 !important;
-        border:none !important; box-shadow:none !important;
-        overflow:hidden !important; background:white !important; transform:none !important;
+        display:block !important; width:210mm !important; height:297mm !important;
+        margin:0 !important; border:none !important; box-shadow:none !important;
         page-break-after:always !important; break-after:page !important;
-        page-break-inside:avoid !important; break-inside:avoid !important;
     }
-    .page:last-child { page-break-after:avoid !important; break-after:avoid !important; }
-    .page > img { width:210mm !important; height:297mm !important; object-fit:fill !important; display:block !important; }
-    .split-page {
-        background:#d0d0d0 !important; display:flex !important; flex-direction:column !important;
-        width:210mm !important; height:297mm !important; padding:8mm !important; gap:0 !important;
-        overflow:hidden !important;
-    }
-    .split-half {
-        flex:1 !important; min-height:0 !important; background:#fff !important;
-        display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important;
-    }
-    .split-half img { max-width:100% !important; max-height:100% !important; object-fit:contain !important; display:block !important; }
-    .split-gap { height:8mm !important; background:#d0d0d0 !important; flex-shrink:0 !important; }
+    .page > img { width:210mm !important; height:297mm !important; object-fit:fill !important; }
+    .split-page { padding:8mm !important; background:#d0d0d0 !important; }
 }
-
-/* ═══ OVERLAY ═══════════════════════════════════════════════════════ */
-#print-overlay {
-    display:none; position:fixed; inset:0;
-    background:rgba(0,0,0,.85); z-index:9999;
-    flex-direction:column; align-items:center; justify-content:center;
-    gap:14px; color:#fff; font-size:15px;
-}
-#print-overlay.show { display:flex; }
-.spinner {
-    width:44px; height:44px;
-    border:4px solid rgba(255,255,255,.2); border-top-color:#fff;
-    border-radius:50%; animation:spin .7s linear infinite;
-}
-@keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
 <body>
-<div id="print-overlay">
-    <div class="spinner"></div>
-    <div id="overlay-msg">Đang chuẩn bị in…</div>
-</div>
 
 <div class="viewer">
-    <!--
-        SIDEBAR: 18 thumb
-        Thumb 1–14  → scrollToPage(0..13)
-        Thumb 15    → scrollToSplitHalf('top')   — ảnh project-04, đầu trang p14
-        Thumb 16    → scrollToSplitHalf('bot')   — ảnh project-07, nửa dưới trang p14
-        Thumb 17–18 → scrollToPage(15..16)
-        Content thật: 17 trang (p0–p16), p14 là split.
-    -->
+    <!-- SIDEBAR -->
     <div class="sidebar">
-        <div class="thumb" onclick="scrollToPage(0)"><div class="thumb-inner"><img src="./profile-cover.jpg" loading="lazy"></div><span>1</span></div>
-        <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-inner"><img src="./company-intro-01.jpg" loading="lazy"></div><span>2</span></div>
-        <div class="thumb" onclick="scrollToPage(2)"><div class="thumb-inner"><img src="./company-intro-02.jpg" loading="lazy"></div><span>3</span></div>
-        <div class="thumb" onclick="scrollToPage(3)"><div class="thumb-inner"><img src="./main-products.jpg" loading="lazy"></div><span>4</span></div>
-        <div class="thumb" onclick="scrollToPage(4)"><div class="thumb-inner"><img src="./thep-products.jpg" loading="lazy"></div><span>5</span></div>
-        <div class="thumb" onclick="scrollToPage(5)"><div class="thumb-inner"><img src="./ximang-products.jpg" loading="lazy"></div><span>6</span></div>
-        <div class="thumb" onclick="scrollToPage(6)"><div class="thumb-inner"><img src="./thephinh-products.jpg" loading="lazy"></div><span>7</span></div>
-        <div class="thumb" onclick="scrollToPage(7)"><div class="thumb-inner"><img src="./vlxd-products.jpg" loading="lazy"></div><span>8</span></div>
-        <div class="thumb" onclick="scrollToPage(8)"><div class="thumb-inner"><img src="./project-11.jpg" loading="lazy"></div><span>9</span></div>
-        <div class="thumb" onclick="scrollToPage(9)"><div class="thumb-inner"><img src="./project-12.jpg" loading="lazy"></div><span>10</span></div>
-        <div class="thumb" onclick="scrollToPage(10)"><div class="thumb-inner"><img src="./project-03.jpg" loading="lazy"></div><span>11</span></div>
-        <div class="thumb" onclick="scrollToPage(11)"><div class="thumb-inner"><img src="./project-08.jpg" loading="lazy"></div><span>12</span></div>
-        <div class="thumb" onclick="scrollToPage(12)"><div class="thumb-inner"><img src="./project-09.jpg" loading="lazy"></div><span>13</span></div>
-        <div class="thumb" onclick="scrollToPage(13)"><div class="thumb-inner"><img src="./project-10.jpg" loading="lazy"></div><span>14</span></div>
-        <!-- Thumb 15: project-04, fill ngang (fit-width) -->
-        <div class="thumb" onclick="scrollToSplitHalf('top')">
-            <div class="thumb-inner half-page"><img src="./project-04.jpg" loading="lazy"></div>
-            <span>15</span>
-        </div>
-        <!-- Thumb 16: project-07, fill ngang (fit-width) -->
-        <div class="thumb" onclick="scrollToSplitHalf('bot')">
-            <div class="thumb-inner half-page"><img src="./project-07.jpg" loading="lazy"></div>
-            <span>16</span>
-        </div>
-        <div class="thumb" onclick="scrollToPage(15)"><div class="thumb-inner"><img src="./project-01.jpg" loading="lazy"></div><span>17</span></div>
-        <div class="thumb" onclick="scrollToPage(16)"><div class="thumb-inner"><img src="./project-02.jpg" loading="lazy"></div><span>18</span></div>
+        <div class="thumb" onclick="scrollToPage(0)"><div class="thumb-inner"><img src="./profile-cover.jpg"></div><span>1</span></div>
+        <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-inner"><img src="./company-intro-01.jpg"></div><span>2</span></div>
+        <div class="thumb" onclick="scrollToPage(2)"><div class="thumb-inner"><img src="./company-intro-02.jpg"></div><span>3</span></div>
+        <div class="thumb" onclick="scrollToPage(3)"><div class="thumb-inner"><img src="./main-products.jpg"></div><span>4</span></div>
+        <div class="thumb" onclick="scrollToPage(4)"><div class="thumb-inner"><img src="./thep-products.jpg"></div><span>5</span></div>
+        <div class="thumb" onclick="scrollToPage(5)"><div class="thumb-inner"><img src="./ximang-products.jpg"></div><span>6</span></div>
+        <div class="thumb" onclick="scrollToPage(6)"><div class="thumb-inner"><img src="./thephinh-products.jpg"></div><span>7</span></div>
+        <div class="thumb" onclick="scrollToPage(7)"><div class="thumb-inner"><img src="./vlxd-products.jpg"></div><span>8</span></div>
+        <div class="thumb" onclick="scrollToPage(8)"><div class="thumb-inner"><img src="./project-11.jpg"></div><span>9</span></div>
+        <div class="thumb" onclick="scrollToPage(9)"><div class="thumb-inner"><img src="./project-12.jpg"></div><span>10</span></div>
+        <div class="thumb" onclick="scrollToPage(10)"><div class="thumb-inner"><img src="./project-03.jpg"></div><span>11</span></div>
+        <div class="thumb" onclick="scrollToPage(11)"><div class="thumb-inner"><img src="./project-08.jpg"></div><span>12</span></div>
+        <div class="thumb" onclick="scrollToPage(12)"><div class="thumb-inner"><img src="./project-09.jpg"></div><span>13</span></div>
+        <div class="thumb" onclick="scrollToPage(13)"><div class="thumb-inner"><img src="./project-10.jpg"></div><span>14</span></div>
+        <div class="thumb" onclick="scrollToSplitHalf('top')"><div class="thumb-inner half-page"><img src="./project-04.jpg"></div><span>15</span></div>
+        <div class="thumb" onclick="scrollToSplitHalf('bot')"><div class="thumb-inner half-page"><img src="./project-07.jpg"></div><span>16</span></div>
+        <div class="thumb" onclick="scrollToPage(15)"><div class="thumb-inner"><img src="./project-01.jpg"></div><span>17</span></div>
+        <div class="thumb" onclick="scrollToPage(16)"><div class="thumb-inner"><img src="./project-02.jpg"></div><span>18</span></div>
     </div>
 
     <div class="main">
+        <!-- TOOLBAR DESKTOP -->
         <div class="toolbar">
             <div class="toolbar-title">THÉP TAM GIANG PROFILE</div>
             <div class="toolbar-center" id="zoom-d">
@@ -262,73 +201,56 @@ html, body {
                 <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn" title="Tải xuống">
                     <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
                 </a>
-                <button class="tool-btn" onclick="printProfile()" title="In">
+                <button class="tool-btn" onclick="window.print()" title="In">
                     <svg viewBox="0 -960 960 960"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile row 2 -->
+        <!-- TOOLBAR MOBILE (Chỉ tải xuống) -->
         <div id="toolbar-row2" style="display:none;position:relative;height:54px;background:#2b2b2b;border-bottom:1px solid #3c4043;">
-            <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;">
-                <button class="zoom-btn" onclick="zoomOut()">−</button>
-                <input type="text" class="zoom-val" id="zoom-display-m" value="100%" readonly>
-                <button class="zoom-btn" onclick="zoomIn()">+</button>
-            </div>
-            <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:6px;">
-                <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn" title="Tải xuống">
+            <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);">
+                <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn">
                     <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
                 </a>
-                <button class="tool-btn" onclick="printProfile()" title="In">
-                    <svg viewBox="0 -960 960 960"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/></svg>
-                </button>
             </div>
         </div>
 
-        <!-- CONTENT: 17 trang thật (p0–p16) -->
+        <!-- CONTENT -->
         <div class="content" id="content">
-            <section class="page" id="p0"><img src="./profile-cover.jpg" loading="eager"></section>
-            <section class="page" id="p1"><img src="./company-intro-01.jpg" loading="eager"></section>
-            <section class="page" id="p2"><img src="./company-intro-02.jpg" loading="eager"></section>
-            <section class="page" id="p3"><img src="./main-products.jpg" loading="eager"></section>
-            <section class="page" id="p4"><img src="./thep-products.jpg" loading="eager"></section>
-            <section class="page" id="p5"><img src="./ximang-products.jpg" loading="eager"></section>
-            <section class="page" id="p6"><img src="./thephinh-products.jpg" loading="eager"></section>
-            <section class="page" id="p7"><img src="./vlxd-products.jpg" loading="eager"></section>
-            <section class="page" id="p8"><img src="./project-11.jpg" loading="eager"></section>
-            <section class="page" id="p9"><img src="./project-12.jpg" loading="eager"></section>
-            <section class="page" id="p10"><img src="./project-03.jpg" loading="eager"></section>
-            <section class="page" id="p11"><img src="./project-08.jpg" loading="eager"></section>
-            <section class="page" id="p12"><img src="./project-09.jpg" loading="eager"></section>
-            <section class="page" id="p13"><img src="./project-10.jpg" loading="eager"></section>
-            <!-- p14: trang split — 2 ảnh xếp dọc trên 1 trang A4 -->
+            <section class="page" id="p0"><img src="./profile-cover.jpg"></section>
+            <section class="page" id="p1"><img src="./company-intro-01.jpg"></section>
+            <section class="page" id="p2"><img src="./company-intro-02.jpg"></section>
+            <section class="page" id="p3"><img src="./main-products.jpg"></section>
+            <section class="page" id="p4"><img src="./thep-products.jpg"></section>
+            <section class="page" id="p5"><img src="./ximang-products.jpg"></section>
+            <section class="page" id="p6"><img src="./thephinh-products.jpg"></section>
+            <section class="page" id="p7"><img src="./vlxd-products.jpg"></section>
+            <section class="page" id="p8"><img src="./project-11.jpg"></section>
+            <section class="page" id="p9"><img src="./project-12.jpg"></section>
+            <section class="page" id="p10"><img src="./project-03.jpg"></section>
+            <section class="page" id="p11"><img src="./project-08.jpg"></section>
+            <section class="page" id="p12"><img src="./project-09.jpg"></section>
+            <section class="page" id="p13"><img src="./project-10.jpg"></section>
             <section class="page split-page" id="p14">
-                <div class="split-half" id="split-top">
-                    <img src="./project-04.jpg" loading="eager">
-                </div>
+                <div class="split-half" id="split-top"><img src="./project-04.jpg"></div>
                 <div class="split-gap"></div>
-                <div class="split-half" id="split-bot">
-                    <img src="./project-07.jpg" loading="eager">
-                </div>
+                <div class="split-half" id="split-bot"><img src="./project-07.jpg"></div>
             </section>
-            <section class="page" id="p15"><img src="./project-01.jpg" loading="eager"></section>
-            <section class="page" id="p16"><img src="./project-02.jpg" loading="eager"></section>
+            <section class="page" id="p15"><img src="./project-01.jpg"></section>
+            <section class="page" id="p16"><img src="./project-02.jpg"></section>
         </div>
     </div>
 </div>
 
 <script>
-/* ── Layout switch ─────────────────────────────────────────────────── */
 function applyLayout() {
     const mob = window.innerWidth <= 768;
     document.getElementById('toolbar-row2').style.display = mob ? 'block' : 'none';
-    document.getElementById('zoom-d').style.display  = mob ? 'none' : 'flex';
-    document.getElementById('icons-d').style.display = mob ? 'none' : 'flex';
 }
 applyLayout();
 window.addEventListener('resize', applyLayout);
 
-/* ── Zoom ──────────────────────────────────────────────────────────── */
 let zoomLevel = 100;
 const contentEl = document.getElementById('content');
 
@@ -338,24 +260,14 @@ function updateZoom() {
         p.style.transform = `scale(${zoomLevel/100})`;
         const h = p.offsetHeight;
         const diff = h - h * zoomLevel / 100;
-        p.style.marginTop    = `${-diff/2}px`;
+        p.style.marginTop = `${-diff/2}px`;
         p.style.marginBottom = `${24 - diff/2}px`;
     });
-    document.getElementById('zoom-display').value   = zoomLevel + '%';
-    document.getElementById('zoom-display-m').value = zoomLevel + '%';
+    document.getElementById('zoom-display').value = zoomLevel + '%';
 }
-function zoomIn()  { if (zoomLevel < 200) { zoomLevel += 10; updateZoom(); } }
-function zoomOut() { if (zoomLevel > 30)  { zoomLevel -= 10; updateZoom(); } }
-function resetZoom() {
-    zoomLevel = 100;
-    document.querySelectorAll('.page').forEach(p => {
-        p.style.transform = p.style.marginTop = p.style.marginBottom = '';
-    });
-    document.getElementById('zoom-display').value   = '100%';
-    document.getElementById('zoom-display-m').value = '100%';
-}
+function zoomIn() { if (zoomLevel < 200) { zoomLevel += 10; updateZoom(); } }
+function zoomOut() { if (zoomLevel > 30) { zoomLevel -= 10; updateZoom(); } }
 
-/* ── Scroll ────────────────────────────────────────────────────────── */
 function scrollToPage(i) {
     const el = document.getElementById('p' + i);
     if (el) contentEl.scrollTo({ top: el.offsetTop - 16, behavior: 'smooth' });
@@ -368,162 +280,14 @@ function scrollToSplitHalf(half) {
         contentEl.scrollTo({ top: page.offsetTop - 16, behavior: 'smooth' });
     } else {
         const botEl = document.getElementById('split-bot');
-        if (botEl) {
-            contentEl.scrollTo({ top: page.offsetTop + botEl.offsetTop - 16, behavior: 'smooth' });
-        }
-    }
-}
-
-/* ── Browser detect ────────────────────────────────────────────────── */
-const ua = navigator.userAgent;
-const isIOS           = /iP(hone|ad|od)/i.test(ua);
-const isChromeIOS     = /CriOS/i.test(ua);
-const isSafariIOS = isIOS && /WebKit/i.test(ua) && !isChromeIOS && !/FxiOS|OPiOS|EdgiOS/i.test(ua);
-const isAndroid       = /Android/i.test(ua);
-const isChromeAndroid = isAndroid && /Chrome/i.test(ua) && !/Firefox/i.test(ua);
-/*
- * iOS: dùng iframe + ẩn body gốc khi print → Safari chỉ in iframe, không in 2 lần.
- * Chrome Android: iframe như cũ.
- */
-const needsIframe = isChromeAndroid || isIOS;
-
-/* ── Pages data (17 trang thật) ────────────────────────────────────── */
-const PAGES = [
-    { t:'s', src:'./profile-cover.jpg' },
-    { t:'s', src:'./company-intro-01.jpg' },
-    { t:'s', src:'./company-intro-02.jpg' },
-    { t:'s', src:'./main-products.jpg' },
-    { t:'s', src:'./thep-products.jpg' },
-    { t:'s', src:'./ximang-products.jpg' },
-    { t:'s', src:'./thephinh-products.jpg' },
-    { t:'s', src:'./vlxd-products.jpg' },
-    { t:'s', src:'./project-11.jpg' },
-    { t:'s', src:'./project-12.jpg' },
-    { t:'s', src:'./project-03.jpg' },
-    { t:'s', src:'./project-08.jpg' },
-    { t:'s', src:'./project-09.jpg' },
-    { t:'s', src:'./project-10.jpg' },
-    { t:'2', src:'./project-04.jpg', src2:'./project-07.jpg' },
-    { t:'s', src:'./project-01.jpg' },
-    { t:'s', src:'./project-02.jpg' },
-];
-
-function getBase() {
-    const h = window.location.href;
-    return h.substring(0, h.lastIndexOf('/') + 1);
-}
-
-/* ── Mobile print: fetch ảnh → base64 → mở tab mới → print ────────── */
-async function imgToBase64(url) {
-    const res = await fetch(url);
-    const blob = await res.blob();
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-    });
-}
-
-async function printViaMobileTab() {
-    const msgEl = document.getElementById('overlay-msg');
-    const overlay = document.getElementById('print-overlay');
-    const base = getBase();
-    const abs = r => base + r.replace(/^\.\//,'');
-
-    /* Thu thập danh sách URL cần fetch */
-    const urlSet = new Set();
-    PAGES.forEach(p => { urlSet.add(abs(p.src)); if (p.src2) urlSet.add(abs(p.src2)); });
-    const urls = [...urlSet];
-
-    /* Fetch song song */
-    msgEl.textContent = 'Đang tải ảnh để in…';
-    const b64map = {};
-    await Promise.all(urls.map(async url => {
-        try { b64map[url] = await imgToBase64(url); }
-        catch(e) { b64map[url] = url; }
-    }));
-
-    /* Xây nội dung HTML */
-    let body = '';
-    PAGES.forEach(p => {
-        const s1 = b64map[abs(p.src)];
-        if (p.t === '2') {
-            const s2 = b64map[abs(p.src2)];
-            body += `<div class="p sp"><div class="sh"><img src="${s1}"></div><div class="sg"></div><div class="sh"><img src="${s2}"></div></div>`;
-        } else {
-            body += `<div class="p"><img src="${s1}"></div>`;
-        }
-    });
-
-    const printHTML = `<!DOCTYPE html><html><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-@page{size:A4 portrait;margin:0}
-html,body{background:#fff;margin:0;padding:0;width:100%}
-.p{width:100vw;height:100vh;overflow:hidden;background:#fff;display:block;page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid}
-.p:last-child{page-break-after:avoid;break-after:avoid}
-.p>img{display:block;width:100%;height:100%;object-fit:fill}
-.sp{display:flex;flex-direction:column;background:#d0d0d0;padding:4vw}
-.sh{flex:1;min-height:0;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.sh img{max-width:100%;max-height:100%;object-fit:contain;display:block}
-.sg{height:3vw;flex-shrink:0;background:#d0d0d0}
-@media print{
-  html,body{width:210mm}
-  .p{width:210mm;height:297mm}
-  .p>img{width:210mm;height:297mm}
-  .sp{width:210mm;height:297mm;padding:8mm}
-  .sg{height:5mm}
-}
-</style>
-<script>window.onload=function(){setTimeout(function(){window.print();},600);};<\/script>
-</head><body>${body}</body></html>`;
-
-    msgEl.textContent = 'Đang mở trang in…';
-    const win = window.open('', '_blank');
-    if (!win) {
-        overlay.classList.remove('show');
-        alert('Vui lòng cho phép mở tab mới để in.');
-        return;
-    }
-    win.document.open();
-    win.document.write(printHTML);
-    win.document.close();
-    overlay.classList.remove('show');
-}
-
-/* ── printProfile ──────────────────────────────────────────────────── */
-/* ── printProfile ──────────────────────────────────────────────────── */
-function printProfile() {
-    const overlay = document.getElementById('print-overlay');
-    resetZoom();
-    overlay.classList.add('show');
-    document.getElementById('overlay-msg').textContent = 'Đang chuẩn bị in…';
-
-    if (needsIframe) {
-        /* iOS và Android: mở tab mới với ảnh base64 → print */
-        printViaMobileTab().catch(e => {
-            overlay.classList.remove('show');
-            alert('Lỗi khi in: ' + e.message);
-        });
-    } else {
-        /* Desktop: Chrome, Edge, Firefox, Safari macOS */
-        waitMainImages(() => {
-            setTimeout(() => {
-                overlay.classList.remove('show');
-                setTimeout(() => window.print(), 200);
-            }, 400);
-        });
+        contentEl.scrollTo({ top: page.offsetTop + botEl.offsetTop - 16, behavior: 'smooth' });
     }
 }
 
 window.addEventListener('beforeprint', () => {
-    resetZoom();
-});
-window.addEventListener('afterprint', () => {
-    document.getElementById('print-overlay').classList.remove('show');
+    document.querySelectorAll('.page').forEach(p => {
+        p.style.transform = p.style.marginTop = p.style.marginBottom = '';
+    });
 });
 </script>
 </body>
