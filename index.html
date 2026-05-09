@@ -310,7 +310,7 @@ img{
   }
   
   html, body {
-    height: 100% !important;
+    height: auto !important;
     overflow: visible !important;
     background: #fff !important;
   }
@@ -340,34 +340,24 @@ img{
     transform: scale(1) !important;
     max-width: none !important;
     position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
+    display: block !important;
   }
 
   .page img {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important; /* Đảm bảo fit trọn trang không bị cắt */
+    object-fit: contain !important;
     display: block !important;
   }
 
   .split-page {
-    display: flex !important;
-    flex-direction: column !important;
+    display: block !important;
   }
 
   .split-half {
     height: 50% !important;
     width: 100% !important;
     position: relative !important;
-  }
-  
-  .split-half img {
-    height: 100% !important;
-    object-fit: contain !important;
   }
   
   img {
@@ -429,33 +419,33 @@ img{
   </div>
 
   <div class="content" id="content">
-    <section class="page"><img class="cover-image" src="./profile-cover.jpg"></section>
-    <section class="page"><img class="full-bg" src="./company-intro-01.jpg"></section>
-    <section class="page"><img class="full-bg" src="./company-intro-02.jpg"></section>
-    <section class="page"><img class="full-bg" src="./main-products.jpg"></section>
-    <section class="page"><img class="full-bg" src="./thep-products.jpg"></section>
-    <section class="page"><img class="full-bg" src="./ximang-products.jpg"></section>
-    <section class="page"><img class="full-bg" src="./thephinh-products.jpg"></section>
-    <section class="page"><img class="full-bg" src="./vlxd-products.jpg"></section>
-    <section class="page"><img class="full-bg" src="./project-01.jpg"></section>
-    <section class="page"><img class="full-bg" src="./project-02.jpg"></section>
-    <section class="page"><img class="full-bg" src="./project-03.jpg"></section>
+    <section class="page"><img src="./profile-cover.jpg"></section>
+    <section class="page"><img src="./company-intro-01.jpg"></section>
+    <section class="page"><img src="./company-intro-02.jpg"></section>
+    <section class="page"><img src="./main-products.jpg"></section>
+    <section class="page"><img src="./thep-products.jpg"></section>
+    <section class="page"><img src="./ximang-products.jpg"></section>
+    <section class="page"><img src="./thephinh-products.jpg"></section>
+    <section class="page"><img src="./vlxd-products.jpg"></section>
+    <section class="page"><img src="./project-01.jpg"></section>
+    <section class="page"><img src="./project-02.jpg"></section>
+    <section class="page"><img src="./project-03.jpg"></section>
 
-    <!-- 12 + 13 -->
+    <!-- Trang 12 + 13 -->
     <section class="page split-page">
-      <div class="split-half"><img class="split-image" src="./project-04.jpg"></div>
-      <div class="split-half"><img class="split-image" src="./project-05.jpg"></div>
+      <div class="split-half"><img src="./project-04.jpg"></div>
+      <div class="split-half"><img src="./project-05.jpg"></div>
     </section>
 
-    <!-- 14 + 15 -->
+    <!-- Trang 14 + 15 -->
     <section class="page split-page">
-      <div class="split-half"><img class="split-image" src="./project-06.jpg"></div>
-      <div class="split-half"><img class="split-image" src="./project-07.jpg"></div>
+      <div class="split-half"><img src="./project-06.jpg"></div>
+      <div class="split-half"><img src="./project-07.jpg"></div>
     </section>
 
-    <section class="page"><img class="full-bg" src="./project-08.jpg"></section>
-    <section class="page"><img class="full-bg" src="./project-09.jpg"></section>
-    <section class="page"><img class="full-bg" src="./project-10.jpg"></section>
+    <section class="page"><img src="./project-08.jpg"></section>
+    <section class="page"><img src="./project-09.jpg"></section>
+    <section class="page"><img src="./project-10.jpg"></section>
   </div>
 
 </div>
