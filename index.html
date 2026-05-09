@@ -378,21 +378,9 @@ function scrollToSplitHalf(half) {
 const ua = navigator.userAgent;
 const isIOS           = /iP(hone|ad|od)/i.test(ua);
 const isChromeIOS     = /CriOS/i.test(ua);
-/*
- * isSafariIOS: Safari iOS thật sự (không phải Chrome/Firefox/Opera trên iOS)
- * Safari iOS dùng window.print() trực tiếp trên document gốc — KHÔNG dùng iframe.
- * Iframe trên Safari iOS sẽ gây in 2 lần (document gốc + iframe) → nhân đôi trang.
- */
 const isSafariIOS = isIOS && /WebKit/i.test(ua) && !isChromeIOS && !/FxiOS|OPiOS|EdgiOS/i.test(ua);
 const isAndroid       = /Android/i.test(ua);
 const isChromeAndroid = isAndroid && /Chrome/i.test(ua) && !/Firefox/i.test(ua);
-
-/*
- * CHỈ Chrome Android mới dùng iframe.
- * Chrome iOS (CriOS) và Safari iOS đều KHÔNG dùng iframe.
- *   - Safari: in document gốc với injected CSS
- *   - Chrome iOS: thực ra cũng là WebKit, hành xử như Safari → window.print() luôn
- */
 const needsIframe = isChromeAndroid;
 
 /* ── Pages data (17 trang thật) ────────────────────────────────────── */
@@ -422,25 +410,42 @@ function getBase() {
 }
 
 /* ── Iframe print — CHỈ cho Chrome Android ─────────────────────────── */
+/*
+ * FIX SCALE: Thêm <meta viewport> với width=device-width và zoom=1,
+ * sau đó dùng CSS width:100vw thay vì width:210mm để tránh bị scale down.
+ * Dùng aspect-ratio:210/297 thay vì height cứng để ảnh fill đúng tỉ lệ A4.
+ */
 function buildIframeHTML() {
     const base = getBase();
     const abs = r => base + r.replace(/^\.\//, '');
 
-    let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+    let html = `<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;
   -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 @page{size:210mm 297mm;margin:0}
-html,body{width:210mm;margin:0;padding:0;background:#fff}
-.p{width:210mm;height:297mm;overflow:hidden;background:#fff;
-   page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid}
+html,body{width:100%;margin:0;padding:0;background:#fff}
+.p{
+  width:100%;
+  aspect-ratio:210/297;
+  overflow:hidden;background:#fff;
+  page-break-after:always;break-after:page;
+  page-break-inside:avoid;break-inside:avoid;
+  display:flex;align-items:stretch;
+}
 .p:last-child{page-break-after:avoid;break-after:avoid}
-.p>img{display:block;width:210mm;height:297mm;object-fit:fill}
+.p>img{display:block;width:100%;height:100%;object-fit:fill;flex:1}
 .sp{display:flex;flex-direction:column;background:#d0d0d0;padding:8mm}
 .sh{width:100%;flex:1;min-height:0;background:#fff;
-    display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+    display:flex;align-items:center;justify-content:center;overflow:hidden}
 .sh img{max-width:100%;max-height:100%;object-fit:contain;display:block}
 .sg{height:5mm;flex-shrink:0;background:#d0d0d0}
+@media print{
+  .p{width:210mm!important;height:297mm!important;aspect-ratio:unset!important}
+  .p>img{width:210mm!important;height:297mm!important}
+}
 </style></head><body>`;
 
     PAGES.forEach(p => {
@@ -462,8 +467,7 @@ function printViaIframe() {
 
     const iframe = document.createElement('iframe');
     iframe.id = '_pf';
-    // width:210mm ~ 794px ở 96dpi, set cứng để Chrome Android không wrap
-    iframe.style.cssText = 'position:fixed;top:-9999px;left:0;width:210mm;height:1px;border:none;visibility:hidden;';
+    iframe.style.cssText = 'position:fixed;top:-9999px;left:0;width:100%;height:1px;border:none;visibility:hidden;';
     document.body.appendChild(iframe);
 
     const doc = iframe.contentDocument || iframe.contentWindow.document;
@@ -497,19 +501,13 @@ function printViaIframe() {
 
 /* ── Safari iOS / Chrome iOS print via window.print() ──────────────── */
 /*
- * Safari và Chrome iOS đều dùng WebKit engine.
- * Cả hai in document gốc khi gọi window.print().
- * Inject @media print CSS để kiểm soát layout → đúng 17 trang.
- * KHÔNG tạo iframe vì Safari sẽ in cả document gốc lẫn iframe → nhân đôi.
+ * FIX SCALE: Thay vì dùng height:100vh (= chiều cao màn hình, không phải trang giấy),
+ * dùng aspect-ratio:210/297 để page tự tính chiều cao đúng tỉ lệ A4.
+ * width:100% đảm bảo fill ngang hết trang giấy.
+ * Ảnh dùng width:100%;height:100% với object-fit:fill để fill cả page.
  */
 let _mobileStyleEl = null;
 function buildMobilePrintCSS() {
-    /*
-     * Safari iOS: KHÔNG dùng height:297mm vì iOS render mm theo pixel màn hình thực
-     * → mỗi trang cao hơn 1 trang giấy → tràn → sinh trang trắng → 34 trang.
-     * Giải pháp: height:100vh trong @media print = đúng 1 trang.
-     * width:100% để tránh scale sai.
-     */
     return `@media print{
 @page{size:210mm 297mm;margin:0!important}
 *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
@@ -518,16 +516,19 @@ html,body{background:#fff!important;width:100%!important;height:auto!important;
   margin:0!important;padding:0!important;overflow:visible!important}
 .viewer,.main,.content{display:block!important;width:100%!important;height:auto!important;
   margin:0!important;padding:0!important;overflow:visible!important;background:#fff!important}
-.page{display:block!important;width:100%!important;
-  height:100vh!important;min-height:unset!important;max-height:100vh!important;
+.page{
+  display:flex!important;align-items:stretch!important;
+  width:100%!important;
+  height:auto!important;min-height:unset!important;max-height:unset!important;
+  aspect-ratio:210/297!important;
   margin:0!important;padding:0!important;border:none!important;box-shadow:none!important;
   overflow:hidden!important;background:#fff!important;transform:none!important;
   page-break-after:always!important;break-after:page!important;
   page-break-inside:avoid!important;break-inside:avoid!important}
 .page:last-child{page-break-after:avoid!important;break-after:avoid!important}
-.page>img{width:100%!important;height:100vh!important;object-fit:fill!important;display:block!important}
+.page>img{width:100%!important;height:100%!important;object-fit:fill!important;display:block!important;flex:1!important}
 .split-page{display:flex!important;flex-direction:column!important;
-  width:100%!important;height:100vh!important;max-height:100vh!important;
+  width:100%!important;aspect-ratio:210/297!important;height:auto!important;max-height:unset!important;
   background:#d0d0d0!important;padding:8mm!important;gap:0!important;overflow:hidden!important}
 .split-half{flex:1!important;min-height:0!important;background:#fff!important;
   display:flex!important;align-items:center!important;
