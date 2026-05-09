@@ -109,6 +109,7 @@ body{
   justify-content:space-between;
   padding:0 18px;
   position:relative;
+  z-index: 100;
 }
 
 .toolbar-title{
@@ -167,7 +168,13 @@ body{
   outline:none;
 }
 
-/* ===== PRINT ===== */
+/* ===== RIGHT TOOLS ===== */
+
+.toolbar-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
 
 .tool-btn{
   width:34px;
@@ -180,6 +187,11 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  text-decoration: none;
+}
+
+.tool-btn:hover {
+  background: #3c4043;
 }
 
 .tool-btn svg{
@@ -192,7 +204,8 @@ body{
 
 .content{
   flex:1;
-  overflow:auto;
+  overflow-x:hidden;
+  overflow-y:auto;
   background:#1e1e1e;
   padding:30px 0;
 }
@@ -214,7 +227,7 @@ body{
 .page{
   width:100%;
   max-width:760px;
-  aspect-ratio:9/16;
+  aspect-ratio: 1/1.414; /* Tỉ lệ khổ dọc tiêu chuẩn */
   background:#fff;
   margin:0 auto 30px;
   overflow:hidden;
@@ -232,7 +245,6 @@ body{
   flex-direction:column;
   gap:0;
   padding:0;
-  overflow:hidden;
   background:#fff;
 }
 
@@ -246,10 +258,8 @@ body{
 .split-image{
   width:100%;
   height:100%;
-  object-fit:contain;
-  object-position:center;
+  object-fit:cover;
   display:block;
-  background:#fff;
 }
 
 /* ===== IMAGE ===== */
@@ -264,21 +274,14 @@ img{
 .cover-image{
   width:100%;
   height:100%;
-  object-fit:contain;
-  object-position:center;
+  object-fit:cover;
   background:#fff;
 }
 
 /* ===== MOBILE ===== */
 
 @media(max-width:768px){
-
-  .sidebar{
-    display:none;
-  }
-
-  /* ===== TOOLBAR MOBILE ===== */
-
+  .sidebar{ display:none; }
   .toolbar{
     height:auto;
     min-height:56px;
@@ -287,67 +290,64 @@ img{
     grid-template-columns:1fr auto;
     grid-template-rows:auto auto;
     gap:10px;
-    align-items:center;
   }
-
-  .toolbar-title{
-    grid-column:1;
-    grid-row:1;
-    font-size:16px;
-    line-height:1.3;
-    white-space:normal;
-    word-break:break-word;
-    text-align:left;
-  }
-
-  /* ===== ZOOM CENTER ===== */
-
+  .toolbar-title{ grid-column:1; grid-row:1; font-size:16px; white-space:normal; }
+  .toolbar-right { grid-column: 2; grid-row: 1; }
   .toolbar-center{
-    position:static;
-    transform:none;
-    grid-column:1 / 3;
-    grid-row:2;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    position:static; transform:none;
+    grid-column:1 / 3; grid-row:2;
+    width:100%; display:flex; justify-content:center;
+  }
+  .page{ max-width:95%; }
+}
+
+/* ===== CẤU HÌNH IN (FIX LỖI 29 TRANG) ===== */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0; /* Xóa lề để mất header/footer trình duyệt */
+  }
+  
+  html, body {
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff !important;
   }
 
-  #zoom-controls{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    width:100%;
+  .sidebar, .toolbar, .content::-webkit-scrollbar {
+    display: none !important;
   }
 
-  #zoom-controls button{
-    width:32px;
-    height:32px;
+  .viewer, .main, .content {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
   }
 
-  #zoom-controls input{
-    width:60px;
-    height:30px;
-    font-size:13px;
+  .page {
+    width: 210mm !important; /* Chiều rộng chuẩn A4 */
+    height: 297mm !important; /* Chiều cao chuẩn A4 */
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-after: always !important; /* Ngắt trang đúng sau mỗi section */
+    page-break-inside: avoid !important;
+    box-shadow: none !important;
+    transform: scale(1) !important; /* Không zoom khi in */
+    max-width: none !important;
+    aspect-ratio: auto !important;
   }
 
-  .tool-btn{
-    grid-column:2;
-    grid-row:1;
-    justify-self:end;
-    width:32px;
-    height:32px;
+  .split-page { display: flex !important; flex-direction: column !important; }
+  .split-half { height: 50% !important; }
+  
+  img {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
-
-  .content{
-    padding:10px 0;
-  }
-
-  .page{
-    max-width:95%;
-  }
-
 }
 
 </style>
@@ -358,414 +358,116 @@ img{
 
 <div class="viewer">
 
-<!-- =========================
-     SIDEBAR
-========================= -->
-
+<!-- SIDEBAR -->
 <div class="sidebar">
-
-  <div class="thumb" onclick="scrollToPage(1)">
-    <img src="./profile-cover.jpg">
-    <span>1</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(2)">
-    <img src="./company-intro-01.jpg">
-    <span>2</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(3)">
-    <img src="./company-intro-02.jpg">
-    <span>3</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(4)">
-    <img src="./main-products.jpg">
-    <span>4</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(5)">
-    <img src="./thep-products.jpg">
-    <span>5</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(6)">
-    <img src="./ximang-products.jpg">
-    <span>6</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(7)">
-    <img src="./thephinh-products.jpg">
-    <span>7</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(8)">
-    <img src="./vlxd-products.jpg">
-    <span>8</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(9)">
-    <img src="./project-01.jpg">
-    <span>9</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(10)">
-    <img src="./project-02.jpg">
-    <span>10</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(11)">
-    <img src="./project-03.jpg">
-    <span>11</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(12)">
-    <img src="./project-04.jpg">
-    <span>12</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(13)">
-    <img src="./project-05.jpg">
-    <span>13</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(14)">
-    <img src="./project-06.jpg">
-    <span>14</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(15)">
-    <img src="./project-07.jpg">
-    <span>15</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(16)">
-    <img src="./project-08.jpg">
-    <span>16</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(17)">
-    <img src="./project-09.jpg">
-    <span>17</span>
-  </div>
-
-  <div class="thumb" onclick="scrollToPage(18)">
-    <img src="./project-10.jpg">
-    <span>18</span>
-  </div>
-
+  <div class="thumb" onclick="scrollToPage(1)"><img src="./profile-cover.jpg"><span>1</span></div>
+  <div class="thumb" onclick="scrollToPage(2)"><img src="./company-intro-01.jpg"><span>2</span></div>
+  <div class="thumb" onclick="scrollToPage(3)"><img src="./company-intro-02.jpg"><span>3</span></div>
+  <div class="thumb" onclick="scrollToPage(4)"><img src="./main-products.jpg"><span>4</span></div>
+  <div class="thumb" onclick="scrollToPage(5)"><img src="./thep-products.jpg"><span>5</span></div>
+  <div class="thumb" onclick="scrollToPage(6)"><img src="./ximang-products.jpg"><span>6</span></div>
+  <div class="thumb" onclick="scrollToPage(7)"><img src="./thephinh-products.jpg"><span>7</span></div>
+  <div class="thumb" onclick="scrollToPage(8)"><img src="./vlxd-products.jpg"><span>8</span></div>
+  <div class="thumb" onclick="scrollToPage(9)"><img src="./project-01.jpg"><span>9</span></div>
+  <div class="thumb" onclick="scrollToPage(10)"><img src="./project-02.jpg"><span>10</span></div>
+  <div class="thumb" onclick="scrollToPage(11)"><img src="./project-03.jpg"><span>11</span></div>
+  <div class="thumb" onclick="scrollToPage(12)"><img src="./project-04.jpg"><span>12</span></div>
+  <div class="thumb" onclick="scrollToPage(13)"><img src="./project-05.jpg"><span>13</span></div>
+  <div class="thumb" onclick="scrollToPage(14)"><img src="./project-06.jpg"><span>14</span></div>
+  <div class="thumb" onclick="scrollToPage(15)"><img src="./project-07.jpg"><span>15</span></div>
+  <div class="thumb" onclick="scrollToPage(16)"><img src="./project-08.jpg"><span>16</span></div>
+  <div class="thumb" onclick="scrollToPage(17)"><img src="./project-09.jpg"><span>17</span></div>
+  <div class="thumb" onclick="scrollToPage(18)"><img src="./project-10.jpg"><span>18</span></div>
 </div>
-
-<!-- =========================
-     MAIN
-========================= -->
 
 <div class="main">
 
-  <!-- TOOLBAR -->
-
   <div class="toolbar">
-
-    <div class="toolbar-title">
-      THÉP TAM GIANG PROFILE
-    </div>
+    <div class="toolbar-title">THÉP TAM GIANG PROFILE</div>
 
     <div class="toolbar-center">
-
       <span id="zoom-controls">
-
-        <button onclick="zoomOut()">
-
-          <svg viewBox="0 -960 960 960">
-            <path d="M232-444v-72h496v72H232Z"></path>
-          </svg>
-
-        </button>
-
-        <input
-        type="text"
-        id="zoomInput"
-        value="100%"
-        readonly>
-
-        <button onclick="zoomIn()">
-
-          <svg viewBox="0 -960 960 960">
-            <path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"></path>
-          </svg>
-
-        </button>
-
+        <button onclick="zoomOut()"><svg viewBox="0 -960 960 960"><path d="M232-444v-72h496v72H232Z"></path></svg></button>
+        <input type="text" id="zoomInput" value="100%" readonly>
+        <button onclick="zoomIn()"><svg viewBox="0 -960 960 960"><path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"></path></svg></button>
       </span>
-
     </div>
 
-    <button class="tool-btn" onclick="window.print()">
-
-      <svg viewBox="0 -960 960 960">
-        <path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/>
-      </svg>
-
-    </button>
-
+    <div class="toolbar-right">
+      <a href="./profile_thep_tam_giang.pdf" download="profile_thep_tam_giang.pdf" class="tool-btn" title="Tải xuống">
+        <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+      </a>
+      <button class="tool-btn" onclick="window.print()" title="In profile">
+        <svg viewBox="0 -960 960 960"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/></svg>
+      </button>
+    </div>
   </div>
 
-<!-- =========================
-     CONTENT
-========================= -->
+  <div class="content" id="content">
+    <section class="page"><img class="cover-image" src="./profile-cover.jpg"></section>
+    <section class="page"><img class="full-bg" src="./company-intro-01.jpg"></section>
+    <section class="page"><img class="full-bg" src="./company-intro-02.jpg"></section>
+    <section class="page"><img class="full-bg" src="./main-products.jpg"></section>
+    <section class="page"><img class="full-bg" src="./thep-products.jpg"></section>
+    <section class="page"><img class="full-bg" src="./ximang-products.jpg"></section>
+    <section class="page"><img class="full-bg" src="./thephinh-products.jpg"></section>
+    <section class="page"><img class="full-bg" src="./vlxd-products.jpg"></section>
+    <section class="page"><img class="full-bg" src="./project-01.jpg"></section>
+    <section class="page"><img class="full-bg" src="./project-02.jpg"></section>
+    <section class="page"><img class="full-bg" src="./project-03.jpg"></section>
 
-<div class="content" id="content">
+    <!-- 12 + 13 -->
+    <section class="page split-page">
+      <div class="split-half"><img class="split-image" src="./project-04.jpg"></div>
+      <div class="split-half"><img class="split-image" src="./project-05.jpg"></div>
+    </section>
 
-  <!-- 01 -->
-  <section class="page">
-    <img class="cover-image" src="./profile-cover.jpg">
-  </section>
+    <!-- 14 + 15 -->
+    <section class="page split-page">
+      <div class="split-half"><img class="split-image" src="./project-06.jpg"></div>
+      <div class="split-half"><img class="split-image" src="./project-07.jpg"></div>
+    </section>
 
-  <!-- 02 -->
-  <section class="page">
-    <img class="full-bg" src="./company-intro-01.jpg">
-  </section>
-
-  <!-- 03 -->
-  <section class="page">
-    <img class="full-bg" src="./company-intro-02.jpg">
-  </section>
-
-  <!-- 04 -->
-  <section class="page">
-    <img class="full-bg" src="./main-products.jpg">
-  </section>
-
-  <!-- 05 -->
-  <section class="page">
-    <img class="full-bg" src="./thep-products.jpg">
-  </section>
-
-  <!-- 06 -->
-  <section class="page">
-    <img class="full-bg" src="./ximang-products.jpg">
-  </section>
-
-  <!-- 07 -->
-  <section class="page">
-    <img class="full-bg" src="./thephinh-products.jpg">
-  </section>
-
-  <!-- 08 -->
-  <section class="page">
-    <img class="full-bg" src="./vlxd-products.jpg">
-  </section>
-
-  <!-- 09 -->
-  <section class="page">
-    <img class="full-bg" src="./project-01.jpg">
-  </section>
-
-  <!-- 10 -->
-  <section class="page">
-    <img class="full-bg" src="./project-02.jpg">
-  </section>
-
-  <!-- 11 -->
-  <section class="page">
-    <img class="full-bg" src="./project-03.jpg">
-  </section>
-
-  <!-- 12 + 13 -->
-  <section class="page split-page">
-
-    <div class="split-half" id="project04">
-      <img class="split-image" src="./project-04.jpg">
-    </div>
-
-    <div class="split-half" id="project05">
-      <img class="split-image" src="./project-05.jpg">
-    </div>
-
-  </section>
-
-  <!-- 14 + 15 -->
-  <section class="page split-page">
-
-    <div class="split-half" id="project06">
-      <img class="split-image" src="./project-06.jpg">
-    </div>
-
-    <div class="split-half" id="project07">
-      <img class="split-image" src="./project-07.jpg">
-    </div>
-
-  </section>
-
-  <!-- 16 -->
-  <section class="page">
-    <img class="full-bg" src="./project-08.jpg">
-  </section>
-
-  <!-- 17 -->
-  <section class="page">
-    <img class="full-bg" src="./project-09.jpg">
-  </section>
-
-  <!-- 18 -->
-  <section class="page">
-    <img class="full-bg" src="./project-10.jpg">
-  </section>
+    <section class="page"><img class="full-bg" src="./project-08.jpg"></section>
+    <section class="page"><img class="full-bg" src="./project-09.jpg"></section>
+    <section class="page"><img class="full-bg" src="./project-10.jpg"></section>
+  </div>
 
 </div>
-
-</div>
-
 </div>
 
 <script>
-
 let zoomLevel = 100;
-
 function updateZoom(){
-
   document.querySelectorAll('.page').forEach(page=>{
-
-    page.style.transform =
-    `scale(${zoomLevel / 100})`;
-
+    page.style.transform = `scale(${zoomLevel / 100})`;
   });
-
-  document.getElementById('zoomInput').value =
-  zoomLevel + '%';
-
+  document.getElementById('zoomInput').value = zoomLevel + '%';
 }
-
-function zoomIn(){
-
-  if(zoomLevel < 200){
-
-    zoomLevel += 10;
-    updateZoom();
-
-  }
-
-}
-
-function zoomOut(){
-
-  if(zoomLevel > 50){
-
-    zoomLevel -= 10;
-    updateZoom();
-
-  }
-
-}
+function zoomIn(){ if(zoomLevel < 200){ zoomLevel += 10; updateZoom(); } }
+function zoomOut(){ if(zoomLevel > 50){ zoomLevel -= 10; updateZoom(); } }
 
 function scrollToPage(index){
+  const content = document.getElementById('content');
+  const pages = document.querySelectorAll('.page');
+  let targetTop = 0;
 
-  const content =
-  document.getElementById('content');
-
-  const pages =
-  document.querySelectorAll('.page');
-
-  if(index === 12){
-
-    const page =
-    pages[11];
-
-    content.scrollTo({
-
-      top:
-      page.offsetTop,
-
-      behavior:'smooth'
-
-    });
-
-    return;
-
+  if(index <= 11){
+    targetTop = pages[index-1].offsetTop;
+  } else if(index === 12){
+    targetTop = pages[11].offsetTop;
+  } else if(index === 13){
+    targetTop = pages[11].offsetTop + (pages[11].offsetHeight / 2);
+  } else if(index === 14){
+    targetTop = pages[12].offsetTop;
+  } else if(index === 15){
+    targetTop = pages[12].offsetTop + (pages[12].offsetHeight / 2);
+  } else {
+    targetTop = pages[index-3].offsetTop;
   }
 
-  if(index === 13){
-
-    const page =
-    pages[11];
-
-    content.scrollTo({
-
-      top:
-      page.offsetTop +
-      (page.offsetHeight / 2),
-
-      behavior:'smooth'
-
-    });
-
-    return;
-
-  }
-
-  if(index === 14){
-
-    const page =
-    pages[12];
-
-    content.scrollTo({
-
-      top:
-      page.offsetTop,
-
-      behavior:'smooth'
-
-    });
-
-    return;
-
-  }
-
-  if(index === 15){
-
-    const page =
-    pages[12];
-
-    content.scrollTo({
-
-      top:
-      page.offsetTop +
-      (page.offsetHeight / 2),
-
-      behavior:'smooth'
-
-    });
-
-    return;
-
-  }
-
-  let realIndex = index;
-
-  if(index >= 16){
-
-    realIndex = index - 2;
-
-  }
-
-  const page =
-  pages[realIndex - 1];
-
-  if(page){
-
-    content.scrollTo({
-
-      top:
-      page.offsetTop,
-
-      behavior:'smooth'
-
-    });
-
-  }
-
+  content.scrollTo({ top: targetTop, behavior:'smooth' });
 }
-
 </script>
 
 </body>
