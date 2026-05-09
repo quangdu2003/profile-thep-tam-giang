@@ -425,33 +425,26 @@ function buildIframeHTML() {
 
     let html = `<!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=210mm, initial-scale=1.0">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;
   -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 @page{size:210mm 297mm;margin:0}
-html,body{width:100%;margin:0;padding:0;background:#fff}
+html,body{width:210mm;margin:0;padding:0;background:#fff}
 .p{
-  width:100%;
-  aspect-ratio:210/297;
+  width:210mm;height:297mm;
   overflow:hidden;background:#fff;
   page-break-after:always;break-after:page;
   page-break-inside:avoid;break-inside:avoid;
-  display:flex;align-items:stretch;
 }
 .p:last-child{page-break-after:avoid;break-after:avoid}
-.p>img{display:block;width:100%;height:100%;object-fit:fill;flex:1}
-.sp{display:flex;flex-direction:column;background:#d0d0d0;padding:8mm}
+.p>img{display:block;width:210mm;height:297mm;object-fit:fill}
+.sp{display:flex;flex-direction:column;background:#d0d0d0;padding:8mm;
+  width:210mm;height:297mm;overflow:hidden}
 .sh{width:100%;flex:1;min-height:0;background:#fff;
     display:flex;align-items:center;justify-content:center;overflow:hidden}
 .sh img{max-width:100%;max-height:100%;object-fit:contain;display:block}
 .sg{height:5mm;flex-shrink:0;background:#d0d0d0}
-@media print{
-  html,body{width:210mm!important}
-  .p{width:210mm!important;height:297mm!important;aspect-ratio:unset!important;max-height:297mm!important}
-  .p>img{display:block!important;width:210mm!important;height:297mm!important;object-fit:fill!important}
-  .sp{width:210mm!important;height:297mm!important;aspect-ratio:unset!important;max-height:297mm!important}
-}
 </style></head><body>`;
 
     PAGES.forEach(p => {
