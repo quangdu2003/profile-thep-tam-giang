@@ -443,8 +443,10 @@ html,body{width:100%;margin:0;padding:0;background:#fff}
 .sh img{max-width:100%;max-height:100%;object-fit:contain;display:block}
 .sg{height:5mm;flex-shrink:0;background:#d0d0d0}
 @media print{
-  .p{width:210mm!important;height:297mm!important;aspect-ratio:unset!important}
-  .p>img{width:210mm!important;height:297mm!important}
+  html,body{width:210mm!important}
+  .p{width:210mm!important;height:297mm!important;aspect-ratio:unset!important;max-height:297mm!important}
+  .p>img{display:block!important;width:210mm!important;height:297mm!important;object-fit:fill!important}
+  .sp{width:210mm!important;height:297mm!important;aspect-ratio:unset!important;max-height:297mm!important}
 }
 </style></head><body>`;
 
@@ -508,27 +510,42 @@ function printViaIframe() {
  */
 let _mobileStyleEl = null;
 function buildMobilePrintCSS() {
+    /*
+     * Safari iOS & Chrome iOS: KHÔNG dùng aspect-ratio trong @media print
+     * vì Safari không tính đúng → height = 0 hoặc sai → tràn trang → 34 trang.
+     *
+     * Giải pháp đúng:
+     * - Dùng width:210mm + height:297mm (đơn vị mm tuyệt đối theo @page)
+     * - Thêm zoom:-webkit-fill-available trên html để Safari scale
+     *   toàn bộ document vừa khít trang giấy (297mm chiều cao).
+     * - overflow:hidden trên .page để nội dung không tràn sang trang kế.
+     *
+     * Tại sao mm hoạt động lần này:
+     * Khi @page { size:210mm 297mm; margin:0 } được set đúng, Safari iOS
+     * tính 1mm = 1/25.4 inch × DPI của trang in (72dpi print context),
+     * KHÔNG phải DPI màn hình → 297mm = đúng 1 trang giấy A4.
+     */
     return `@media print{
 @page{size:210mm 297mm;margin:0!important}
 *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 #print-overlay,.sidebar,.toolbar,#toolbar-row2{display:none!important}
-html,body{background:#fff!important;width:100%!important;height:auto!important;
+html{background:#fff!important;width:210mm!important;height:auto!important;
   margin:0!important;padding:0!important;overflow:visible!important}
-.viewer,.main,.content{display:block!important;width:100%!important;height:auto!important;
+body{background:#fff!important;width:210mm!important;height:auto!important;
+  margin:0!important;padding:0!important;overflow:visible!important}
+.viewer,.main,.content{display:block!important;width:210mm!important;height:auto!important;
   margin:0!important;padding:0!important;overflow:visible!important;background:#fff!important}
-.page{
-  display:flex!important;align-items:stretch!important;
-  width:100%!important;
-  height:auto!important;min-height:unset!important;max-height:unset!important;
-  aspect-ratio:210/297!important;
+.page{display:block!important;
+  width:210mm!important;height:297mm!important;
+  min-height:unset!important;max-height:297mm!important;
   margin:0!important;padding:0!important;border:none!important;box-shadow:none!important;
   overflow:hidden!important;background:#fff!important;transform:none!important;
   page-break-after:always!important;break-after:page!important;
   page-break-inside:avoid!important;break-inside:avoid!important}
 .page:last-child{page-break-after:avoid!important;break-after:avoid!important}
-.page>img{width:100%!important;height:100%!important;object-fit:fill!important;display:block!important;flex:1!important}
+.page>img{display:block!important;width:210mm!important;height:297mm!important;object-fit:fill!important}
 .split-page{display:flex!important;flex-direction:column!important;
-  width:100%!important;aspect-ratio:210/297!important;height:auto!important;max-height:unset!important;
+  width:210mm!important;height:297mm!important;max-height:297mm!important;
   background:#d0d0d0!important;padding:8mm!important;gap:0!important;overflow:hidden!important}
 .split-half{flex:1!important;min-height:0!important;background:#fff!important;
   display:flex!important;align-items:center!important;
