@@ -66,40 +66,33 @@
             .page { width: 95%; margin-bottom: 15px; }
         }
 
-        /* ===== PHÁ BỎ CẤU TRÚC ĐỂ FIX 34 TRANG VÀ FOOTER TRÊN IPHONE ===== */
+        /* ===== CHIẾN THUẬT TRIỆT TIÊU TRANG TRỐNG & FOOTER ===== */
         @media print {
             @page { 
                 size: A4 portrait; 
-                margin: 0 !important; /* Xóa lề sạch sẽ */
+                margin: 0 !important; /* Xóa sạch lề để diệt Header/Footer */
             }
 
-            /* Ẩn sạch các thành phần thừa */
+            /* Ẩn toàn bộ giao diện web */
             .sidebar, .toolbar, .mobile-tools-wrap { display: none !important; }
 
-            html, body { 
-                background: #fff !important; 
-                margin: 0 !important;
-                padding: 0 !important;
-                height: auto !important;
-                width: 100% !important;
-                overflow: visible !important;
-            }
-
-            .viewer, .main, .desktop-layout, .content { 
+            /* Ép body và các thẻ cha không chiếm diện tích ảo */
+            html, body, .viewer, .main, .desktop-layout, .content { 
                 display: block !important; 
                 margin: 0 !important; 
                 padding: 0 !important;
-                width: 100% !important;
                 height: auto !important;
+                width: 210mm !important; /* Khóa chiều rộng chuẩn */
                 overflow: visible !important;
                 position: static !important;
+                background: white !important;
             }
 
+            /* Định nghĩa lại section là 1 tờ A4 khít */
             .page { 
-                display: block !important;
-                position: relative !important;
+                display: flex !important;
                 width: 210mm !important; 
-                height: 296.5mm !important; /* Giảm nhẹ để né trang trống ảo */
+                height: 297mm !important; /* Chiều cao chuẩn A4 */
                 margin: 0 !important; 
                 padding: 0 !important;
                 page-break-after: always !important; 
@@ -108,21 +101,23 @@
                 border: none !important;
                 overflow: hidden !important;
             }
-            
+
+            /* Xử lý trang gộp 15 */
             .split-page { 
                 display: flex !important;
                 flex-direction: column !important;
-                padding: 10mm !important; 
-                gap: 10mm !important; 
-                height: 296.5mm !important;
+                padding: 10mm !important;
+                gap: 10mm !important;
+                justify-content: center !important;
             }
+            .split-half { height: 45% !important; flex: none !important; }
 
+            /* Ảnh phải khít 100% không dư thừa pixel */
             img { 
                 width: 100% !important; 
                 height: 100% !important; 
-                max-width: 100% !important;
-                max-height: 100% !important;
                 object-fit: contain !important; 
+                page-break-inside: avoid !important;
             }
         }
     </style>
@@ -131,7 +126,6 @@
 <body>
     <div class="viewer">
         <div class="sidebar">
-            <!-- Thumbnail list -->
             <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-page"><img src="./profile-cover.jpg"></div><span>1</span></div>
             <div class="thumb" onclick="scrollToPage(2)"><div class="thumb-page"><img src="./company-intro-01.jpg"></div><span>2</span></div>
             <div class="thumb" onclick="scrollToPage(3)"><div class="thumb-page"><img src="./company-intro-02.jpg"></div><span>3</span></div>
