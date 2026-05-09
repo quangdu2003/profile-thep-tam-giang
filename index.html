@@ -6,16 +6,18 @@
     <title>THÉP TAM GIANG PROFILE</title>
     <link rel="icon" href="./profile-cover-removebg-preview.png">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; height: 100%; overflow: hidden; font-family: Arial, sans-serif; background: #202124; }
         .viewer { display: flex; width: 100%; height: 100vh; }
 
+        /* ── SIDEBAR ── */
         .sidebar { width: 260px; background: #2b2b2b; overflow-y: auto; border-right: 1px solid #3c4043; padding: 14px 12px; display: flex; flex-direction: column; height: 100vh; }
         .thumb { width: 100%; margin-bottom: 20px; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
-        .thumb-page { width: 100%; aspect-ratio: 1 / 1.414; background: #fff; padding: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .thumb-page { width: 100%; aspect-ratio: 1/1.414; background: #fff; padding: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .thumb-page img { width: 100%; height: 100%; object-fit: contain; }
         .thumb span { display: block; text-align: center; color: #fff; margin-top: 8px; font-size: 13px; }
 
+        /* ── MAIN ── */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; background: #1e1e1e; }
         .toolbar { height: 56px; background: #2b2b2b; border-bottom: 1px solid #3c4043; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; width: 100%; flex-shrink: 0; z-index: 100; }
         .toolbar-title { color: #fff; font-size: 15px; font-weight: 600; }
@@ -27,12 +29,14 @@
         .tool-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 4px; background: #3c4043; cursor: pointer; border: none; text-decoration: none; }
         .tool-btn svg { width: 20px; height: 20px; fill: #fff; }
 
+        /* ── CONTENT ── */
         .content { flex: 1; overflow-x: hidden; overflow-y: auto; padding: 30px 0; scroll-behavior: smooth; }
         .page { width: 760px; aspect-ratio: 1/1.414; background: #fff; margin: 0 auto 30px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .split-page { display: flex; flex-direction: column; padding: 25px; gap: 25px; }
         .split-half { width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         img { width: 100%; height: 100%; display: block; object-fit: contain; }
 
+        /* ── MOBILE UI ── */
         @media (max-width: 768px) {
             .sidebar { display: none; }
             .toolbar { flex-direction: column; height: auto; padding: 12px 0; gap: 15px; }
@@ -45,23 +49,24 @@
             .page { width: 95%; margin-bottom: 15px; }
         }
 
-        /* Print cơ bản cho Chrome/Desktop */
+        /* ── PRINT — Desktop / Chrome Android thực ── */
         @media print {
             @page { size: A4 portrait; margin: 0; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .sidebar, .toolbar, .mobile-tools-wrap, #print-overlay { display: none !important; }
-            html, body { background: white !important; width: 210mm !important; height: auto !important; overflow: visible !important; }
+            html, body { background: white !important; width: 210mm !important; height: auto !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; }
             .viewer, .main, .content { display: block !important; width: 210mm !important; height: auto !important; overflow: visible !important; background: white !important; padding: 0 !important; margin: 0 !important; }
             .page { display: block !important; width: 210mm !important; height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important; aspect-ratio: unset !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; overflow: hidden !important; background: white !important; transform: none !important; page-break-after: always !important; break-after: page !important; break-inside: avoid !important; }
             .page:last-child { page-break-after: avoid !important; break-after: avoid !important; }
-            .split-page { display: flex !important; flex-direction: column !important; padding: 0 !important; gap: 0 !important; height: 297mm !important; max-height: 297mm !important; }
-            .split-half { flex: 1 !important; width: 100% !important; height: 50% !important; max-height: 50% !important; overflow: hidden !important; }
+            .split-page { display: flex !important; flex-direction: column !important; padding: 0 !important; gap: 0 !important; height: 297mm !important; max-height: 297mm !important; overflow: hidden !important; }
+            .split-half { flex: 1 !important; width: 100% !important; height: 50% !important; max-height: 50% !important; flex: none !important; overflow: hidden !important; }
             img { width: 100% !important; height: 100% !important; object-fit: fill !important; display: block !important; }
         }
 
-        /* Overlay */
-        #print-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.78); z-index: 9999; align-items: center; justify-content: center; flex-direction: column; gap: 16px; color: white; font-size: 16px; font-family: Arial, sans-serif; }
+        /* ── OVERLAY ── */
+        #print-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.82); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; gap: 16px; color: #fff; font-size: 15px; font-family: Arial, sans-serif; }
         #print-overlay.show { display: flex; }
-        .spinner { width: 42px; height: 42px; border: 4px solid rgba(255,255,255,0.25); border-top-color: #fff; border-radius: 50%; animation: spin 0.75s linear infinite; }
+        .spinner { width: 42px; height: 42px; border: 4px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: spin 0.75s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -69,10 +74,11 @@
 
 <div id="print-overlay">
     <div class="spinner"></div>
-    <div>Đang chuẩn bị in, vui lòng chờ…</div>
+    <div id="overlay-msg">Đang chuẩn bị in, vui lòng chờ…</div>
 </div>
 
 <div class="viewer">
+    <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-page"><img src="./profile-cover.jpg"></div><span>1</span></div>
         <div class="thumb" onclick="scrollToPage(2)"><div class="thumb-page"><img src="./company-intro-01.jpg"></div><span>2</span></div>
@@ -94,6 +100,7 @@
         <div class="thumb" onclick="scrollToPage(18)"><div class="thumb-page"><img src="./project-02.jpg"></div><span>18</span></div>
     </div>
 
+    <!-- MAIN -->
     <div class="main">
         <div class="toolbar">
             <div class="toolbar-title">THÉP TAM GIANG PROFILE</div>
@@ -142,7 +149,9 @@
 </div>
 
 <script>
-/* ── ZOOM ─────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   ZOOM
+═══════════════════════════════════════════════════════════════ */
 let zoomLevel = 100;
 const content = document.getElementById('content');
 function updateZoom() {
@@ -154,193 +163,275 @@ function zoomOut() { if (zoomLevel > 50)  { zoomLevel -= 10; updateZoom(); } }
 function scrollToPage(n) {
     const pages = document.querySelectorAll('.page');
     let top = 0;
-    if      (n <= 14) top = pages[n-1].offsetTop;
+    if      (n <= 14)  top = pages[n-1].offsetTop;
     else if (n === 15) top = pages[14].offsetTop;
     else if (n === 16) top = pages[14].offsetTop + pages[14].offsetHeight / 2;
     else               top = pages[n-2].offsetTop;
     content.scrollTo({ top: top - 20, behavior: 'smooth' });
 }
 
-/* ── DETECT BROWSER ───────────────────────────────────────────── */
-const ua        = navigator.userAgent;
-const isIOS     = /iP(hone|ad|od)/i.test(ua);
-const isAndroid = /Android/i.test(ua);
-const isChromeIOS    = /CriOS/i.test(ua);
-const isChromeAndroid= /Android/i.test(ua) && /Chrome/i.test(ua);
-const isChromeMobile = isChromeIOS || isChromeAndroid;
-const isSafariIOS    = isIOS && /WebKit/i.test(ua) && !isChromeIOS && !/FxiOS|OPiOS/i.test(ua);
-const isSafariDesk   = !isIOS && /^((?!chrome|android).)*safari/i.test(ua);
-const isMobile  = isIOS || isAndroid;
-const needsFix  = isMobile || isSafariDesk;
+/* ═══════════════════════════════════════════════════════════════
+   DETECT BROWSER
+═══════════════════════════════════════════════════════════════ */
+const ua          = navigator.userAgent;
+const isIOS       = /iP(hone|ad|od)/i.test(ua);
+const isAndroid   = /Android/i.test(ua);
+const isChromeIOS = /CriOS/i.test(ua);                          // Chrome trên iPhone/iPad
+const isSafariIOS = isIOS && /WebKit/i.test(ua) && !isChromeIOS && !/FxiOS|OPiOS/i.test(ua);
+const isMobile    = isIOS || isAndroid;
 
-/* ── TÍNH KÍCH THƯỚC PAPER THEO TỪNG TRÌNH DUYỆT ─────────────────
-   Mỗi trình duyệt tính paper width khác nhau:
+/* ═══════════════════════════════════════════════════════════════
+   DANH SÁCH ẢNH (theo thứ tự trang)
+   split-page = 2 ảnh trên 1 trang → đánh dấu isSplit
+═══════════════════════════════════════════════════════════════ */
+const PAGE_IMAGES = [
+    { src: './profile-cover.jpg' },
+    { src: './company-intro-01.jpg' },
+    { src: './company-intro-02.jpg' },
+    { src: './main-products.jpg' },
+    { src: './thep-products.jpg' },
+    { src: './ximang-products.jpg' },
+    { src: './thephinh-products.jpg' },
+    { src: './vlxd-products.jpg' },
+    { src: './project-11.jpg' },
+    { src: './project-12.jpg' },
+    { src: './project-03.jpg' },
+    { src: './project-08.jpg' },
+    { src: './project-09.jpg' },
+    { src: './project-10.jpg' },
+    { src: './project-04.jpg', split: './project-07.jpg' },  // 1 trang 2 ảnh
+    { src: './project-01.jpg' },
+    { src: './project-02.jpg' },
+];
 
-   Safari iOS   : dùng screen.width (CSS px = physical/dpr)
-                  → pw = Math.min(screen.width, screen.height)
+/* ═══════════════════════════════════════════════════════════════
+   SAFARI iOS — inject style pixel vào trang hiện tại
+═══════════════════════════════════════════════════════════════ */
+function getSafariPaperPx() {
+    const pw = Math.min(screen.width, screen.height);
+    return { pw, ph: Math.round(pw * 297 / 210) };
+}
 
-   Chrome iOS   : dùng window.innerWidth khi print (portrait)
-                  → pw = Math.min(screen.width, screen.height) (giống Safari)
-
-   Chrome Android: dùng document.documentElement.clientWidth
-                   khi ở chế độ print (sau khi reset layout)
-                   Nhưng thực tế nó scale theo dpr khác,
-                   nên ta dùng: pw = screen.width / devicePixelRatio
-                   (đây là CSS pixel thực Chrome Android nhận)
-
-   Firefox mobile: tương tự Chrome Android
-──────────────────────────────────────────────────────────────── */
-function getPaperPx() {
-    let pw;
-    if (isAndroid) {
-        // Chrome/Firefox Android: CSS px = physical px / dpr
-        const dpr = window.devicePixelRatio || 1;
-        pw = Math.round(Math.min(screen.width, screen.height) / dpr);
-        // Fallback nếu dpr đã được tính sẵn trong screen.width
-        if (pw < 200) pw = Math.min(screen.width, screen.height);
-    } else {
-        // iOS (Safari & Chrome): screen.width đã là CSS px
-        pw = Math.min(screen.width, screen.height);
-    }
-    const ph  = Math.round(pw * 297 / 210);
+function buildSafariStyle() {
+    const { pw, ph } = getSafariPaperPx();
     const ph2 = Math.round(ph / 2);
-    return { pw, ph, ph2 };
+    return `@media print {
+        @page { size: A4 portrait; margin: 0 !important; }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        #print-overlay, .sidebar, .toolbar, .mobile-tools-wrap { display: none !important; }
+        html, body { background: white !important; width: ${pw}px !important; height: auto !important; margin: 0 !important; padding: 0 !important; overflow: visible !important; }
+        .viewer, .main, .content { display: block !important; width: ${pw}px !important; height: auto !important; margin: 0 !important; padding: 0 !important; overflow: visible !important; background: white !important; float: none !important; }
+        .page { display: block !important; width: ${pw}px !important; height: ${ph}px !important; min-height: ${ph}px !important; max-height: ${ph}px !important; aspect-ratio: unset !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; overflow: hidden !important; background: white !important; transform: none !important; float: none !important; position: relative !important; page-break-after: always !important; page-break-inside: avoid !important; break-after: page !important; break-inside: avoid !important; }
+        .page:last-of-type { page-break-after: avoid !important; break-after: avoid !important; }
+        .split-page { display: flex !important; flex-direction: column !important; flex-wrap: nowrap !important; padding: 0 !important; gap: 0 !important; height: ${ph}px !important; max-height: ${ph}px !important; overflow: hidden !important; }
+        .split-half { display: block !important; width: ${pw}px !important; height: ${ph2}px !important; min-height: ${ph2}px !important; max-height: ${ph2}px !important; flex: none !important; overflow: hidden !important; }
+        .content img { display: block !important; width: ${pw}px !important; height: 100% !important; max-width: ${pw}px !important; object-fit: fill !important; }
+    }`;
 }
 
-function buildPrintStyle() {
-    const { pw, ph, ph2 } = getPaperPx();
-
-    return `
-@media print {
-    @page { size: A4 portrait; margin: 0 !important; }
-    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    #print-overlay, .sidebar, .toolbar, .mobile-tools-wrap { display: none !important; }
-
-    html, body {
-        background: white !important;
-        width: ${pw}px !important; height: auto !important;
-        margin: 0 !important; padding: 0 !important;
-        overflow: visible !important;
-    }
-    .viewer, .main, .content {
-        display: block !important;
-        width: ${pw}px !important; height: auto !important;
-        margin: 0 !important; padding: 0 !important;
-        overflow: visible !important; background: white !important;
-        float: none !important;
-    }
-
-    /* MỖI .page = 1 TRANG A4 */
-    .page {
-        display: block !important;
-        width: ${pw}px !important;
-        height: ${ph}px !important;
-        min-height: ${ph}px !important;
-        max-height: ${ph}px !important;
-        aspect-ratio: unset !important;
-        margin: 0 !important; padding: 0 !important;
-        border: none !important; box-shadow: none !important;
-        overflow: hidden !important; background: white !important;
-        transform: none !important; float: none !important;
-        position: relative !important;
-        page-break-after: always !important;
-        page-break-inside: avoid !important;
-        -webkit-column-break-inside: avoid !important;
-        break-after: page !important;
-        break-inside: avoid !important;
-    }
-    .page:last-of-type {
-        page-break-after: avoid !important;
-        break-after: avoid !important;
-    }
-
-    /* TRANG SPLIT (2 ảnh) */
-    .split-page {
-        display: flex !important;
-        flex-direction: column !important;
-        flex-wrap: nowrap !important;
-        padding: 0 !important; gap: 0 !important;
-        height: ${ph}px !important;
-        max-height: ${ph}px !important;
-        overflow: hidden !important;
-    }
-    .split-half {
-        display: block !important;
-        width: ${pw}px !important;
-        height: ${ph2}px !important;
-        min-height: ${ph2}px !important;
-        max-height: ${ph2}px !important;
-        flex: none !important;
-        overflow: hidden !important;
-    }
-
-    /* ẢNH */
-    .content img {
-        display: block !important;
-        width: ${pw}px !important;
-        height: 100% !important;
-        max-width: ${pw}px !important;
-        max-height: 100% !important;
-        object-fit: fill !important;
-        object-position: center !important;
-    }
-}`;
+let safariStyleEl = null;
+function injectSafariStyle() {
+    if (safariStyleEl) safariStyleEl.remove();
+    safariStyleEl = document.createElement('style');
+    safariStyleEl.textContent = buildSafariStyle();
+    document.head.appendChild(safariStyleEl);
 }
 
-let printStyleEl = null;
-function injectPrintStyle() {
-    if (printStyleEl) printStyleEl.remove();
-    printStyleEl = document.createElement('style');
-    printStyleEl.id = 'mobile-print-fix';
-    printStyleEl.textContent = buildPrintStyle();
-    document.head.appendChild(printStyleEl);
+/* ═══════════════════════════════════════════════════════════════
+   CHROME iOS — print qua iframe riêng
+   
+   Chrome iOS không hiểu @page size, không scale đúng paper,
+   và không cho window.print() từ trang gốc hoạt động đúng.
+   
+   Giải pháp: tạo iframe ẩn, viết HTML print-ready vào đó
+   (dùng URL ảnh tuyệt đối), rồi gọi iframe.contentWindow.print().
+═══════════════════════════════════════════════════════════════ */
+function getAbsoluteBase() {
+    // Lấy base URL tuyệt đối của trang hiện tại (thư mục chứa file)
+    const href = window.location.href;
+    return href.substring(0, href.lastIndexOf('/') + 1);
 }
 
-/* ── PRINT ────────────────────────────────────────────────────── */
-function printProfile() {
+function buildIframePrintHTML() {
+    const base   = getAbsoluteBase();
+    // Chrome iOS: paper width = screen.width (CSS px, đã normalize)
+    const pw = Math.min(screen.width, screen.height);
+    const ph = Math.round(pw * 297 / 210);
+    const ph2 = Math.round(ph / 2);
+
+    let pagesHTML = '';
+    PAGE_IMAGES.forEach(p => {
+        if (p.split) {
+            pagesHTML += `
+            <div class="page split-page">
+                <div class="split-half"><img src="${base}${p.src.replace('./','')}"></div>
+                <div class="split-half"><img src="${base}${p.split.replace('./','')}"></div>
+            </div>`;
+        } else {
+            pagesHTML += `
+            <div class="page"><img src="${base}${p.src.replace('./','')}"></div>`;
+        }
+    });
+
+    return `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-print-color-adjust:exact !important; }
+@page { size: A4 portrait; margin: 0; }
+html, body { background: white; width: ${pw}px; margin: 0; padding: 0; }
+.page {
+    display: block;
+    width: ${pw}px;
+    height: ${ph}px;
+    overflow: hidden;
+    background: white;
+    page-break-after: always;
+    page-break-inside: avoid;
+    break-after: page;
+    break-inside: avoid;
+}
+.page:last-child { page-break-after: avoid; break-after: avoid; }
+.page img {
+    display: block;
+    width: ${pw}px;
+    height: ${ph}px;
+    object-fit: fill;
+}
+.split-page {
+    display: flex;
+    flex-direction: column;
+    width: ${pw}px;
+    height: ${ph}px;
+    overflow: hidden;
+}
+.split-half {
+    width: ${pw}px;
+    height: ${ph2}px;
+    overflow: hidden;
+    flex: none;
+}
+.split-half img {
+    display: block;
+    width: ${pw}px;
+    height: ${ph2}px;
+    object-fit: fill;
+}
+</style>
+</head>
+<body>${pagesHTML}</body>
+</html>`;
+}
+
+function printViaIframe(onDone) {
     const overlay = document.getElementById('print-overlay');
+    document.getElementById('overlay-msg').textContent = 'Đang tải ảnh để in…';
 
-    // 1. Reset zoom
-    zoomLevel = 100;
-    document.querySelectorAll('.page').forEach(p => p.style.transform = '');
-    document.querySelectorAll('.zoomInput').forEach(i => i.value = '100%');
+    // Xóa iframe cũ nếu có
+    const old = document.getElementById('print-iframe');
+    if (old) old.remove();
 
-    // 2. Hiện overlay
-    overlay.classList.add('show');
+    const iframe = document.createElement('iframe');
+    iframe.id    = 'print-iframe';
+    iframe.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;border:none;opacity:0;pointer-events:none;z-index:-1;';
+    document.body.appendChild(iframe);
 
-    // 3. Inject style phù hợp với trình duyệt hiện tại
-    if (needsFix) injectPrintStyle();
+    const html = buildIframePrintHTML();
+    iframe.contentDocument.open();
+    iframe.contentDocument.write(html);
+    iframe.contentDocument.close();
 
-    // 4. Chờ ảnh load
-    const imgs = Array.from(document.querySelectorAll('.content img'));
-    let pending = imgs.filter(img => !img.complete).length;
-
-    function go() {
-        // Chrome Android cần ít thời gian hơn Safari iOS
-        const delay = isSafariIOS ? 900 : isAndroid ? 500 : 300;
-        setTimeout(() => {
-            overlay.classList.remove('show');
-            setTimeout(() => window.print(), 200);
-        }, delay);
-    }
-
-    if (pending === 0) { go(); }
-    else {
+    // Chờ tất cả ảnh trong iframe load xong
+    function waitImages(cb) {
+        const imgs = Array.from(iframe.contentDocument.querySelectorAll('img'));
+        let pending = imgs.filter(i => !i.complete).length;
+        if (pending === 0) { cb(); return; }
         imgs.forEach(img => {
             if (!img.complete) {
-                const done = () => { if (--pending === 0) go(); };
+                const done = () => { if (--pending === 0) cb(); };
                 img.addEventListener('load',  done, { once: true });
                 img.addEventListener('error', done, { once: true });
             }
         });
     }
+
+    waitImages(() => {
+        document.getElementById('overlay-msg').textContent = 'Đang mở hộp thoại in…';
+        setTimeout(() => {
+            overlay.classList.remove('show');
+            setTimeout(() => {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+                if (onDone) onDone();
+            }, 300);
+        }, 400);
+    });
 }
 
-/* Fallback Ctrl+P / Share → Print */
+/* ═══════════════════════════════════════════════════════════════
+   MAIN PRINT FUNCTION — tự chọn phương pháp theo trình duyệt
+═══════════════════════════════════════════════════════════════ */
+function printProfile() {
+    const overlay = document.getElementById('print-overlay');
+
+    // Reset zoom
+    zoomLevel = 100;
+    document.querySelectorAll('.page').forEach(p => p.style.transform = '');
+    document.querySelectorAll('.zoomInput').forEach(i => i.value = '100%');
+
+    overlay.classList.add('show');
+    document.getElementById('overlay-msg').textContent = 'Đang chuẩn bị in, vui lòng chờ…';
+
+    if (isChromeIOS) {
+        /* ── Chrome iOS: dùng iframe ── */
+        printViaIframe(() => {
+            // Dọn dẹp iframe sau 5s
+            setTimeout(() => {
+                const f = document.getElementById('print-iframe');
+                if (f) f.remove();
+            }, 5000);
+        });
+
+    } else if (isSafariIOS) {
+        /* ── Safari iOS: inject style px ── */
+        injectSafariStyle();
+        waitAllImages(() => {
+            setTimeout(() => {
+                overlay.classList.remove('show');
+                setTimeout(() => window.print(), 200);
+            }, 900);
+        });
+
+    } else {
+        /* ── Desktop / Android Chrome ── */
+        waitAllImages(() => {
+            setTimeout(() => {
+                overlay.classList.remove('show');
+                setTimeout(() => window.print(), 200);
+            }, 300);
+        });
+    }
+}
+
+function waitAllImages(cb) {
+    const imgs = Array.from(document.querySelectorAll('.content img'));
+    let pending = imgs.filter(i => !i.complete).length;
+    if (pending === 0) { cb(); return; }
+    imgs.forEach(img => {
+        if (!img.complete) {
+            const done = () => { if (--pending === 0) cb(); };
+            img.addEventListener('load',  done, { once: true });
+            img.addEventListener('error', done, { once: true });
+        }
+    });
+}
+
+/* Fallback beforeprint (Ctrl+P desktop) */
 window.addEventListener('beforeprint', () => {
     zoomLevel = 100;
     document.querySelectorAll('.page').forEach(p => p.style.transform = '');
-    if (needsFix) injectPrintStyle();
+    if (isSafariIOS) injectSafariStyle();
 });
 window.addEventListener('afterprint', () => {
     document.getElementById('print-overlay').classList.remove('show');
