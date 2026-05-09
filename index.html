@@ -66,21 +66,25 @@
             .page { width: 95%; margin-bottom: 15px; }
         }
 
-        /* ===== PHƯƠNG ÁN RÚT GỌN CHIỀU CAO - XOÁ 34 TRANG & FOOTER ===== */
+        /* ===== PHƯƠNG ÁN "MẠNH TAY" - TRIỆT TIÊU 34 TRANG CHO IPHONE ===== */
         @media print {
             @page { 
                 size: A4 portrait; 
-                margin: 0 !important; /* Buộc xoá sạch Footer/Header mặc định */
+                margin: 0 !important; 
             }
 
-            .sidebar, .toolbar, .mobile-tools-wrap, span { display: none !important; }
+            /* Ẩn sạch tất cả văn bản và giao diện */
+            .sidebar, .toolbar, .mobile-tools-wrap, .toolbar-title, span { 
+                display: none !important; 
+                visibility: hidden !important;
+            }
 
             html, body { 
                 background: white !important; 
                 margin: 0 !important;
                 padding: 0 !important;
                 height: auto !important;
-                width: 100% !important;
+                width: 210mm !important;
                 overflow: visible !important;
             }
 
@@ -88,7 +92,6 @@
                 display: block !important; 
                 margin: 0 !important; 
                 padding: 0 !important;
-                width: 100% !important;
                 height: auto !important;
                 overflow: visible !important;
                 position: static !important;
@@ -97,9 +100,9 @@
             .page { 
                 display: flex !important;
                 width: 210mm !important; 
-                /* CHỈNH TẠI ĐÂY: Trừ hẳn 8mm (297 - 8 = 289) để chừa chỗ cho footer Safari */
-                height: 289mm !important; 
-                margin: 0 0 -5mm 0 !important; /* Kéo trang sau lên sát để triệt tiêu trang trống */
+                /* TRỪ HẲN 15mm (297 - 15 = 282) - KHÔNG THỂ BỊ ĐẨY TRANG */
+                height: 282mm !important; 
+                margin: 0 0 -10mm 0 !important; /* Âm lề 10mm để xóa trang trống */
                 padding: 0 !important;
                 page-break-after: always !important; 
                 page-break-inside: avoid !important;
@@ -110,9 +113,10 @@
             }
             
             .split-page { 
-                padding: 10mm !important; 
+                padding: 5mm !important; 
                 gap: 5mm !important; 
-                height: 289mm !important;
+                height: 282mm !important;
+                justify-content: center !important;
             }
 
             img { 
@@ -131,6 +135,7 @@
 <body>
     <div class="viewer">
         <div class="sidebar">
+            <!-- Thumbnail list giữ nguyên -->
             <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-page"><img src="./profile-cover.jpg"></div><span>1</span></div>
             <div class="thumb" onclick="scrollToPage(2)"><div class="thumb-page"><img src="./company-intro-01.jpg"></div><span>2</span></div>
             <div class="thumb" onclick="scrollToPage(3)"><div class="thumb-page"><img src="./company-intro-02.jpg"></div><span>3</span></div>
