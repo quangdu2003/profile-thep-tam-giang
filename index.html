@@ -161,25 +161,54 @@ function scrollToPage(n) {
     content.scrollTo({ top: top - 20, behavior: 'smooth' });
 }
 
-/* ── DETECT ───────────────────────────────────────────────────── */
-const isIOS     = /iP(hone|ad|od)/i.test(navigator.userAgent);
-const isSafari  = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-const needsFix  = isIOS || isSafari;
+/* ── DETECT BROWSER ───────────────────────────────────────────── */
+const ua        = navigator.userAgent;
+const isIOS     = /iP(hone|ad|od)/i.test(ua);
+const isAndroid = /Android/i.test(ua);
+const isChromeIOS    = /CriOS/i.test(ua);
+const isChromeAndroid= /Android/i.test(ua) && /Chrome/i.test(ua);
+const isChromeMobile = isChromeIOS || isChromeAndroid;
+const isSafariIOS    = isIOS && /WebKit/i.test(ua) && !isChromeIOS && !/FxiOS|OPiOS/i.test(ua);
+const isSafariDesk   = !isIOS && /^((?!chrome|android).)*safari/i.test(ua);
+const isMobile  = isIOS || isAndroid;
+const needsFix  = isMobile || isSafariDesk;
 
-/* ── SAFARI iOS PRINT STYLE INJECTION ────────────────────────────
-   Safari iOS bỏ qua height: 297mm trong @media print.
-   Thay vào đó nó layout theo pixel màn hình rồi scale lên paper.
+/* ── TÍNH KÍCH THƯỚC PAPER THEO TỪNG TRÌNH DUYỆT ─────────────────
+   Mỗi trình duyệt tính paper width khác nhau:
 
-   screen.width (CSS px, portrait) = chiều rộng paper mà Safari dùng.
-   Chiều cao = screen.width × (297 / 210)
-   
-   Ta inject <style> với px cụ thể ngay trước khi print.
+   Safari iOS   : dùng screen.width (CSS px = physical/dpr)
+                  → pw = Math.min(screen.width, screen.height)
+
+   Chrome iOS   : dùng window.innerWidth khi print (portrait)
+                  → pw = Math.min(screen.width, screen.height) (giống Safari)
+
+   Chrome Android: dùng document.documentElement.clientWidth
+                   khi ở chế độ print (sau khi reset layout)
+                   Nhưng thực tế nó scale theo dpr khác,
+                   nên ta dùng: pw = screen.width / devicePixelRatio
+                   (đây là CSS pixel thực Chrome Android nhận)
+
+   Firefox mobile: tương tự Chrome Android
 ──────────────────────────────────────────────────────────────── */
-function buildSafariStyle() {
-    // Luôn dùng chiều nhỏ hơn làm chiều rộng (portrait)
-    const pw = Math.min(screen.width, screen.height);
-    const ph = Math.round(pw * 297 / 210);
+function getPaperPx() {
+    let pw;
+    if (isAndroid) {
+        // Chrome/Firefox Android: CSS px = physical px / dpr
+        const dpr = window.devicePixelRatio || 1;
+        pw = Math.round(Math.min(screen.width, screen.height) / dpr);
+        // Fallback nếu dpr đã được tính sẵn trong screen.width
+        if (pw < 200) pw = Math.min(screen.width, screen.height);
+    } else {
+        // iOS (Safari & Chrome): screen.width đã là CSS px
+        pw = Math.min(screen.width, screen.height);
+    }
+    const ph  = Math.round(pw * 297 / 210);
     const ph2 = Math.round(ph / 2);
+    return { pw, ph, ph2 };
+}
+
+function buildPrintStyle() {
+    const { pw, ph, ph2 } = getPaperPx();
 
     return `
 @media print {
@@ -258,13 +287,13 @@ function buildSafariStyle() {
 }`;
 }
 
-let safariStyleEl = null;
-function injectSafariStyle() {
-    if (safariStyleEl) safariStyleEl.remove();
-    safariStyleEl = document.createElement('style');
-    safariStyleEl.id = 'safari-print-fix';
-    safariStyleEl.textContent = buildSafariStyle();
-    document.head.appendChild(safariStyleEl);
+let printStyleEl = null;
+function injectPrintStyle() {
+    if (printStyleEl) printStyleEl.remove();
+    printStyleEl = document.createElement('style');
+    printStyleEl.id = 'mobile-print-fix';
+    printStyleEl.textContent = buildPrintStyle();
+    document.head.appendChild(printStyleEl);
 }
 
 /* ── PRINT ────────────────────────────────────────────────────── */
@@ -279,19 +308,20 @@ function printProfile() {
     // 2. Hiện overlay
     overlay.classList.add('show');
 
-    // 3. Inject fix ngay
-    if (needsFix) injectSafariStyle();
+    // 3. Inject style phù hợp với trình duyệt hiện tại
+    if (needsFix) injectPrintStyle();
 
     // 4. Chờ ảnh load
     const imgs = Array.from(document.querySelectorAll('.content img'));
     let pending = imgs.filter(img => !img.complete).length;
 
     function go() {
-        // Delay 800ms để Safari có thời gian áp dụng style mới
+        // Chrome Android cần ít thời gian hơn Safari iOS
+        const delay = isSafariIOS ? 900 : isAndroid ? 500 : 300;
         setTimeout(() => {
             overlay.classList.remove('show');
             setTimeout(() => window.print(), 200);
-        }, needsFix ? 800 : 300);
+        }, delay);
     }
 
     if (pending === 0) { go(); }
@@ -306,11 +336,11 @@ function printProfile() {
     }
 }
 
-/* Fallback Ctrl+P */
+/* Fallback Ctrl+P / Share → Print */
 window.addEventListener('beforeprint', () => {
     zoomLevel = 100;
     document.querySelectorAll('.page').forEach(p => p.style.transform = '');
-    if (needsFix) injectSafariStyle();
+    if (needsFix) injectPrintStyle();
 });
 window.addEventListener('afterprint', () => {
     document.getElementById('print-overlay').classList.remove('show');
