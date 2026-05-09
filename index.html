@@ -12,7 +12,7 @@
         html, body { width: 100%; height: 100%; overflow: hidden; font-family: Arial, sans-serif; background: #202124; }
         .viewer { display: flex; width: 100%; height: 100vh; }
 
-        /* SIDEBAR & TOOLBAR giữ nguyên như cũ để hiển thị Web đẹp */
+        /* SIDEBAR */
         .sidebar { width: 260px; background: #2b2b2b; overflow-y: auto; border-right: 1px solid #3c4043; padding: 14px 12px; display: flex; flex-direction: column; height: 100vh; }
         .thumb { width: 100%; margin-bottom: 20px; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
         .thumb-page { width: 100%; aspect-ratio: 1 / 1.414; background: #fff; padding: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
@@ -49,46 +49,130 @@
             .page { width: 95%; margin-bottom: 15px; }
         }
 
-        /* ===== PHƯƠNG ÁN "VỀ ĐÍCH" - XOÁ FOOTER & KHOẢNG ĐEN ===== */
+        /* ===== PRINT - FIX SAFARI iOS/macOS ===== */
         @media print {
             @page { 
                 size: A4 portrait; 
-                margin: 0 !important; 
+                margin: 0mm !important;
+                /* Safari iOS không hỗ trợ @page margin-top/bottom cho footer
+                   nên ta dùng margin: 0 và padding bên trong page */
             }
 
-            .sidebar, .toolbar, .mobile-tools-wrap, .toolbar-title, span { display: none !important; }
+            /* Ẩn toàn bộ UI */
+            .sidebar,
+            .toolbar,
+            .mobile-tools-wrap,
+            .toolbar-title,
+            .thumb,
+            span,
+            button,
+            .tool-btn { 
+                display: none !important; 
+            }
 
-            html, body, .viewer, .main, .content { 
-                display: block !important; 
+            /* Reset layout về block flow để Safari in đúng */
+            html {
                 background: white !important;
-                margin: 0 !important;
-                padding: 0 !important;
+                overflow: visible !important;
+                height: auto !important;
+                width: 100% !important;
+            }
+
+            body {
+                background: white !important;
+                overflow: visible !important;
+                height: auto !important;
+                width: 100% !important;
+                font-size: 0 !important; /* Ngăn khoảng trắng text giữa các page */
+            }
+
+            .viewer {
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+                background: white !important;
+            }
+
+            .main {
+                display: block !important;
                 width: 100% !important;
                 height: auto !important;
                 overflow: visible !important;
+                background: white !important;
             }
 
-            .page { 
+            .content {
                 display: block !important;
-                width: 210mm !important; 
-                height: 297mm !important; /* Trả về chiều cao A4 đầy đủ */
-                margin: 0 !important;
-                /* Dùng lề âm phía dưới cực mạnh để "nuốt" footer Safari */
-                margin-bottom: -20px !important; 
+                width: 100% !important;
+                height: auto !important;
+                overflow: visible !important;
                 padding: 0 !important;
-                page-break-after: always !important; 
-                page-break-inside: avoid !important;
-                border: none !important;
+                margin: 0 !important;
+                background: white !important;
             }
-            
-            .split-page { padding: 5mm !important; gap: 5mm !important; display: flex !important; flex-direction: column !important; }
 
-            img { 
-                width: 100% !important; 
-                height: 100% !important; 
-                /* Quan trọng: Tràn viền để xoá khoảng đen */
-                object-fit: fill !important; 
+            /* ===== MỖI PAGE = 1 TRANG A4 CHÍNH XÁC ===== */
+            .page {
+                /* Dùng px thay mm/vh để Safari iOS không tính sai */
                 display: block !important;
+                width: 100% !important;
+                /* 
+                    Safari iOS print: 1 trang A4 portrait @ 96dpi = 794px × 1123px
+                    Nhưng Safari thêm footer ~40px nên ta dùng height = 100vh khi print
+                    Trick: dùng height cố định khớp với paper size Safari dùng nội bộ
+                */
+                height: 100vh !important;
+                max-height: 100vh !important;
+                min-height: unset !important;
+                aspect-ratio: unset !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                overflow: hidden !important;
+                background: white !important;
+                /* Mỗi .page = 1 trang in */
+                page-break-after: always !important;
+                page-break-before: avoid !important;
+                page-break-inside: avoid !important;
+                -webkit-column-break-inside: avoid !important;
+                break-inside: avoid !important;
+                break-after: page !important;
+            }
+
+            /* Trang split (2 ảnh) */
+            .split-page {
+                display: flex !important;
+                flex-direction: column !important;
+                padding: 0 !important;
+                gap: 0 !important;
+                height: 100vh !important;
+            }
+
+            .split-half {
+                flex: 1 !important;
+                width: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                overflow: hidden !important;
+                height: 50% !important;
+                max-height: 50% !important;
+            }
+
+            img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: fill !important; /* fill để tràn viền, không để khoảng đen */
+                display: block !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+            }
+
+            /* Trang cuối không cần page-break */
+            .page:last-child {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
             }
         }
     </style>
@@ -130,32 +214,32 @@
                     </div>
                     <div class="toolbar-right">
                         <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn"><svg viewBox="0 -960 960 960" width="22" height="22"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" fill="white"/></svg></a>
-                        <button class="tool-btn" onclick="window.print()"><svg viewBox="0 -960 960 960" width="22" height="22"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z" fill="white"/></svg></button>
+                        <button class="tool-btn" onclick="printProfile()"><svg viewBox="0 -960 960 960" width="22" height="22"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z" fill="white"/></svg></button>
                     </div>
                 </div>
             </div>
 
             <div class="content" id="content">
-                <section class="page"><img src="./profile-cover.jpg"></section>
-                <section class="page"><img src="./company-intro-01.jpg"></section>
-                <section class="page"><img src="./company-intro-02.jpg"></section>
-                <section class="page"><img src="./main-products.jpg"></section>
-                <section class="page"><img src="./thep-products.jpg"></section>
-                <section class="page"><img src="./ximang-products.jpg"></section>
-                <section class="page"><img src="./thephinh-products.jpg"></section>
-                <section class="page"><img src="./vlxd-products.jpg"></section>
-                <section class="page"><img src="./project-11.jpg"></section>
-                <section class="page"><img src="./project-12.jpg"></section>
-                <section class="page"><img src="./project-03.jpg"></section>
-                <section class="page"><img src="./project-08.jpg"></section>
-                <section class="page"><img src="./project-09.jpg"></section>
-                <section class="page"><img src="./project-10.jpg"></section>
+                <section class="page"><img src="./profile-cover.jpg" loading="eager"></section>
+                <section class="page"><img src="./company-intro-01.jpg" loading="eager"></section>
+                <section class="page"><img src="./company-intro-02.jpg" loading="eager"></section>
+                <section class="page"><img src="./main-products.jpg" loading="eager"></section>
+                <section class="page"><img src="./thep-products.jpg" loading="eager"></section>
+                <section class="page"><img src="./ximang-products.jpg" loading="eager"></section>
+                <section class="page"><img src="./thephinh-products.jpg" loading="eager"></section>
+                <section class="page"><img src="./vlxd-products.jpg" loading="eager"></section>
+                <section class="page"><img src="./project-11.jpg" loading="eager"></section>
+                <section class="page"><img src="./project-12.jpg" loading="eager"></section>
+                <section class="page"><img src="./project-03.jpg" loading="eager"></section>
+                <section class="page"><img src="./project-08.jpg" loading="eager"></section>
+                <section class="page"><img src="./project-09.jpg" loading="eager"></section>
+                <section class="page"><img src="./project-10.jpg" loading="eager"></section>
                 <section class="page split-page">
-                    <div class="split-half"><img src="./project-04.jpg"></div>
-                    <div class="split-half"><img src="./project-07.jpg"></div>
+                    <div class="split-half"><img src="./project-04.jpg" loading="eager"></div>
+                    <div class="split-half"><img src="./project-07.jpg" loading="eager"></div>
                 </section>
-                <section class="page"><img src="./project-01.jpg"></section>
-                <section class="page"><img src="./project-02.jpg"></section>
+                <section class="page"><img src="./project-01.jpg" loading="eager"></section>
+                <section class="page"><img src="./project-02.jpg" loading="eager"></section>
             </div>
         </div>
     </div>
@@ -163,12 +247,14 @@
     <script>
         let zoomLevel = 100;
         const content = document.getElementById('content');
+
         function updateZoom() {
             document.querySelectorAll('.page').forEach(page => { page.style.transform = `scale(${zoomLevel / 100})`; });
             document.querySelectorAll('.zoomInput').forEach(input => { input.value = zoomLevel + '%'; });
         }
         function zoomIn() { if (zoomLevel < 180) { zoomLevel += 10; updateZoom(); } }
         function zoomOut() { if (zoomLevel > 50) { zoomLevel -= 10; updateZoom(); } }
+
         function scrollToPage(index) {
             const pages = document.querySelectorAll('.page');
             let targetTop = 0;
@@ -178,6 +264,52 @@
             else targetTop = pages[index - 2].offsetTop;
             content.scrollTo({ top: targetTop - 20, behavior: 'smooth' });
         }
+
+        /**
+         * FIX SAFARI iOS FOOTER:
+         * Safari iOS không cho tắt footer qua CSS @page.
+         * Cách duy nhất: reset zoom về 100% trước khi print,
+         * đảm bảo tất cả ảnh đã load, sau đó gọi window.print().
+         */
+        function printProfile() {
+            // Reset zoom về 100% để tránh scale làm lệch trang in
+            zoomLevel = 100;
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.transform = '';
+            });
+            document.querySelectorAll('.zoomInput').forEach(input => {
+                input.value = '100%';
+            });
+
+            // Đợi tất cả ảnh load xong rồi mới in
+            const images = document.querySelectorAll('.content img');
+            let loaded = 0;
+            const total = images.length;
+
+            function tryPrint() {
+                loaded++;
+                if (loaded >= total) {
+                    setTimeout(() => window.print(), 300);
+                }
+            }
+
+            images.forEach(img => {
+                if (img.complete) {
+                    tryPrint();
+                } else {
+                    img.addEventListener('load', tryPrint);
+                    img.addEventListener('error', tryPrint);
+                }
+            });
+        }
+
+        // Gắn lại nút print cũ (nếu có ai gọi window.print() trực tiếp)
+        window.addEventListener('beforeprint', () => {
+            zoomLevel = 100;
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.transform = '';
+            });
+        });
     </script>
 </body>
 </html>
