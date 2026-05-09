@@ -29,27 +29,33 @@
         /* ===== MAIN AREA ===== */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; background: #1e1e1e; }
 
-        /* ===== TOOLBAR (Căn theo vùng Main) ===== */
+        /* ===== TOOLBAR ===== */
         .toolbar { 
             height: 56px; background: #2b2b2b; border-bottom: 1px solid #3c4043; 
             display: flex; align-items: center; justify-content: space-between; padding: 0 20px; width: 100%; flex-shrink: 0; z-index: 100;
         }
-        .toolbar-title { color: #fff; font-size: 15px; font-weight: 600; }
-        
+        .toolbar-title { color: #fff; font-size: 15px; font-weight: 600; white-space: nowrap; }
         .toolbar-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; }
         
         #zoom-controls { display: flex; align-items: center; gap: 4px; }
-        #zoom-controls button { width: 32px; height: 32px; border: none; background: transparent; color: #fff; cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-        #zoom-controls button:hover { background: #3c4043; }
+        #zoom-controls button { 
+            width: 32px; height: 32px; border: none; background: #3c4043; color: #fff; 
+            cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        #zoom-controls button:hover { background: #5f6368; }
         #zoom-controls input { width: 55px; height: 26px; background: #202124; border: 1px solid #5f6368; color: #fff; text-align: center; font-size: 12px; outline: none; border-radius: 2px; }
         
         .toolbar-right { display: flex; align-items: center; gap: 10px; }
-        .tool-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: .2s; cursor: pointer; border: none; background: transparent; text-decoration: none; }
-        .tool-btn:hover { background: #3c4043; }
+        .tool-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: .2s; cursor: pointer; border: none; background: #3c4043; text-decoration: none; }
+        .tool-btn:hover { background: #5f6368; }
         .tool-btn svg { width: 20px; height: 20px; fill: #fff; }
 
         /* ===== CONTENT & PAGE ===== */
         .content { flex: 1; overflow-x: hidden; overflow-y: auto; padding: 30px 0; scroll-behavior: smooth; }
+        .content::-webkit-scrollbar { width: 10px; }
+        .content::-webkit-scrollbar-thumb { background: #5f6368; }
+
         .page { 
             width: 760px; aspect-ratio: 1/1.414; background: #fff; 
             margin: 0 auto 30px; overflow: hidden; transform-origin: top center; 
@@ -57,19 +63,62 @@
             display: flex; align-items: center; justify-content: center;
         }
         
-        /* Trang gộp số 15 */
         .split-page { display: flex; flex-direction: column; padding: 25px; gap: 25px; }
         .split-half { width: 100%; flex: 1; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        
         img { width: 100%; height: 100%; display: block; object-fit: contain; }
 
         /* ===== MOBILE ADAPTATION ===== */
         @media (max-width: 768px) {
             .sidebar { display: none; }
-            .toolbar { flex-direction: column; height: auto; padding: 10px 0; gap: 10px; }
-            .toolbar-title { position: static; text-align: center; width: 100%; padding-bottom: 8px; border-bottom: 1px solid #3c4043; }
-            .toolbar-center { position: static; transform: none; order: 2; }
-            .toolbar-right { position: absolute; bottom: 8px; right: 10px; gap: 5px; }
+            .toolbar { 
+                flex-direction: column; 
+                height: auto; 
+                padding: 12px 0; 
+                gap: 15px; 
+            }
+            .toolbar-title { 
+                position: static; 
+                text-align: center; 
+                width: 100%; 
+                padding-bottom: 10px; 
+                border-bottom: 1px solid #3c4043;
+                font-size: 14px;
+            }
+            /* Box chứa Zoom và các nút chức năng trên mobile */
+            .mobile-tools-wrap {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                padding: 0 15px;
+                height: 40px;
+            }
+            .toolbar-center { 
+                position: absolute; 
+                left: 50%; 
+                transform: translateX(-50%); 
+            }
+            /* Tăng độ đậm và kích thước nút zoom trên mobile */
+            #zoom-controls button {
+                width: 38px;
+                height: 38px;
+                background: #4b4d50; /* Sáng hơn một chút để dễ thấy */
+            }
+            #zoom-controls input {
+                height: 32px;
+                font-size: 14px;
+            }
+            .toolbar-right { 
+                position: absolute; 
+                right: 15px; 
+                gap: 8px; 
+            }
+            .tool-btn {
+                width: 38px;
+                height: 38px;
+                background: #4b4d50;
+            }
             .page { width: 95%; margin-bottom: 15px; }
             .content { padding: 15px 0; }
             .split-page { padding: 15px; gap: 15px; }
@@ -121,22 +170,28 @@
             <div class="toolbar">
                 <div class="toolbar-title">THÉP TAM GIANG PROFILE</div>
                 
-                <div class="toolbar-center">
-                    <div id="zoom-controls">
-                        <button onclick="zoomOut()"><svg viewBox="0 -960 960 960"><path d="M232-444v-72h496v72H232Z"/></svg></button>
-                        <input type="text" class="zoomInput" value="100%" readonly>
-                        <button onclick="zoomIn()"><svg viewBox="0 -960 960 960"><path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"/></svg></button>
+                <!-- Wrap này giúp định vị các nút trên mobile chính xác hơn -->
+                <div class="mobile-tools-wrap">
+                    <div class="toolbar-center">
+                        <div id="zoom-controls">
+                            <button onclick="zoomOut()" aria-label="Zoom Out">
+                                <svg viewBox="0 -960 960 960" width="24" height="24"><path d="M232-444v-72h496v72H232Z" fill="white"/></svg>
+                            </button>
+                            <input type="text" class="zoomInput" value="100%" readonly>
+                            <button onclick="zoomIn()" aria-label="Zoom In">
+                                <svg viewBox="0 -960 960 960" width="24" height="24"><path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z" fill="white"/></svg>
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="toolbar-right">
-                    <!-- Nút tải xuống file Google Drive trực tiếp -->
-                    <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn" title="Tải xuống trực tiếp">
-                        <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
-                    </a>
-                    <button class="tool-btn" onclick="window.print()" title="In Profile">
-                        <svg viewBox="0 -960 960 960"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/></svg>
-                    </button>
+                    <div class="toolbar-right">
+                        <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn" title="Tải xuống Profile">
+                            <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+                        </a>
+                        <button class="tool-btn" onclick="window.print()" title="In Profile">
+                            <svg viewBox="0 -960 960 960"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
