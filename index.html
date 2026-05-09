@@ -66,48 +66,62 @@
             .page { width: 95%; margin-bottom: 15px; }
         }
 
-        /* ===== TUYỆT CHIÊU CUỐI: DIỆT 34 TRANG VÀ FOOTER ===== */
+        /* ===== GIẢI PHÁP DIỆT 34 TRANG CHO IOS ===== */
         @media print {
             @page { 
                 size: A4 portrait; 
-                margin: 0 !important; /* Triệt tiêu Footer/Header */
+                margin: 0 !important; 
             }
 
-            /* Ẩn tất cả trừ nội dung chính */
-            .sidebar, .toolbar, .mobile-tools-wrap, .toolbar-title, span { display: none !important; }
+            /* 1. Ẩn sạch mọi thứ dư thừa */
+            .sidebar, .toolbar, .mobile-tools-wrap, span { display: none !important; }
 
-            html, body, .viewer, .main, .desktop-layout, .content { 
+            /* 2. Ép body không được có lề và tràn màn hình */
+            html, body { 
+                height: 100% !important;
+                width: 100% !important;
+                overflow: visible !important;
+                background: white !important;
+            }
+
+            .viewer, .main, .desktop-layout, .content { 
                 display: block !important; 
                 margin: 0 !important; 
                 padding: 0 !important;
                 height: auto !important;
-                width: 210mm !important; /* Ép cứng chiều rộng A4 */
                 overflow: visible !important;
-                background: white !important;
                 position: static !important;
             }
 
+            /* 3. TUYỆT CHIÊU: Giảm chiều cao trang và dùng margin âm */
             .page { 
-                display: flex !important;
+                display: block !important;
                 width: 210mm !important; 
-                /* Quan trọng: Giảm chiều cao xuống một chút để né Footer Safari */
-                height: 296mm !important; 
-                margin: 0 !important; 
+                height: 295mm !important; /* Thụt hẳn xuống 2mm so với A4 chuẩn để "lách" Safari */
+                margin: 0 0 -2mm 0 !important; /* Margin âm để kéo trang sau lên sát trang trước */
                 padding: 0 !important;
                 page-break-after: always !important; 
                 page-break-inside: avoid !important;
                 box-shadow: none !important;
                 border: none !important;
-                overflow: hidden !important;
+                background: white !important;
             }
 
-            .split-page { padding: 10mm !important; gap: 10mm !important; display: flex !important; flex-direction: column !important; height: 296mm !important;}
-            .split-half { height: 48% !important; flex: none !important; }
+            .split-page { 
+                display: flex !important;
+                flex-direction: column !important;
+                padding: 10mm !important;
+                gap: 10mm !important;
+            }
 
+            /* 4. Ép ảnh nằm gọn lỏn, không dư pixel nào */
             img { 
-                width: 100% !important; 
-                height: 100% !important; 
-                object-fit: contain !important; 
+                width: auto !important; 
+                height: auto !important; 
+                max-width: 100% !important;
+                max-height: 100% !important;
+                object-fit: contain !important;
+                margin: auto !important;
                 display: block !important;
             }
         }
@@ -116,7 +130,6 @@
 
 <body>
     <div class="viewer">
-        <!-- Sidebar and Content remain the same structure -->
         <div class="sidebar">
             <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-page"><img src="./profile-cover.jpg"></div><span>1</span></div>
             <div class="thumb" onclick="scrollToPage(2)"><div class="thumb-page"><img src="./company-intro-01.jpg"></div><span>2</span></div>
