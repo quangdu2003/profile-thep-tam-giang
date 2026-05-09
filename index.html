@@ -381,7 +381,11 @@ const isChromeIOS     = /CriOS/i.test(ua);
 const isSafariIOS = isIOS && /WebKit/i.test(ua) && !isChromeIOS && !/FxiOS|OPiOS|EdgiOS/i.test(ua);
 const isAndroid       = /Android/i.test(ua);
 const isChromeAndroid = isAndroid && /Chrome/i.test(ua) && !/Firefox/i.test(ua);
-const needsIframe = isChromeAndroid;
+/*
+ * iOS: dùng iframe + ẩn body gốc khi print → Safari chỉ in iframe, không in 2 lần.
+ * Chrome Android: iframe như cũ.
+ */
+const needsIframe = isChromeAndroid || isIOS;
 
 /* ── Pages data (17 trang thật) ────────────────────────────────────── */
 const PAGES = [
@@ -469,7 +473,7 @@ function printViaIframe() {
 
     const iframe = document.createElement('iframe');
     iframe.id = '_pf';
-    iframe.style.cssText = 'position:fixed;top:-9999px;left:0;width:100%;height:1px;border:none;visibility:hidden;';
+    iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:-1;visibility:hidden;';
     document.body.appendChild(iframe);
 
     const doc = iframe.contentDocument || iframe.contentWindow.document;
@@ -493,9 +497,29 @@ function printViaIframe() {
         setTimeout(() => {
             document.getElementById('print-overlay').classList.remove('show');
             setTimeout(() => {
+                /*
+                 * Ẩn toàn bộ body gốc trong @media print để Safari/Chrome iOS
+                 * không in document gốc khi gọi iframe.contentWindow.print().
+                 * Safari sẽ chỉ thấy nội dung iframe → đúng 17 trang.
+                 */
+                const hideStyle = document.createElement('style');
+                hideStyle.id = '_hide_for_print';
+                hideStyle.textContent = '@media print { body > *:not(#_pf) { display:none!important; } #_pf { position:fixed!important; top:0!important; left:0!important; width:100%!important; height:100%!important; z-index:9999!important; visibility:visible!important; border:none!important; } }';
+                document.head.appendChild(hideStyle);
+
                 iframe.contentWindow.focus();
                 iframe.contentWindow.print();
-                setTimeout(() => iframe.remove(), 15000);
+
+                const cleanup = () => {
+                    hideStyle.remove();
+                    setTimeout(() => iframe.remove(), 1000);
+                    window.removeEventListener('afterprint', cleanup);
+                    iframe.contentWindow.removeEventListener('afterprint', cleanup);
+                };
+                window.addEventListener('afterprint', cleanup, { once: true });
+                try { iframe.contentWindow.addEventListener('afterprint', cleanup, { once: true }); } catch(e){}
+                /* Fallback cleanup nếu afterprint không fire */
+                setTimeout(cleanup, 30000);
             }, 400);
         }, 400);
     });
@@ -585,21 +609,8 @@ function printProfile() {
     document.getElementById('overlay-msg').textContent = 'Đang chuẩn bị in…';
 
     if (needsIframe) {
-        /* Chrome Android: iframe riêng → 17 trang */
+        /* iOS (Safari + Chrome iOS) và Chrome Android: iframe riêng → 17 trang */
         printViaIframe();
-    } else if (isIOS) {
-        /*
-         * MỌI trình duyệt trên iOS (Safari, Chrome iOS, Firefox iOS...)
-         * đều dùng WebKit và in document gốc.
-         * Inject CSS → window.print() → đúng 17 trang.
-         */
-        injectMobilePrintCSS();
-        waitMainImages(() => {
-            setTimeout(() => {
-                overlay.classList.remove('show');
-                setTimeout(() => window.print(), 600);
-            }, 800);
-        });
     } else {
         /* Desktop: Chrome, Edge, Firefox, Safari macOS */
         waitMainImages(() => {
@@ -613,7 +624,6 @@ function printProfile() {
 
 window.addEventListener('beforeprint', () => {
     resetZoom();
-    if (isIOS) injectMobilePrintCSS();
 });
 window.addEventListener('afterprint', () => {
     document.getElementById('print-overlay').classList.remove('show');
