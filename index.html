@@ -41,7 +41,7 @@
         .tool-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 4px; background: #3c4043; cursor: pointer; border: none; text-decoration: none; }
         .tool-btn svg { width: 20px; height: 20px; fill: #fff; }
 
-        /* ===== CONTENT ===== */
+        /* ===== CONTENT & PAGE ===== */
         .content { flex: 1; overflow-x: hidden; overflow-y: auto; padding: 30px 0; scroll-behavior: smooth; }
         .page { 
             width: 760px; aspect-ratio: 1/1.414; background: #fff; 
@@ -66,63 +66,63 @@
             .page { width: 95%; margin-bottom: 15px; }
         }
 
-        /* ===== GIẢI PHÁP DIỆT 34 TRANG CHO IOS ===== */
+        /* ===== PHƯƠNG ÁN RÚT GỌN CHIỀU CAO - XOÁ 34 TRANG & FOOTER ===== */
         @media print {
             @page { 
                 size: A4 portrait; 
-                margin: 0 !important; 
+                margin: 0 !important; /* Buộc xoá sạch Footer/Header mặc định */
             }
 
-            /* 1. Ẩn sạch mọi thứ dư thừa */
             .sidebar, .toolbar, .mobile-tools-wrap, span { display: none !important; }
 
-            /* 2. Ép body không được có lề và tràn màn hình */
             html, body { 
-                height: 100% !important;
+                background: white !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
                 width: 100% !important;
                 overflow: visible !important;
-                background: white !important;
             }
 
-            .viewer, .main, .desktop-layout, .content { 
+            .viewer, .main, .content { 
                 display: block !important; 
                 margin: 0 !important; 
                 padding: 0 !important;
+                width: 100% !important;
                 height: auto !important;
                 overflow: visible !important;
                 position: static !important;
             }
 
-            /* 3. TUYỆT CHIÊU: Giảm chiều cao trang và dùng margin âm */
             .page { 
-                display: block !important;
+                display: flex !important;
                 width: 210mm !important; 
-                height: 295mm !important; /* Thụt hẳn xuống 2mm so với A4 chuẩn để "lách" Safari */
-                margin: 0 0 -2mm 0 !important; /* Margin âm để kéo trang sau lên sát trang trước */
+                /* CHỈNH TẠI ĐÂY: Trừ hẳn 8mm (297 - 8 = 289) để chừa chỗ cho footer Safari */
+                height: 289mm !important; 
+                margin: 0 0 -5mm 0 !important; /* Kéo trang sau lên sát để triệt tiêu trang trống */
                 padding: 0 !important;
                 page-break-after: always !important; 
                 page-break-inside: avoid !important;
                 box-shadow: none !important;
                 border: none !important;
                 background: white !important;
+                overflow: hidden !important;
             }
-
+            
             .split-page { 
-                display: flex !important;
-                flex-direction: column !important;
-                padding: 10mm !important;
-                gap: 10mm !important;
+                padding: 10mm !important; 
+                gap: 5mm !important; 
+                height: 289mm !important;
             }
 
-            /* 4. Ép ảnh nằm gọn lỏn, không dư pixel nào */
             img { 
                 width: auto !important; 
                 height: auto !important; 
                 max-width: 100% !important;
                 max-height: 100% !important;
-                object-fit: contain !important;
-                margin: auto !important;
+                object-fit: contain !important; 
                 display: block !important;
+                margin: auto !important;
             }
         }
     </style>
