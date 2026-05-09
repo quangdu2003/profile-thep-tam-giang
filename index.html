@@ -18,9 +18,7 @@ html, body {
 /* ═══ LAYOUT ══════════════════════════════════════════════════════════ */
 .viewer { display:flex; width:100%; height:100vh; }
 
-/* ═══ SIDEBAR ══════════════════════════════════════════════════════════
-   Thumbnail: object-fit:contain để KHÔNG cắt nội dung ảnh
-════════════════════════════════════════════════════════════════════════ */
+/* ═══ SIDEBAR ══════════════════════════════════════════════════════════ */
 .sidebar {
     width:200px;
     background:#2b2b2b;
@@ -41,7 +39,6 @@ html, body {
     flex-direction:column;
     align-items:center;
 }
-/* Khung thumb tỉ lệ A4, nền trắng */
 .thumb-inner {
     width:100%;
     aspect-ratio:210/297;
@@ -52,37 +49,11 @@ html, body {
     align-items:center;
     justify-content:center;
 }
-/* Ảnh đơn: contain để thấy toàn bộ nội dung */
 .thumb-inner img {
     width:100%;
     height:100%;
     object-fit:contain;
     display:block;
-}
-/* Thumb split: 2 ảnh xếp DỌC + đường kẻ đỏ tách rõ */
-.thumb-inner.split {
-    flex-direction:column;
-    align-items:stretch;
-    justify-content:flex-start;
-}
-.thumb-inner.split .th-half {
-    flex:1;
-    overflow:hidden;
-    min-height:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.thumb-inner.split .th-half img {
-    width:100%; height:100%;
-    object-fit:contain;
-}
-/* Đường kẻ đỏ nổi bật trong thumb */
-.thumb-sep {
-    width:100%;
-    height:4px;
-    background:#cc0000;
-    flex-shrink:0;
 }
 .thumb span {
     display:block;
@@ -96,10 +67,7 @@ html, body {
 /* ═══ MAIN ════════════════════════════════════════════════════════════ */
 .main { flex:1; display:flex; flex-direction:column; overflow:hidden; background:#1e1e1e; }
 
-/* ═══ TOOLBAR — DESKTOP ════════════════════════════════════════════════
-   Grid 3 cột: title | zoom-center | icons-right
-   → zoom luôn căn giữa tuyệt đối
-════════════════════════════════════════════════════════════════════════ */
+/* ═══ TOOLBAR — DESKTOP ════════════════════════════════════════════════ */
 .toolbar {
     height:52px;
     background:#2b2b2b;
@@ -205,41 +173,10 @@ html, body {
     object-fit:fill;
 }
 
-/* ─── TRANG SPLIT: 2 ảnh xếp DỌC + đường kẻ đỏ nổi bật ─── */
-.split-page {
-    display:flex !important;
-    flex-direction:column !important;
-}
-.split-half {
-    flex:1;
-    width:100%;
-    min-height:0;
-    overflow:hidden;
-}
-.split-half img {
-    width:100%;
-    height:100%;
-    object-fit:fill;
-    display:block;
-}
-/* Đường kẻ đỏ tách 2 ảnh — rõ ràng, dày 8px, shadow để nổi */
-.split-divider {
-    width:100%;
-    height:8px;
-    background:#cc0000;
-    flex-shrink:0;
-    box-shadow:0 0 6px rgba(204,0,0,.6);
-}
-
-/* ═══ MOBILE TOOLBAR ══════════════════════════════════════════════════
-   Layout 2 hàng:
-   Hàng 1: tên profile (full width, centered)
-   Hàng 2: [zoom-left] [zoom-val] [zoom-right]  [dl-btn] [print-btn]
-════════════════════════════════════════════════════════════════════════ */
+/* ═══ MOBILE TOOLBAR ══════════════════════════════════════════════════ */
 @media (max-width:768px) {
     .sidebar { display:none; }
 
-    /* Toolbar 2 hàng */
     .toolbar {
         height:auto;
         display:flex;
@@ -258,57 +195,62 @@ html, body {
         padding-bottom:8px;
         border-bottom:1px solid #3c4043;
         justify-self:unset;
-        overflow:visible;
         white-space:nowrap;
+        overflow:visible;
     }
 
-    /* Hàng 2: zoom + icons trên 1 hàng ngang */
+    /* Hàng 2: zoom + icons */
     .toolbar-row2 {
-        display:flex;
+        display:flex !important;
         align-items:center;
         padding-top:8px;
-        gap:0;
+        width:100%;
+        position:relative;
     }
-    /* Zoom ở chính giữa: flex:1 để chiếm phần còn lại, rồi center nội dung */
+
+    /* Zoom tuyệt đối ở giữa */
     .toolbar-center {
-        flex:1;
+        position:absolute;
+        left:50%;
+        transform:translateX(-50%);
         display:flex;
-        justify-content:center;
         align-items:center;
+        justify-content:center;
+        gap:6px;
+        pointer-events:auto;
     }
+
+    /* Icons đẩy sang phải */
     .toolbar-right {
-        justify-self:unset;
-        margin-left:0;
+        margin-left:auto;
         display:flex;
         align-items:center;
         gap:6px;
     }
+
     .zoom-btn { width:38px; height:38px; font-size:26px; }
     .zoom-val  { width:54px; height:32px; font-size:13px; }
     .tool-btn  { width:38px; height:38px; }
 
-    /* Trang mobile: full-width, aspect-ratio A4 */
+    /* Trang mobile */
     .page {
         width:95vw !important;
         height:auto !important;
         aspect-ratio:210/297;
     }
-    .split-page {
-        width:95vw !important;
-        height:auto !important;
-        aspect-ratio:210/297;
-    }
-    .split-divider { height:5px; box-shadow:none; }
 }
 
-/* ═══ PRINT: Desktop Chrome / Firefox / Edge ══════════════════════════ */
+/* ═══ PRINT: Desktop ══════════════════════════════════════════════════
+   Mục tiêu: in đúng như giao diện web — mỗi trang là 1 ảnh A4
+   KHÔNG scale, KHÔNG thêm margin ngoài
+════════════════════════════════════════════════════════════════════════ */
 @media print {
     @page { size:A4 portrait; margin:0; }
     * {
         -webkit-print-color-adjust:exact !important;
         print-color-adjust:exact !important;
     }
-    .sidebar, .toolbar, #print-overlay { display:none !important; }
+    .sidebar, .toolbar, #toolbar-row2, #print-overlay { display:none !important; }
 
     html, body {
         background:white !important;
@@ -339,31 +281,6 @@ html, body {
     .page > img {
         width:210mm !important; height:297mm !important;
         object-fit:fill !important; display:block !important;
-    }
-    /* Split print */
-    .split-page {
-        display:flex !important; flex-direction:column !important;
-        width:210mm !important; height:297mm !important;
-        overflow:hidden !important;
-    }
-    .split-half {
-        flex:1 !important;
-        width:210mm !important;
-        min-height:0 !important;
-        overflow:hidden !important;
-        display:flex !important;
-        align-items:stretch !important;
-    }
-    .split-half img {
-        width:210mm !important; height:100% !important;
-        object-fit:fill !important; display:block !important;
-    }
-    .split-divider {
-        width:210mm !important; height:8px !important;
-        background:#cc0000 !important;
-        flex-shrink:0 !important;
-        display:block !important;
-        box-shadow:none !important;
     }
 }
 
@@ -435,34 +352,28 @@ html, body {
         <div class="thumb" onclick="scrollToPage(13)">
             <div class="thumb-inner"><img src="./project-10.jpg" loading="lazy"></div><span>14</span>
         </div>
-        <!-- Trang 15: split thumb — 2 ảnh DỌC + đường kẻ đỏ nổi bật -->
+        <!-- Trang 15: project-04 riêng -->
         <div class="thumb" onclick="scrollToPage(14)">
-            <div class="thumb-inner split">
-                <div class="th-half"><img src="./project-04.jpg" loading="lazy"></div>
-                <div class="thumb-sep"></div>
-                <div class="th-half"><img src="./project-07.jpg" loading="lazy"></div>
-            </div><span>15</span>
+            <div class="thumb-inner"><img src="./project-04.jpg" loading="lazy"></div><span>15</span>
         </div>
+        <!-- Trang 16: project-07 riêng -->
         <div class="thumb" onclick="scrollToPage(15)">
-            <div class="thumb-inner"><img src="./project-01.jpg" loading="lazy"></div><span>16</span>
+            <div class="thumb-inner"><img src="./project-07.jpg" loading="lazy"></div><span>16</span>
         </div>
         <div class="thumb" onclick="scrollToPage(16)">
-            <div class="thumb-inner"><img src="./project-02.jpg" loading="lazy"></div><span>17</span>
+            <div class="thumb-inner"><img src="./project-01.jpg" loading="lazy"></div><span>17</span>
+        </div>
+        <div class="thumb" onclick="scrollToPage(17)">
+            <div class="thumb-inner"><img src="./project-02.jpg" loading="lazy"></div><span>18</span>
         </div>
     </div>
 
     <!-- ═══ MAIN ══════════════════════════════════════════════════════ -->
     <div class="main">
-        <!--
-            TOOLBAR:
-            Desktop: grid 3 cột (title | zoom | icons)
-            Mobile: flex-column (hàng 1 = title, hàng 2 = zoom+icons)
-            toolbar-row2 chỉ hiện trên mobile
-        -->
+        <!-- TOOLBAR DESKTOP -->
         <div class="toolbar">
             <div class="toolbar-title">THÉP TAM GIANG PROFILE</div>
 
-            <!-- Desktop: toolbar-center nằm giữa grid -->
             <div class="toolbar-center" id="zoom-slot-desktop">
                 <div id="zoom-controls">
                     <button class="zoom-btn" onclick="zoomOut()" title="Thu nhỏ">−</button>
@@ -473,23 +384,25 @@ html, body {
 
             <div class="toolbar-right" id="icons-slot-desktop">
                 <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP"
-                   class="tool-btn" title="Tải xuống" id="dl-btn">
+                   class="tool-btn" title="Tải xuống">
                     <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
                 </a>
-                <button class="tool-btn" onclick="printProfile()" title="In" id="print-btn">
+                <button class="tool-btn" onclick="printProfile()" title="In">
                     <svg viewBox="0 -960 960 960"><path d="M648-624v-120H312v120h-72v-192h480v192h-72Zm-480 72h625-625Zm539.79 96q15.21 0 25.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21 0-25.71 10.29t-10.5 25.5q0 15.21 10.29 25.71t25.5 10.5ZM648-216v-144H312v144h336Zm72 72H240v-144H96v-240q0-40 28-68t68-28h576q40 0 68 28t28 68v240H720v144Z"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Hàng 2 toolbar — chỉ hiện trên mobile, ẩn desktop -->
-        <div id="toolbar-row2" style="display:none; background:#2b2b2b; border-bottom:1px solid #3c4043; padding:6px 10px; align-items:center; gap:0;">
-            <div style="flex:1; display:flex; justify-content:center; align-items:center; gap:6px;">
-                <button class="zoom-btn" onclick="zoomOut()" title="Thu nhỏ">−</button>
+        <!-- TOOLBAR ROW 2 — Mobile only (hidden on desktop via JS) -->
+        <div id="toolbar-row2" style="display:none; background:#2b2b2b; border-bottom:1px solid #3c4043; padding:6px 10px; width:100%; position:relative;">
+            <!-- Zoom canh giữa tuyệt đối -->
+            <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:flex; align-items:center; gap:6px; pointer-events:auto;">
+                <button class="zoom-btn" onclick="zoomOut()">−</button>
                 <input type="text" class="zoom-val" id="zoom-display-m" value="100%" readonly>
-                <button class="zoom-btn" onclick="zoomIn()" title="Phóng to">+</button>
+                <button class="zoom-btn" onclick="zoomIn()">+</button>
             </div>
-            <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+            <!-- Icons bên phải -->
+            <div style="display:flex; align-items:center; gap:6px; margin-left:auto; height:38px;">
                 <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP"
                    class="tool-btn" title="Tải xuống">
                     <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
@@ -515,27 +428,18 @@ html, body {
             <section class="page" id="p11"><img src="./project-08.jpg" loading="eager"></section>
             <section class="page" id="p12"><img src="./project-09.jpg" loading="eager"></section>
             <section class="page" id="p13"><img src="./project-10.jpg" loading="eager"></section>
-
-            <!-- Trang 15: 2 ảnh xếp DỌC + đường kẻ đỏ dày tách rõ ràng -->
-            <section class="page split-page" id="p14">
-                <div class="split-half"><img src="./project-04.jpg" loading="eager"></div>
-                <div class="split-divider"></div>
-                <div class="split-half"><img src="./project-07.jpg" loading="eager"></div>
-            </section>
-
-            <section class="page" id="p15"><img src="./project-01.jpg" loading="eager"></section>
-            <section class="page" id="p16"><img src="./project-02.jpg" loading="eager"></section>
+            <!-- Trang 15: project-04 riêng -->
+            <section class="page" id="p14"><img src="./project-04.jpg" loading="eager"></section>
+            <!-- Trang 16: project-07 riêng -->
+            <section class="page" id="p15"><img src="./project-07.jpg" loading="eager"></section>
+            <section class="page" id="p16"><img src="./project-01.jpg" loading="eager"></section>
+            <section class="page" id="p17"><img src="./project-02.jpg" loading="eager"></section>
         </div>
     </div>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════════
-   MOBILE LAYOUT SWITCH
-   Dùng JS vì CSS không thể move DOM element.
-   Trên mobile: ẩn toolbar-center & toolbar-right ở hàng 1,
-   hiện #toolbar-row2 ở hàng 2.
-═══════════════════════════════════════════════════════════════════ */
+/* ═══ MOBILE LAYOUT SWITCH ══════════════════════════════════════════ */
 function applyLayout() {
     const isMobileLayout = window.innerWidth <= 768;
     const row2 = document.getElementById('toolbar-row2');
@@ -555,9 +459,7 @@ function applyLayout() {
 applyLayout();
 window.addEventListener('resize', applyLayout);
 
-/* ═══════════════════════════════════════════════════════════════════
-   ZOOM
-═══════════════════════════════════════════════════════════════════ */
+/* ═══ ZOOM ══════════════════════════════════════════════════════════ */
 let zoomLevel = 100;
 const contentEl = document.getElementById('content');
 
@@ -570,7 +472,6 @@ function updateZoom() {
         p.style.marginTop    = `${-diff / 2}px`;
         p.style.marginBottom = `${24 - diff / 2}px`;
     });
-    // Cập nhật cả 2 input (desktop + mobile)
     document.getElementById('zoom-display').value   = zoomLevel + '%';
     document.getElementById('zoom-display-m').value = zoomLevel + '%';
 }
@@ -591,40 +492,35 @@ function scrollToPage(idx) {
     if (el) contentEl.scrollTo({ top: el.offsetTop - 16, behavior: 'smooth' });
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   DETECT BROWSER
-═══════════════════════════════════════════════════════════════════ */
+/* ═══ DETECT BROWSER ════════════════════════════════════════════════ */
 const ua = navigator.userAgent;
 const isIOS           = /iP(hone|ad|od)/i.test(ua);
 const isChromeIOS     = /CriOS/i.test(ua);
-/* Safari iOS = iOS + WebKit, không phải Chrome/Firefox/Opera iOS */
 const isSafariIOS     = isIOS && /WebKit/i.test(ua) && !isChromeIOS && !/FxiOS|OPiOS/i.test(ua);
 const isAndroid       = /Android/i.test(ua);
 const isChromeAndroid = isAndroid && /Chrome/i.test(ua) && !/Firefox/i.test(ua);
-/* Cả 2 Chrome mobile đều cần iframe print */
 const needsIframe     = isChromeIOS || isChromeAndroid;
 
-/* ═══════════════════════════════════════════════════════════════════
-   DANH SÁCH TRANG (cho iframe / Safari)
-═══════════════════════════════════════════════════════════════════ */
+/* ═══ DANH SÁCH TRANG ══════════════════════════════════════════════ */
 const PAGES = [
-    {t:'s', src:'./profile-cover.jpg'},
-    {t:'s', src:'./company-intro-01.jpg'},
-    {t:'s', src:'./company-intro-02.jpg'},
-    {t:'s', src:'./main-products.jpg'},
-    {t:'s', src:'./thep-products.jpg'},
-    {t:'s', src:'./ximang-products.jpg'},
-    {t:'s', src:'./thephinh-products.jpg'},
-    {t:'s', src:'./vlxd-products.jpg'},
-    {t:'s', src:'./project-11.jpg'},
-    {t:'s', src:'./project-12.jpg'},
-    {t:'s', src:'./project-03.jpg'},
-    {t:'s', src:'./project-08.jpg'},
-    {t:'s', src:'./project-09.jpg'},
-    {t:'s', src:'./project-10.jpg'},
-    {t:'2', src:'./project-04.jpg', src2:'./project-07.jpg'},
-    {t:'s', src:'./project-01.jpg'},
-    {t:'s', src:'./project-02.jpg'},
+    {src:'./profile-cover.jpg'},
+    {src:'./company-intro-01.jpg'},
+    {src:'./company-intro-02.jpg'},
+    {src:'./main-products.jpg'},
+    {src:'./thep-products.jpg'},
+    {src:'./ximang-products.jpg'},
+    {src:'./thephinh-products.jpg'},
+    {src:'./vlxd-products.jpg'},
+    {src:'./project-11.jpg'},
+    {src:'./project-12.jpg'},
+    {src:'./project-03.jpg'},
+    {src:'./project-08.jpg'},
+    {src:'./project-09.jpg'},
+    {src:'./project-10.jpg'},
+    {src:'./project-04.jpg'},
+    {src:'./project-07.jpg'},
+    {src:'./project-01.jpg'},
+    {src:'./project-02.jpg'},
 ];
 
 function getBase() {
@@ -632,22 +528,14 @@ function getBase() {
     return h.substring(0, h.lastIndexOf('/') + 1);
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   IFRAME PRINT — Chrome iOS & Chrome Android
-   ---------------------------------------------------------------
-   Chrome mobile bỏ qua @page size, render theo viewport.
-   → Tạo iframe với body width = 794px (210mm@96dpi).
-     Mỗi page height = 1123px (297mm@96dpi) + page-break → 17 trang.
-   
-   QUAN TRỌNG: iframe.width phải >= 794px để Chrome không thu hẹp.
-   Dùng width:794px nhưng đặt ở ngoài màn hình (top:-9999px).
-═══════════════════════════════════════════════════════════════════ */
+/* ═══ IFRAME PRINT — Chrome iOS & Chrome Android ═══════════════════
+   Build iframe với body width=794px, mỗi page height=1123px.
+   KHÔNG include toolbar, KHÔNG include sidebar.
+   Mỗi ảnh = 1 div.p riêng biệt → đúng 18 trang, không bị nhân đôi.
+══════════════════════════════════════════════════════════════════════ */
 function buildIframeHTML() {
     const base = getBase();
-    /* A4 @ 96dpi */
     const W = 794, H = 1123;
-    /* Chia đôi trừ divider 8px */
-    const H2 = Math.floor((H - 8) / 2);
     const abs = r => base + r.replace(/^\.\//, '');
 
     let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
@@ -665,23 +553,12 @@ html,body{width:${W}px;background:#fff;margin:0;padding:0}
 }
 .p:last-child{page-break-after:avoid;break-after:avoid}
 .p>img{display:block;width:${W}px;height:${H}px;object-fit:fill}
-.sp{display:flex;flex-direction:column;width:${W}px;height:${H}px;overflow:hidden}
-.sh{flex:none;width:${W}px;height:${H2}px;overflow:hidden;display:block}
-.sh img{display:block;width:${W}px;height:${H2}px;object-fit:fill}
-.sd{width:${W}px;height:8px;background:#cc0000;flex-shrink:0;display:block}
 </style></head><body>`;
 
     PAGES.forEach(p => {
-        if (p.t === '2') {
-            html += `<div class="p sp">`
-                  + `<div class="sh"><img src="${abs(p.src)}"></div>`
-                  + `<div class="sd"></div>`
-                  + `<div class="sh"><img src="${abs(p.src2)}"></div>`
-                  + `</div>`;
-        } else {
-            html += `<div class="p"><img src="${abs(p.src)}"></div>`;
-        }
+        html += `<div class="p"><img src="${abs(p.src)}"></div>`;
     });
+
     return html + `</body></html>`;
 }
 
@@ -694,10 +571,6 @@ function printViaIframe() {
 
     const iframe = document.createElement('iframe');
     iframe.id = '_pf';
-    /*
-     * Width = 794px để Chrome render đúng layout A4.
-     * Đặt position:fixed ngoài màn hình để không ảnh hưởng giao diện.
-     */
     iframe.style.cssText =
         'position:fixed;top:-9999px;left:0;' +
         'width:794px;height:1px;border:none;visibility:hidden;';
@@ -708,7 +581,6 @@ function printViaIframe() {
     doc.write(buildIframeHTML());
     doc.close();
 
-    /* Chờ tất cả ảnh load trong iframe */
     function waitImgs(cb) {
         const imgs = Array.from(doc.querySelectorAll('img'));
         let n = imgs.filter(i => !i.complete).length;
@@ -735,30 +607,15 @@ function printViaIframe() {
     });
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   SAFARI iOS PRINT
-   ---------------------------------------------------------------
-   Safari iOS bỏ qua @page size hoàn toàn.
-   Paper width (CSS px) = chiều rộng màn hình ở portrait.
-   
-   Dùng: screen.width nếu portrait, screen.height nếu landscape.
-   Math.min(screen.width, screen.height) luôn ra portrait width.
-   
-   Inject <style> với kích thước px tuyệt đối vào document
-   rồi gọi window.print(). Safari sẽ dùng đúng kích thước đó.
-═══════════════════════════════════════════════════════════════════ */
+/* ═══ SAFARI iOS PRINT ══════════════════════════════════════════════
+   Inject CSS với kích thước px tính theo screen.width (portrait).
+   Đảm bảo chỉ có 18 trang, mỗi trang 1 ảnh.
+══════════════════════════════════════════════════════════════════════ */
 let _safariEl = null;
 
 function buildSafariCSS() {
-    /*
-     * Portrait CSS px width của Safari iOS.
-     * screen.width / screen.height bao giờ cũng là giá trị portrait/landscape
-     * thực tế của thiết bị, không phụ thuộc orientation hiện tại.
-     */
-    const pw  = Math.min(screen.width, screen.height);   /* portrait width */
-    const ph  = Math.round(pw * 297 / 210);              /* A4 height */
-    const dh  = 8;                                        /* divider height px */
-    const ph2 = Math.floor((ph - dh) / 2);               /* nửa trang */
+    const pw  = Math.min(screen.width, screen.height);
+    const ph  = Math.round(pw * 297 / 210);
 
     return `@media print{
 @page{size:${pw}px ${ph}px;margin:0!important}
@@ -790,24 +647,6 @@ html,body{
   width:${pw}px!important;height:${ph}px!important;
   object-fit:fill!important;display:block!important
 }
-.split-page{
-  display:flex!important;flex-direction:column!important;
-  width:${pw}px!important;height:${ph}px!important;overflow:hidden!important
-}
-.split-half{
-  flex:none!important;
-  width:${pw}px!important;height:${ph2}px!important;
-  overflow:hidden!important;display:block!important
-}
-.split-half img{
-  width:${pw}px!important;height:${ph2}px!important;
-  object-fit:fill!important;display:block!important
-}
-.split-divider{
-  width:${pw}px!important;height:${dh}px!important;
-  background:#cc0000!important;
-  display:block!important;flex-shrink:0!important;box-shadow:none!important
-}
 }`;
 }
 
@@ -819,9 +658,7 @@ function injectSafariCSS() {
     document.head.appendChild(_safariEl);
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   WAIT MAIN IMAGES
-═══════════════════════════════════════════════════════════════════ */
+/* ═══ WAIT IMAGES ═══════════════════════════════════════════════════ */
 function waitMainImages(cb) {
     const imgs = Array.from(document.querySelectorAll('.content img'));
     let n = imgs.filter(i => !i.complete).length;
@@ -835,9 +672,7 @@ function waitMainImages(cb) {
     });
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   MAIN PRINT
-═══════════════════════════════════════════════════════════════════ */
+/* ═══ MAIN PRINT ════════════════════════════════════════════════════ */
 function printProfile() {
     const overlay = document.getElementById('print-overlay');
     resetZoom();
@@ -845,23 +680,19 @@ function printProfile() {
     document.getElementById('overlay-msg').textContent = 'Đang chuẩn bị in…';
 
     if (needsIframe) {
-        /* ── Chrome iOS + Chrome Android ── */
+        /* Chrome iOS + Chrome Android: dùng iframe sạch, không có toolbar */
         printViaIframe();
-
     } else if (isSafariIOS) {
-        /* ── Safari iOS ── */
+        /* Safari iOS: inject CSS rồi print trên document hiện tại */
         injectSafariCSS();
         waitMainImages(() => {
-            /* Đợi style apply xong */
             setTimeout(() => {
                 overlay.classList.remove('show');
-                /* Thêm delay nhỏ để Safari đọc style mới trước khi print */
                 setTimeout(() => window.print(), 400);
             }, 600);
         });
-
     } else {
-        /* ── Desktop & Firefox Android ── */
+        /* Desktop & Firefox Android */
         waitMainImages(() => {
             setTimeout(() => {
                 overlay.classList.remove('show');
