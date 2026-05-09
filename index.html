@@ -2,20 +2,20 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<title>THÉP TAM GIANG PROFILE - In Ấn Chính Xác</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>THÉP TAM GIANG PROFILE</title>
 <link rel="icon" href="./profile-cover-removebg-preview.png">
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html, body {
     width:100%; height:100%;
     overflow:hidden;
-    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    font-family:Arial, sans-serif;
     background:#202124;
 }
 .viewer { display:flex; width:100%; height:100vh; }
 
-/* ═══ SIDEBAR (Desktop) ══════════════════════════════════════════════ */
+/* ═══ SIDEBAR ═══════════════════════════════════════════════════════ */
 .sidebar {
     width:200px;
     background:#2b2b2b;
@@ -45,27 +45,25 @@ html, body {
     align-items:center;
     justify-content:center;
 }
-/* MẶC ĐỊNH: tất cả thumb đều dùng contain (giữ tỷ lệ) */
+/* Mặc định tất cả thumb dùng contain */
 .thumb-inner img {
     width:100%;
     height:100%;
     object-fit:contain;
     display:block;
 }
-/* CHỈ desktop: thumb 15 & 16 (nửa trang) dùng cover chiều rộng, dư chiều cao cắt đi (fit theo chiều rộng, overflow top/bottom) */
-@media (min-width: 769px) {
-    .thumb-inner.fit-width img {
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        object-position:center top;
-    }
+/* Thumb 15 & 16: ảnh project-04/07 là ảnh ngang nằm trong nửa trang dọc
+   → thumb riêng có aspect-ratio 210/148 (nửa A4 trừ padding/gap)
+   → fill ngang hoàn toàn */
+.thumb-inner.half-page {
+    aspect-ratio:210/148;
 }
-/* mobile giữ nguyên contain để dễ nhìn */
-@media (max-width: 768px) {
-    .thumb-inner.fit-width img {
-        object-fit:contain;
-    }
+.thumb-inner.half-page img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+    display:block;
 }
 .thumb span {
     display:block;
@@ -76,10 +74,10 @@ html, body {
 }
 .thumb:hover .thumb-inner { outline:2px solid #8ab4f8; }
 
-/* ═══ MAIN ═══════════════════════════════════════════════════════════ */
+/* ═══ MAIN ═════════════════════════════════════════════════════════ */
 .main { flex:1; display:flex; flex-direction:column; overflow:hidden; background:#1e1e1e; }
 
-/* TOOLBAR */
+/* ═══ TOOLBAR ═══════════════════════════════════════════════════════ */
 .toolbar {
     height:52px;
     background:#2b2b2b;
@@ -114,11 +112,10 @@ html, body {
 .tool-btn:hover { background:#4f5256; }
 .tool-btn svg { width:20px; height:20px; fill:#fff; }
 
-/* CONTENT (VIEW) */
+/* ═══ CONTENT ═══════════════════════════════════════════════════════ */
 .content {
     flex:1; overflow-x:hidden; overflow-y:auto; padding:24px 0; scroll-behavior:smooth;
 }
-/* chuẩn A4 794x1123px (dự phòng) */
 .page {
     width:794px; height:1123px; background:#fff;
     margin:0 auto 24px; overflow:hidden;
@@ -126,7 +123,7 @@ html, body {
 }
 .page > img { width:100%; height:100%; display:block; object-fit:fill; }
 
-/* Split page: 2 ảnh xếp dọc */
+/* Split page: 2 ảnh xếp dọc trong 1 trang A4 */
 .split-page {
     background:#d0d0d0 !important;
     display:flex !important; flex-direction:column !important;
@@ -139,7 +136,7 @@ html, body {
 .split-half img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
 .split-gap { height:20px; flex-shrink:0; background:#d0d0d0; }
 
-/* MOBILE RESPONSIVE */
+/* ═══ MOBILE ════════════════════════════════════════════════════════ */
 @media (max-width:768px) {
     .sidebar { display:none; }
     .toolbar {
@@ -156,103 +153,44 @@ html, body {
     .split-gap { height:10px; }
 }
 
-/* ═══ IN ẤN GỐC (Desktop + Safari iOS) CHÍNH XÁC 1 TRANG / 1 A4 ═════ */
+/* ═══ PRINT (Desktop Chrome/Edge/Firefox) ═══════════════════════════ */
 @media print {
-    @page { 
-        size: A4 portrait; 
-        margin: 0mm !important; 
-    }
-    * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    /* Ẩn giao diện phụ */
-    .sidebar, .toolbar, #toolbar-row2, #print-overlay, .toolbar-right, .toolbar-center {
-        display: none !important;
-    }
+    @page { size:A4 portrait; margin:0; }
+    * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+    .sidebar, .toolbar, #toolbar-row2, #print-overlay { display:none !important; }
     html, body {
-        background: white !important;
-        width: 100% !important;
-        height: auto !important;
-        overflow: visible !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        background:white !important; width:210mm !important; height:auto !important;
+        overflow:visible !important; margin:0 !important; padding:0 !important;
     }
     .viewer, .main, .content {
-        display: block !important;
-        width: 100% !important;
-        height: auto !important;
-        overflow: visible !important;
-        background: white !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        transform: none !important;
+        display:block !important; width:210mm !important; height:auto !important;
+        overflow:visible !important; background:white !important; padding:0 !important; margin:0 !important;
     }
-    /* Mỗi trang A4 chiếm đúng 1 page break */
     .page {
-        display: block !important;
-        width: 100% !important;
-        height: 297mm !important;
-        min-height: 297mm !important;
-        max-height: 297mm !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-        box-shadow: none !important;
-        overflow: hidden !important;
-        background: white !important;
-        transform: none !important;
-        page-break-after: always !important;
-        break-after: page !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
+        display:block !important; width:210mm !important;
+        height:297mm !important; min-height:unset !important; max-height:297mm !important;
+        margin:0 !important; padding:0 !important;
+        border:none !important; box-shadow:none !important;
+        overflow:hidden !important; background:white !important; transform:none !important;
+        page-break-after:always !important; break-after:page !important;
+        page-break-inside:avoid !important; break-inside:avoid !important;
     }
-    .page:last-child {
-        page-break-after: auto !important;
-        break-after: auto !important;
-    }
-    /* Ảnh đơn full */
-    .page > img {
-        width: 100% !important;
-        height: 297mm !important;
-        object-fit: fill !important;
-        display: block !important;
-    }
-    /* Split page dạng 2 ảnh dọc trong 1 A4 */
+    .page:last-child { page-break-after:avoid !important; break-after:avoid !important; }
+    .page > img { width:210mm !important; height:297mm !important; object-fit:fill !important; display:block !important; }
     .split-page {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-        height: 297mm !important;
-        background: #d0d0d0 !important;
-        padding: 8mm !important;
-        gap: 0 !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
+        background:#d0d0d0 !important; display:flex !important; flex-direction:column !important;
+        width:210mm !important; height:297mm !important; padding:8mm !important; gap:0 !important;
+        overflow:hidden !important;
     }
     .split-half {
-        flex: 1 !important;
-        background: #fff !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        overflow: hidden !important;
+        flex:1 !important; min-height:0 !important; background:#fff !important;
+        display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important;
     }
-    .split-half img {
-        max-width: 100% !important;
-        max-height: 100% !important;
-        object-fit: contain !important;
-        display: block !important;
-    }
-    .split-gap {
-        height: 5mm !important;
-        flex-shrink: 0 !important;
-        background: #d0d0d0 !important;
-        display: block !important;
-    }
+    .split-half img { max-width:100% !important; max-height:100% !important; object-fit:contain !important; display:block !important; }
+    .split-gap { height:8mm !important; background:#d0d0d0 !important; flex-shrink:0 !important; }
 }
 
-/* ═══ OVERLAY TẢI ẢNH ════════════════════════════════════════════════ */
+/* ═══ OVERLAY ═══════════════════════════════════════════════════════ */
 #print-overlay {
     display:none; position:fixed; inset:0;
     background:rgba(0,0,0,.85); z-index:9999;
@@ -275,7 +213,14 @@ html, body {
 </div>
 
 <div class="viewer">
-    <!-- SIDEBAR: 18 thumb, riêng thumb 15,16 desktop dùng fit-width (cover chiều rộng) -->
+    <!--
+        SIDEBAR: 18 thumb
+        Thumb 1–14  → scrollToPage(0..13)
+        Thumb 15    → scrollToSplitHalf('top')   — ảnh project-04, đầu trang p14
+        Thumb 16    → scrollToSplitHalf('bot')   — ảnh project-07, nửa dưới trang p14
+        Thumb 17–18 → scrollToPage(15..16)
+        Content thật: 17 trang (p0–p16), p14 là split.
+    -->
     <div class="sidebar">
         <div class="thumb" onclick="scrollToPage(0)"><div class="thumb-inner"><img src="./profile-cover.jpg" loading="lazy"></div><span>1</span></div>
         <div class="thumb" onclick="scrollToPage(1)"><div class="thumb-inner"><img src="./company-intro-01.jpg" loading="lazy"></div><span>2</span></div>
@@ -291,14 +236,14 @@ html, body {
         <div class="thumb" onclick="scrollToPage(11)"><div class="thumb-inner"><img src="./project-08.jpg" loading="lazy"></div><span>12</span></div>
         <div class="thumb" onclick="scrollToPage(12)"><div class="thumb-inner"><img src="./project-09.jpg" loading="lazy"></div><span>13</span></div>
         <div class="thumb" onclick="scrollToPage(13)"><div class="thumb-inner"><img src="./project-10.jpg" loading="lazy"></div><span>14</span></div>
-        <!-- Thumb 15: project-04 (nửa trên) CHỈ desktop mới cover chiều rộng, mobile vẫn contain -->
+        <!-- Thumb 15: project-04, fill ngang (fit-width) -->
         <div class="thumb" onclick="scrollToSplitHalf('top')">
-            <div class="thumb-inner fit-width"><img src="./project-04.jpg" loading="lazy"></div>
+            <div class="thumb-inner half-page"><img src="./project-04.jpg" loading="lazy"></div>
             <span>15</span>
         </div>
-        <!-- Thumb 16: project-07 (nửa dưới) -->
+        <!-- Thumb 16: project-07, fill ngang (fit-width) -->
         <div class="thumb" onclick="scrollToSplitHalf('bot')">
-            <div class="thumb-inner fit-width"><img src="./project-07.jpg" loading="lazy"></div>
+            <div class="thumb-inner half-page"><img src="./project-07.jpg" loading="lazy"></div>
             <span>16</span>
         </div>
         <div class="thumb" onclick="scrollToPage(15)"><div class="thumb-inner"><img src="./project-01.jpg" loading="lazy"></div><span>17</span></div>
@@ -323,7 +268,7 @@ html, body {
             </div>
         </div>
 
-        <!-- Mobile row 2 (zoom + download/print) -->
+        <!-- Mobile row 2 -->
         <div id="toolbar-row2" style="display:none;position:relative;height:54px;background:#2b2b2b;border-bottom:1px solid #3c4043;">
             <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;">
                 <button class="zoom-btn" onclick="zoomOut()">−</button>
@@ -340,7 +285,7 @@ html, body {
             </div>
         </div>
 
-        <!-- NỘI DUNG 17 TRANG (p0–p16) -->
+        <!-- CONTENT: 17 trang thật (p0–p16) -->
         <div class="content" id="content">
             <section class="page" id="p0"><img src="./profile-cover.jpg" loading="eager"></section>
             <section class="page" id="p1"><img src="./company-intro-01.jpg" loading="eager"></section>
@@ -356,7 +301,7 @@ html, body {
             <section class="page" id="p11"><img src="./project-08.jpg" loading="eager"></section>
             <section class="page" id="p12"><img src="./project-09.jpg" loading="eager"></section>
             <section class="page" id="p13"><img src="./project-10.jpg" loading="eager"></section>
-            <!-- p14: split 2 ảnh -->
+            <!-- p14: trang split — 2 ảnh xếp dọc trên 1 trang A4 -->
             <section class="page split-page" id="p14">
                 <div class="split-half" id="split-top">
                     <img src="./project-04.jpg" loading="eager">
@@ -373,7 +318,7 @@ html, body {
 </div>
 
 <script>
-/* ── Layout switch (Mobile / Desktop) ─────────────────────────────── */
+/* ── Layout switch ─────────────────────────────────────────────────── */
 function applyLayout() {
     const mob = window.innerWidth <= 768;
     document.getElementById('toolbar-row2').style.display = mob ? 'block' : 'none';
@@ -410,11 +355,12 @@ function resetZoom() {
     document.getElementById('zoom-display-m').value = '100%';
 }
 
-/* Scroll */
+/* ── Scroll ────────────────────────────────────────────────────────── */
 function scrollToPage(i) {
     const el = document.getElementById('p' + i);
     if (el) contentEl.scrollTo({ top: el.offsetTop - 16, behavior: 'smooth' });
 }
+
 function scrollToSplitHalf(half) {
     const page = document.getElementById('p14');
     if (!page) return;
@@ -428,155 +374,228 @@ function scrollToSplitHalf(half) {
     }
 }
 
-/* ── Browser detection & in ấn chuyên biệt ───────────────────────── */
+/* ── Browser detect ────────────────────────────────────────────────── */
 const ua = navigator.userAgent;
-const isIOS = /iP(hone|ad|od)/i.test(ua);
-const isChromeAndroid = /Android/i.test(ua) && /Chrome/i.test(ua) && !/Firefox/i.test(ua);
-const isSafariIOS = isIOS && /Safari/i.test(ua) && !/CriOS|FxiOS|EdgiOS/i.test(ua);
+const isIOS           = /iP(hone|ad|od)/i.test(ua);
+const isChromeIOS     = /CriOS/i.test(ua);
+/*
+ * isSafariIOS: Safari iOS thật sự (không phải Chrome/Firefox/Opera trên iOS)
+ * Safari iOS dùng window.print() trực tiếp trên document gốc — KHÔNG dùng iframe.
+ * Iframe trên Safari iOS sẽ gây in 2 lần (document gốc + iframe) → nhân đôi trang.
+ */
+const isSafariIOS = isIOS && /WebKit/i.test(ua) && !isChromeIOS && !/FxiOS|OPiOS|EdgiOS/i.test(ua);
+const isAndroid       = /Android/i.test(ua);
+const isChromeAndroid = isAndroid && /Chrome/i.test(ua) && !/Firefox/i.test(ua);
 
-/* Dữ liệu 17 trang (cho iframe fallback) */
-const PAGES_DATA = [
-    { t:'s', src:'./profile-cover.jpg' },{ t:'s', src:'./company-intro-01.jpg' },{ t:'s', src:'./company-intro-02.jpg' },
-    { t:'s', src:'./main-products.jpg' },{ t:'s', src:'./thep-products.jpg' },{ t:'s', src:'./ximang-products.jpg' },
-    { t:'s', src:'./thephinh-products.jpg' },{ t:'s', src:'./vlxd-products.jpg' },{ t:'s', src:'./project-11.jpg' },
-    { t:'s', src:'./project-12.jpg' },{ t:'s', src:'./project-03.jpg' },{ t:'s', src:'./project-08.jpg' },
-    { t:'s', src:'./project-09.jpg' },{ t:'s', src:'./project-10.jpg' },{ t:'2', src:'./project-04.jpg', src2:'./project-07.jpg' },
-    { t:'s', src:'./project-01.jpg' },{ t:'s', src:'./project-02.jpg' }
+/*
+ * CHỈ Chrome Android mới dùng iframe.
+ * Chrome iOS (CriOS) và Safari iOS đều KHÔNG dùng iframe.
+ *   - Safari: in document gốc với injected CSS
+ *   - Chrome iOS: thực ra cũng là WebKit, hành xử như Safari → window.print() luôn
+ */
+const needsIframe = isChromeAndroid;
+
+/* ── Pages data (17 trang thật) ────────────────────────────────────── */
+const PAGES = [
+    { t:'s', src:'./profile-cover.jpg' },
+    { t:'s', src:'./company-intro-01.jpg' },
+    { t:'s', src:'./company-intro-02.jpg' },
+    { t:'s', src:'./main-products.jpg' },
+    { t:'s', src:'./thep-products.jpg' },
+    { t:'s', src:'./ximang-products.jpg' },
+    { t:'s', src:'./thephinh-products.jpg' },
+    { t:'s', src:'./vlxd-products.jpg' },
+    { t:'s', src:'./project-11.jpg' },
+    { t:'s', src:'./project-12.jpg' },
+    { t:'s', src:'./project-03.jpg' },
+    { t:'s', src:'./project-08.jpg' },
+    { t:'s', src:'./project-09.jpg' },
+    { t:'s', src:'./project-10.jpg' },
+    { t:'2', src:'./project-04.jpg', src2:'./project-07.jpg' },
+    { t:'s', src:'./project-01.jpg' },
+    { t:'s', src:'./project-02.jpg' },
 ];
 
-function getAbsolutePath(rel) {
-    const base = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
-    return base + rel.replace(/^\.\//, '');
+function getBase() {
+    const h = window.location.href;
+    return h.substring(0, h.lastIndexOf('/') + 1);
 }
 
-/* Chrome Android: iframe riêng với CSS in chính xác (tránh in 2 trang lẻ) */
+/* ── Iframe print — CHỈ cho Chrome Android ─────────────────────────── */
 function buildIframeHTML() {
-    let html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Print Profile</title>
-    <style>
-    *{margin:0;padding:0;box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
-    @page{size:A4 portrait; margin:0mm;}
-    body{background:#fff; width:100%;}
-    .print-page{width:210mm; height:297mm; page-break-after:always; break-after:page; page-break-inside:avoid; overflow:hidden; background:#fff; margin:0;}
-    .print-page:last-child{page-break-after:auto;}
-    .print-page img{width:100%; height:100%; object-fit:fill; display:block;}
-    .split-print{display:flex; flex-direction:column; background:#d0d0d0; padding:8mm;}
-    .split-print .half{flex:1; background:#fff; display:flex; align-items:center; justify-content:center; margin:0; overflow:hidden;}
-    .split-print .half img{max-width:100%; max-height:100%; object-fit:contain;}
-    .gap-split{height:5mm; background:#d0d0d0;}
-    </style>
-    </head><body>`;
-    PAGES_DATA.forEach(p => {
-        if(p.t === '2') {
-            html += `<div class="print-page split-print"><div class="half"><img src="${getAbsolutePath(p.src)}"></div><div class="gap-split"></div><div class="half"><img src="${getAbsolutePath(p.src2)}"></div></div>`;
+    const base = getBase();
+    const abs = r => base + r.replace(/^\.\//, '');
+
+    let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;
+  -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+@page{size:210mm 297mm;margin:0}
+html,body{width:210mm;margin:0;padding:0;background:#fff}
+.p{width:210mm;height:297mm;overflow:hidden;background:#fff;
+   page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid}
+.p:last-child{page-break-after:avoid;break-after:avoid}
+.p>img{display:block;width:210mm;height:297mm;object-fit:fill}
+.sp{display:flex;flex-direction:column;background:#d0d0d0;padding:8mm}
+.sh{width:100%;flex:1;min-height:0;background:#fff;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.sh img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.sg{height:5mm;flex-shrink:0;background:#d0d0d0}
+</style></head><body>`;
+
+    PAGES.forEach(p => {
+        if (p.t === '2') {
+            html += `<div class="p sp"><div class="sh"><img src="${abs(p.src)}"></div>`
+                  + `<div class="sg"></div><div class="sh"><img src="${abs(p.src2)}"></div></div>`;
         } else {
-            html += `<div class="print-page"><img src="${getAbsolutePath(p.src)}"></div>`;
+            html += `<div class="p"><img src="${abs(p.src)}"></div>`;
         }
     });
-    html += `</body></html>`;
-    return html;
+    return html + `</body></html>`;
 }
 
 function printViaIframe() {
-    const overlay = document.getElementById('print-overlay');
-    overlay.classList.add('show');
-    document.getElementById('overlay-msg').textContent = 'Đang tải ảnh in …';
-    const oldIframe = document.getElementById('_print_iframe_');
-    if(oldIframe) oldIframe.remove();
+    const msgEl = document.getElementById('overlay-msg');
+    msgEl.textContent = 'Đang tải ảnh để in…';
+    const old = document.getElementById('_pf');
+    if (old) old.remove();
+
     const iframe = document.createElement('iframe');
-    iframe.id = '_print_iframe_';
-    iframe.style.position = 'fixed';
-    iframe.style.top = '-9999px';
-    iframe.style.left = '0';
-    iframe.style.width = '794px';
-    iframe.style.height = '1px';
-    iframe.style.border = 'none';
+    iframe.id = '_pf';
+    // width:210mm ~ 794px ở 96dpi, set cứng để Chrome Android không wrap
+    iframe.style.cssText = 'position:fixed;top:-9999px;left:0;width:210mm;height:1px;border:none;visibility:hidden;';
     document.body.appendChild(iframe);
+
     const doc = iframe.contentDocument || iframe.contentWindow.document;
     doc.open(); doc.write(buildIframeHTML()); doc.close();
-    const imgs = Array.from(doc.querySelectorAll('img'));
-    let pending = imgs.filter(i => !i.complete).length;
-    function done() {
-        overlay.classList.remove('show');
-        setTimeout(() => {
-            iframe.contentWindow.focus();
-            iframe.contentWindow.print();
-            setTimeout(() => iframe.remove(), 10000);
-        }, 500);
-    }
-    if(pending === 0) done();
-    else {
+
+    function waitImgs(cb) {
+        const imgs = Array.from(doc.querySelectorAll('img'));
+        let n = imgs.filter(i => !i.complete).length;
+        if (!n) return cb();
         imgs.forEach(img => {
-            if(!img.complete) {
-                img.addEventListener('load', () => { if(--pending === 0) done(); }, {once:true});
-                img.addEventListener('error', () => { if(--pending === 0) done(); }, {once:true});
+            if (!img.complete) {
+                const fn = () => { if (!--n) cb(); };
+                img.addEventListener('load',  fn, { once:true });
+                img.addEventListener('error', fn, { once:true });
             }
         });
     }
+
+    waitImgs(() => {
+        msgEl.textContent = 'Đang mở hộp thoại in…';
+        setTimeout(() => {
+            document.getElementById('print-overlay').classList.remove('show');
+            setTimeout(() => {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+                setTimeout(() => iframe.remove(), 15000);
+            }, 400);
+        }, 400);
+    });
 }
 
-/* Safari iOS + các iOS khác: dùng window.print() + injected CSS đặc biệt đảm bảo tỉ lệ đúng 1 trang A4 */
-let injectedStyle = null;
-function applySafeIOSPrintCSS() {
-    if(injectedStyle) injectedStyle.remove();
-    const css = `@media print{
-        @page{size:A4 portrait; margin:0mm !important;}
-        body, html, .viewer, .main, .content { margin:0 !important; padding:0 !important; background:#fff !important; display:block !important; }
-        .page { width:100% !important; height:297mm !important; margin:0 !important; page-break-after:always !important; break-after:page !important; transform:none !important; }
-        .page > img { height:297mm !important; object-fit:fill !important; }
-        .split-page { height:297mm !important; padding:8mm !important; }
-        .split-gap { height:5mm !important; }
-    }`;
-    injectedStyle = document.createElement('style');
-    injectedStyle.textContent = css;
-    document.head.appendChild(injectedStyle);
+/* ── Safari iOS / Chrome iOS print via window.print() ──────────────── */
+/*
+ * Safari và Chrome iOS đều dùng WebKit engine.
+ * Cả hai in document gốc khi gọi window.print().
+ * Inject @media print CSS để kiểm soát layout → đúng 17 trang.
+ * KHÔNG tạo iframe vì Safari sẽ in cả document gốc lẫn iframe → nhân đôi.
+ */
+let _mobileStyleEl = null;
+function buildMobilePrintCSS() {
+    /*
+     * Safari iOS: KHÔNG dùng height:297mm vì iOS render mm theo pixel màn hình thực
+     * → mỗi trang cao hơn 1 trang giấy → tràn → sinh trang trắng → 34 trang.
+     * Giải pháp: height:100vh trong @media print = đúng 1 trang.
+     * width:100% để tránh scale sai.
+     */
+    return `@media print{
+@page{size:210mm 297mm;margin:0!important}
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+#print-overlay,.sidebar,.toolbar,#toolbar-row2{display:none!important}
+html,body{background:#fff!important;width:100%!important;height:auto!important;
+  margin:0!important;padding:0!important;overflow:visible!important}
+.viewer,.main,.content{display:block!important;width:100%!important;height:auto!important;
+  margin:0!important;padding:0!important;overflow:visible!important;background:#fff!important}
+.page{display:block!important;width:100%!important;
+  height:100vh!important;min-height:unset!important;max-height:100vh!important;
+  margin:0!important;padding:0!important;border:none!important;box-shadow:none!important;
+  overflow:hidden!important;background:#fff!important;transform:none!important;
+  page-break-after:always!important;break-after:page!important;
+  page-break-inside:avoid!important;break-inside:avoid!important}
+.page:last-child{page-break-after:avoid!important;break-after:avoid!important}
+.page>img{width:100%!important;height:100vh!important;object-fit:fill!important;display:block!important}
+.split-page{display:flex!important;flex-direction:column!important;
+  width:100%!important;height:100vh!important;max-height:100vh!important;
+  background:#d0d0d0!important;padding:8mm!important;gap:0!important;overflow:hidden!important}
+.split-half{flex:1!important;min-height:0!important;background:#fff!important;
+  display:flex!important;align-items:center!important;
+  justify-content:center!important;overflow:hidden!important}
+.split-half img{max-width:100%!important;max-height:100%!important;
+  object-fit:contain!important;display:block!important}
+.split-gap{height:5mm!important;flex-shrink:0!important;
+  background:#d0d0d0!important;display:block!important}
+}`;
+}
+function injectMobilePrintCSS() {
+    if (_mobileStyleEl) _mobileStyleEl.remove();
+    _mobileStyleEl = document.createElement('style');
+    _mobileStyleEl.textContent = buildMobilePrintCSS();
+    document.head.appendChild(_mobileStyleEl);
 }
 
-function waitAllMainImages(cb) {
+/* ── Wait images ───────────────────────────────────────────────────── */
+function waitMainImages(cb) {
     const imgs = Array.from(document.querySelectorAll('.content img'));
-    let pending = imgs.filter(img => !img.complete).length;
-    if(pending === 0) return cb();
+    let n = imgs.filter(i => !i.complete).length;
+    if (!n) return cb();
     imgs.forEach(img => {
-        if(!img.complete) {
-            img.addEventListener('load', () => { if(--pending === 0) cb(); }, {once:true});
-            img.addEventListener('error', () => { if(--pending === 0) cb(); }, {once:true});
+        if (!img.complete) {
+            const fn = () => { if (!--n) cb(); };
+            img.addEventListener('load',  fn, { once:true });
+            img.addEventListener('error', fn, { once:true });
         }
     });
 }
 
-/* Main print handler */
+/* ── printProfile ──────────────────────────────────────────────────── */
 function printProfile() {
-    resetZoom();
     const overlay = document.getElementById('print-overlay');
+    resetZoom();
     overlay.classList.add('show');
-    document.getElementById('overlay-msg').textContent = 'Đang chuẩn bị…';
-    // Chrome Android → iframe (giải pháp ổn định, in đúng 17 trang)
-    if(isChromeAndroid) {
+    document.getElementById('overlay-msg').textContent = 'Đang chuẩn bị in…';
+
+    if (needsIframe) {
+        /* Chrome Android: iframe riêng → 17 trang */
         printViaIframe();
-        return;
-    }
-    // iOS (bao gồm Safari và Chrome iOS, Firefox iOS) → window.print + injected style đảm bảo scale A4
-    if(isIOS) {
-        applySafeIOSPrintCSS();
-        waitAllMainImages(() => {
+    } else if (isIOS) {
+        /*
+         * MỌI trình duyệt trên iOS (Safari, Chrome iOS, Firefox iOS...)
+         * đều dùng WebKit và in document gốc.
+         * Inject CSS → window.print() → đúng 17 trang.
+         */
+        injectMobilePrintCSS();
+        waitMainImages(() => {
             setTimeout(() => {
                 overlay.classList.remove('show');
                 setTimeout(() => window.print(), 600);
-            }, 600);
+            }, 800);
         });
-        return;
+    } else {
+        /* Desktop: Chrome, Edge, Firefox, Safari macOS */
+        waitMainImages(() => {
+            setTimeout(() => {
+                overlay.classList.remove('show');
+                setTimeout(() => window.print(), 200);
+            }, 400);
+        });
     }
-    // Desktop (Mac/Win) dùng print chuẩn, media print đã đảm bảo layout
-    waitAllMainImages(() => {
-        setTimeout(() => {
-            overlay.classList.remove('show');
-            setTimeout(() => window.print(), 400);
-        }, 500);
-    });
 }
 
 window.addEventListener('beforeprint', () => {
     resetZoom();
-    if(isIOS) applySafeIOSPrintCSS();
+    if (isIOS) injectMobilePrintCSS();
 });
 window.addEventListener('afterprint', () => {
     document.getElementById('print-overlay').classList.remove('show');
