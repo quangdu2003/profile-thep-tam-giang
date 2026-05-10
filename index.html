@@ -145,6 +145,29 @@ html, body {
     .split-page { padding:8px !important; }
 }
 
+/* ═══ MOBILE TOOLBAR ROW 2 ══════════════════════════════════════════ */
+#toolbar-row2 {
+    display:none;
+    background:#2b2b2b;
+    border-bottom:1px solid #3c4043;
+    height:50px;
+    padding:0 12px;
+    align-items:center;
+    justify-content:space-between;
+    flex-shrink:0;
+}
+#toolbar-row2 .mob-zoom {
+    display:flex;
+    align-items:center;
+    gap:4px;
+}
+#toolbar-row2 .zoom-btn {
+    width:36px; height:36px; font-size:24px;
+}
+#toolbar-row2 .zoom-val {
+    width:56px; height:30px; font-size:13px;
+}
+
 /* ═══ PRINT (Desktop) ═══════════════════════════ */
 @media print {
     @page { size:A4 portrait; margin:0; }
@@ -207,13 +230,19 @@ html, body {
             </div>
         </div>
 
-        <!-- TOOLBAR MOBILE (Chỉ tải xuống) -->
-        <div id="toolbar-row2" style="display:none;position:relative;height:54px;background:#2b2b2b;border-bottom:1px solid #3c4043;">
-            <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);">
-                <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn">
-                    <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
-                </a>
+        <!-- TOOLBAR MOBILE (Zoom + Tải xuống) -->
+        <div id="toolbar-row2">
+            <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn" title="Tải xuống" style="visibility:hidden;">
+                <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+            </a>
+            <div class="mob-zoom">
+                <button class="zoom-btn" onclick="zoomOut()">−</button>
+                <input type="text" class="zoom-val" id="zoom-display-mob" value="100%" readonly>
+                <button class="zoom-btn" onclick="zoomIn()">+</button>
             </div>
+            <a href="https://drive.google.com/uc?export=download&id=1-CbOZUOEgPujQ9oRuHAX8_ACFzOTI5JP" class="tool-btn" title="Tải xuống">
+                <svg viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+            </a>
         </div>
 
         <!-- CONTENT -->
@@ -246,7 +275,7 @@ html, body {
 <script>
 function applyLayout() {
     const mob = window.innerWidth <= 768;
-    document.getElementById('toolbar-row2').style.display = mob ? 'block' : 'none';
+    document.getElementById('toolbar-row2').style.display = mob ? 'flex' : 'none';
 }
 applyLayout();
 window.addEventListener('resize', applyLayout);
@@ -263,10 +292,12 @@ function updateZoom() {
         p.style.marginTop = `${-diff/2}px`;
         p.style.marginBottom = `${24 - diff/2}px`;
     });
-    document.getElementById('zoom-display').value = zoomLevel + '%';
+    const val = zoomLevel + '%';
+    document.getElementById('zoom-display').value = val;
+    document.getElementById('zoom-display-mob').value = val;
 }
-function zoomIn() { if (zoomLevel < 200) { zoomLevel += 10; updateZoom(); } }
-function zoomOut() { if (zoomLevel > 30) { zoomLevel -= 10; updateZoom(); } }
+function zoomIn()  { if (zoomLevel < 200) { zoomLevel += 10; updateZoom(); } }
+function zoomOut() { if (zoomLevel > 30)  { zoomLevel -= 10; updateZoom(); } }
 
 function scrollToPage(i) {
     const el = document.getElementById('p' + i);
